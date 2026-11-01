@@ -1,0 +1,67 @@
+{
+  "source": "SPEC.md \u00a74.1, \u00a74.2, \u00a74.9",
+  "last_verified": "",
+  "lists": {
+    "org_type": [
+      "county",
+      "city",
+      "borough",
+      "township",
+      "town",
+      "village",
+      "school district",
+      "intermediate unit / BOCES",
+      "career-tech center",
+      "community college",
+      "state university",
+      "private college",
+      "municipal authority",
+      "housing authority",
+      "redevelopment authority",
+      "IDA",
+      "fire district",
+      "hospital / health system",
+      "nonprofit",
+      "state agency",
+      "DOT",
+      "private developer",
+      "A/E firm",
+      "financial advisor",
+      "bond counsel",
+      "competitor"
+    ],
+    "contact_function": [
+      "elected official",
+      "manager / administrator",
+      "business manager / CFO",
+      "superintendent",
+      "facilities director",
+      "solicitor / attorney",
+      "engineer",
+      "architect",
+      "financial advisor",
+      "grant writer",
+      "legislator / staff",
+      "agency program officer"
+    ],
+    "activity_type": [
+      "call",
+      "meeting",
+      "site walk",
+      "board meeting attended",
+      "email",
+      "presentation",
+      "proposal",
+      "interview",
+      "event"
+    ],
+    "preferred_channel": [
+      "email",
+      "phone",
+      "in person",
+      "text",
+      "LinkedIn"
+    ]
+  },
+  "notes": "preferred_channel values are a starting set (the spec names the field but not the values); edit freely."
+}

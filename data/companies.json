@@ -1,0 +1,66 @@
+{
+  "source": "SPEC.md \u00a72",
+  "last_verified": "",
+  "companies": [
+    {
+      "code": "QCG",
+      "name": "Quandel Construction Group",
+      "base": "Harrisburg, PA (plus regional offices)",
+      "sells": "General construction, construction management, design-build; P3 bridge bundling program",
+      "buyers": "School districts, counties, municipalities, colleges, healthcare, housing",
+      "procurementPaths": "Multiple-prime public bid; CM agency; CM at risk / GMP (private); design-build; COSTARS; P3",
+      "isParent": false,
+      "sortOrder": 1
+    },
+    {
+      "code": "QES",
+      "name": "Quandel Energy Solutions",
+      "base": "Harrisburg, PA",
+      "sells": "ESCO: energy audits, guaranteed energy savings contracts, solar, HVAC, controls, geothermal",
+      "buyers": "Any public owner, housing authorities, nonprofits",
+      "procurementPaths": "PA GESA (RFQ/RFP); NY Energy Law \u00a7 9-103 EPC (RFP); HUD EPC for housing authorities; COSTARS GESA contract",
+      "isParent": false,
+      "sortOrder": 2
+    },
+    {
+      "code": "PCS",
+      "name": "Performance Construction Services",
+      "base": "Pottsville, PA (Williamsport team from the Susquehanna Supply acquisition)",
+      "sells": "Heavy concrete, bridges, dams, water and wastewater plants; PennDOT/NYSDOT work",
+      "buyers": "DOTs, counties, municipal and water/sewer authorities",
+      "procurementPaths": "Low-bid public works; DOT lettings; bundled bridge contracts",
+      "isParent": false,
+      "sortOrder": 3
+    },
+    {
+      "code": "JVS",
+      "name": "J. Vinton Schafer & Sons",
+      "base": "Abingdon, MD",
+      "sells": "Construction management, education and healthcare focus",
+      "buyers": "MD, DC, VA and PA schools, hospitals, private owners",
+      "procurementPaths": "CM agency; CM at risk; public bid in MD/VA/DC",
+      "isParent": false,
+      "sortOrder": 4
+    },
+    {
+      "code": "PYR",
+      "name": "Pyramid Construction",
+      "base": "[confirm]",
+      "sells": "[confirm]",
+      "buyers": "[confirm]",
+      "procurementPaths": "[confirm]",
+      "isParent": false,
+      "sortOrder": 5
+    },
+    {
+      "code": "ENT",
+      "name": "Quandel Enterprises",
+      "base": "Harrisburg, PA",
+      "sells": "Shared BD, training and cross-company pursuits",
+      "buyers": null,
+      "procurementPaths": null,
+      "isParent": true,
+      "sortOrder": 6
+    }
+  ]
+}
