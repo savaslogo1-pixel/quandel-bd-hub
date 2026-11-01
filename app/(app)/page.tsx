@@ -10,7 +10,7 @@ import { markNextStepDone } from "./activities/actions";
 export default async function Home() {
   const user = await requireUser();
   const today = todayUTC();
-  const [steps, overdue, counts] = await Promise.all([
+  const [steps, overdue, counts, alerts] = await Promise.all([
     prisma.activity.findMany({
       where: { createdById: user.id, nextStep: { not: null }, nextStepDone: false },
       include: { org: { select: { id: true, name: true } } },
@@ -30,6 +30,7 @@ export default async function Home() {
       prisma.activity.count({ where: { financingDiscussed: true, financialAdvisorContactId: null } }),
       prisma.opportunity.count({ where: { ownerId: user.id, stage: { lt: 9 } } }),
     ]),
+    prisma.notification.findMany({ where: { userId: user.id, readAt: null }, orderBy: { createdAt: "desc" }, take: 8 }),
   ]);
   const [owned, tierA, last30, maFlags, myOpps] = counts;
   const first = (user.name ?? user.email).split(/[ @]/)[0];
@@ -76,6 +77,17 @@ export default async function Home() {
             <Empty title="No open next steps">When you log an activity, add a next step and a date. It shows up here.</Empty>
           )}
         </section>
+        <div className="flex min-w-0 flex-col gap-4">
+        {alerts.length > 0 && (
+          <section className="panel" style={{ borderColor: "var(--gold)" }}>
+            <div className="mb-1 flex items-baseline"><h2 className="flex-1 text-lg">Deadline alerts</h2><Link className="text-xs" href="/alerts">All alerts</Link></div>
+            <ul className="rows">
+              {alerts.map((n) => (
+                <li key={n.id}><div className="min-w-0 flex-1">{n.link ? <Link className="font-semibold" href={n.link}>{n.title}</Link> : <b>{n.title}</b>}<div className="muted text-xs">{n.body}</div></div></li>
+              ))}
+            </ul>
+          </section>
+        )}
         <section className="panel">
           <h2 className="mb-2 text-lg">Overdue touches</h2>
           <p className="muted mb-1 text-xs">Contacts at organizations you own whose next-touch date has passed.</p>
@@ -95,6 +107,7 @@ export default async function Home() {
             <p className="muted">None.</p>
           )}
         </section>
+        </div>
       </div>
       <h2 className="mb-2 mt-6 text-lg">Recent activity, all companies</h2>
       <ActivityList where={{}} take={10} empty={<Empty title="No activity yet" />} />

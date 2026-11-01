@@ -1,5 +1,33 @@
 # Changelog
 
+## Phase 3 — 2026-11-01
+- Funding program library (SPEC §4.5): 52 PA, NY and Federal programs seeded by name from
+  `data/programs.json`. Every other field is blank and shows [confirm] until someone fills
+  it from current guidelines. Seeding only creates missing programs, so edits made in the
+  app are never overwritten.
+- Library list with search and filters (state, type, deadline within 30/90 days,
+  verification), program detail, add/edit/delete (delete blocked while a program is on a stack).
+- Verification (SPEC §7): "Last verified" date and person; yellow badge when never verified
+  or older than 12 months; "Mark verified today"; banner counting programs that need checking.
+- "Match to opportunity" on each program adds it to that opportunity's capital stack;
+  owners in the program's state are listed first.
+- Capital stack tab on each opportunity (SPEC §4.6): library programs and other sources
+  (bond, note, capital reserve, GESA financing, private equity, owner cash, other) with
+  amount, status, application and award dates, and reimbursement lag.
+  Shows project cost, total sources (denied excluded), committed (awarded + closed), gap or
+  over-funding, cash to front for reimbursement programs, a stacked bar by status, and a
+  match check per program (met / short by $X / no rule yet).
+  Match rule: other non-denied sources must cover the program's % of project cost or of
+  its award. Programs that restrict which funds count as match need a manual check.
+- Illustrative template adds placeholder rows with no amounts (the course's worked
+  examples aren't loaded into the app).
+- Deadline alerts: 90, 60, 30 and 14 days before a program's next deadline, for the owner of
+  each open opportunity whose stack uses it (rows not yet awarded, denied or closed).
+  Each band alerts once. Shown in the header, on Home and on the Alerts page.
+  `POST /api/alerts/run` with `CRON_SECRET` runs them on a schedule. Email delivery is not
+  set up yet. [confirm]
+- `npm test` runs checks on the stack math and alert bands.
+
 ## Phase 2 — 2026-11-01
 - Opportunities (SPEC §4.4): owner, lead company + support companies (joint pursuit),
   project type, delivery method, estimated and Quandel scope values, probability,

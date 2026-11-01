@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
-import { CompanyTag, Empty, Fact } from "@/components/ui";
+import { CompanyTag, Empty, Fact, Tabs } from "@/components/ui";
+import { CapitalStack } from "../CapitalStack";
 import { prisma } from "@/lib/db";
 import { fmtDate, money, ymd } from "@/lib/format";
 import { canDecideGoNoGo, canEditOpportunities, canLogActivity } from "@/lib/permissions";
@@ -23,8 +24,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return { title: o?.name ?? "Opportunity" };
 }
 
-export default async function OppPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function OppPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ tab?: string }> }) {
   const { id } = await params;
+  const { tab = "overview" } = await searchParams;
   const user = await requireUser();
   const o = await prisma.opportunity.findUnique({
     where: { id },
@@ -38,6 +40,7 @@ export default async function OppPage({ params }: { params: Promise<{ id: string
       disclosureBy: true,
       checklist: { include: { doneBy: { select: { name: true, email: true } } } },
       stageChanges: { include: { changedBy: { select: { name: true, email: true } } }, orderBy: { createdAt: "desc" } },
+      _count: { select: { stackRows: true } },
     },
   });
   if (!o) notFound();
@@ -82,6 +85,11 @@ export default async function OppPage({ params }: { params: Promise<{ id: string
         <StageStepper id={o.id} stage={o.stage} stages={STAGES} canMove={canEdit} />
         <p className="muted mt-1.5 text-xs">Exit criteria for {stageName(o.stage)}: {STAGES.find((s) => s.n === o.stage)?.exit}</p>
       </section>
+
+      <Tabs base={`/opportunities/${o.id}`} current={tab} tabs={[["overview", "Overview"], ["stack", `Capital stack · ${o._count.stackRows}`]]} />
+      {tab === "stack" ? (
+        <CapitalStack oppId={o.id} orgState={o.org.state} projectCost={o.estimatedValue != null ? Number(o.estimatedValue) : null} canEdit={canEdit} />
+      ) : (
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <div className="flex min-w-0 flex-col gap-4">
@@ -220,6 +228,7 @@ export default async function OppPage({ params }: { params: Promise<{ id: string
           )}
         </div>
       </div>
+      )}
     </>
   );
 }

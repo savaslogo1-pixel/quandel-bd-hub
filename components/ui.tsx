@@ -119,3 +119,17 @@ export function CheckGroup({ name, label, options, selected, hint }: { name: str
     </fieldset>
   );
 }
+
+/** SPEC §7: yellow badge when never verified or more than 12 months old. */
+export function VerifiedBadge({ at, state }: { at: Date | null; state: "never" | "stale" | "current" }) {
+  if (state === "never") return <span className="chip chip-warn" title="No one has verified this yet">unverified</span>;
+  const label = at!.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  return state === "stale"
+    ? <span className="chip chip-warn" title="Verified more than 12 months ago">verified {label}</span>
+    : <span className="chip chip-ok">verified {label}</span>;
+}
+
+/** Shown wherever a value is still unknown. */
+export function Confirm() {
+  return <span className="conf">[confirm]</span>;
+}

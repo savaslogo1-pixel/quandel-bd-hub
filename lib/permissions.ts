@@ -31,3 +31,6 @@ export const canEditOpportunities = (r: Role) => ACCOUNT_EDITORS.includes(r);
 /** Record go/no-go decisions (SPEC §1: leadership approves go/no-go). */
 const GO_NO_GO: Role[] = ["ADMIN", "BD_DIRECTOR", "LEADERSHIP"];
 export const canDecideGoNoGo = (r: Role) => GO_NO_GO.includes(r);
+
+/** Edit the funding program library and capital stacks. */
+export const canEditPrograms = (r: Role) => ACCOUNT_EDITORS.includes(r);

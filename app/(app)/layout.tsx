@@ -5,13 +5,18 @@ import { SignOut } from "@/components/SignOut";
 import { CompanyTags } from "@/components/ui";
 import { ROLE_LABELS, isAdmin } from "@/lib/permissions";
 import { requireUser } from "@/lib/session";
+import { generateDeadlineAlerts } from "@/lib/alerts";
+import { prisma } from "@/lib/db";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();
+  await generateDeadlineAlerts(user.id);
+  const unread = await prisma.notification.count({ where: { userId: user.id, readAt: null } });
   const links: [string, string][] = [
     ["/", "Home"],
     ["/pipeline", "Pipeline"],
     ["/organizations", "Organizations"],
+    ["/programs", "Programs"],
     ["/contacts", "Contacts"],
     ["/activities", "Activities"],
   ];
@@ -32,6 +37,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             </Link>
             <div className="flex-1" />
             <div className="flex items-center gap-2 text-[12.5px]">
+              <Link href="/alerts" className={`chip ${unread ? "chip-bad" : ""}`} title="Deadline alerts">{unread ? `${unread} alert${unread === 1 ? "" : "s"}` : "Alerts"}</Link>
               <span className="muted">{user.name ?? user.email}</span>
               <span className="chip">{ROLE_LABELS[user.role]}</span>
               {user.companies.length > 0 && <CompanyTags codes={user.companies} />}

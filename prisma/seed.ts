@@ -1,8 +1,9 @@
-// Seeds reference data only (SPEC §12 Phase 1): the five companies + parent, and picklists.
+// Seeds reference data only: the five companies + parent, picklists, and the funding program library.
 // Source files live in /data so non-developers can edit them. Never seeds people or records.
 import { PrismaClient } from "@prisma/client";
 import companies from "../data/companies.json";
 import picklists from "../data/picklists.json";
+import programs from "../data/programs.json";
 
 const prisma = new PrismaClient();
 
@@ -19,9 +20,23 @@ async function main() {
       });
     }
   }
+  // Programs: create missing ones only, so edits made in the app are never overwritten.
+  for (const p of programs.programs) {
+    const { last_verified, nextDeadline, ...rest } = p as typeof p & { last_verified: string | null; nextDeadline: string | null };
+    await prisma.fundingProgram.upsert({
+      where: { key: p.key },
+      update: {},
+      create: {
+        ...(rest as Record<string, unknown> as { key: string; name: string; jurisdiction: string }),
+        nextDeadline: nextDeadline ? new Date(nextDeadline + "T00:00:00Z") : null,
+        lastVerifiedAt: last_verified ? new Date(last_verified + "T00:00:00Z") : null,
+      },
+    });
+  }
   const counts = {
     companies: await prisma.company.count(),
     picklistValues: await prisma.picklistValue.count(),
+    programs: await prisma.fundingProgram.count(),
   };
   console.log("Seeded", counts);
 }

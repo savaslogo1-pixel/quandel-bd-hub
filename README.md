@@ -45,13 +45,28 @@ Stages, delivery-method checklists and their labels live in `data/pipeline.json`
 Stage gating (what must be true before Pursuit and beyond) is in `lib/pipeline.ts`;
 cross-sell routing is in `lib/routing.ts`.
 
+## Funding programs
+
+`data/programs.json` seeds the library. Running `npm run db:seed` adds programs that aren't
+in the database yet and leaves existing ones alone, so the app is where programs are
+maintained. Fill details from current guidelines and mark each program verified.
+
+Deadline alerts are created when people open the app. To run them on a schedule, set
+`CRON_SECRET` and call `POST /api/alerts/run` with `Authorization: Bearer <secret>` daily.
+
+## Tests
+
+```bash
+npm test
+```
+
 ## Roles
 
 | Role | Can |
 |---|---|
 | Admin | Everything, plus users, roles, company tags and dropdown lists |
 | BD director / Enterprise BD | Add and edit everything; record go/no-go; delete records |
-| BD lead, QES project developer, Estimator | Add and edit organizations, contacts and opportunities; move stages; log activities |
+| BD lead, QES project developer, Estimator | Add and edit organizations, contacts, opportunities, programs and capital stacks; move stages; log activities |
 | Trainee | Read everything; log activities |
 | Leadership | Read everything; record go/no-go decisions |
 | Compliance | Read everything |

@@ -54,6 +54,10 @@ model User {
   disclosureLogs       Opportunity[]              @relation("OppDisclosureBy")
   checklistTicks       OpportunityChecklistItem[]
   stageChanges         OpportunityStageChange[]
+  verifiedPrograms     FundingProgram[]           @relation("ProgramVerifiedBy")
+  createdPrograms      FundingProgram[]           @relation("ProgramCreatedBy")
+  createdStackRows     CapitalStackRow[]
+  notifications        Notification[]
 
   // NextAuth (Microsoft 365 sign-in)
   accounts Account[]
@@ -385,6 +389,7 @@ model Opportunity {
   checklist    OpportunityChecklistItem[]
   stageChanges OpportunityStageChange[]
   activities   Activity[]
+  stackRows    CapitalStackRow[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -426,6 +431,121 @@ model OpportunityStageChange {
   updatedAt     DateTime    @updatedAt
 
   @@index([opportunityId, createdAt])
+}
+
+// ───────────────────────── Funding programs and capital stacks (SPEC §4.5, §4.6) — Phase 3 ─────────────────────────
+
+enum ProgramType {
+  GRANT
+  LOAN
+  TAX_CREDIT
+  FORMULA_AID
+  REBATE
+  ELECTIVE_PAY
+}
+
+/// What a program's match percentage is measured against.
+enum MatchBasis {
+  PROJECT_COST // match ≥ pct × total project cost
+  AWARD // match ≥ pct × this program's award
+}
+
+/// One record per program, by state (or Federal). Seeded from data/programs.json; edited in the app.
+model FundingProgram {
+  id                 String       @id @default(cuid())
+  key                String       @unique // stable seed key, e.g. "pa-racp"
+  name               String
+  agency             String?
+  jurisdiction       String // state code or "Federal"
+  programType        ProgramType?
+  eligibleApplicants String? // free text list
+  eligibleUses       String?
+  minAward           Decimal?
+  maxAward           Decimal?
+  matchPct           Decimal? // e.g. 50 for 50%
+  matchBasis         MatchBasis?
+  matchType          String? // cash, in-kind, non-state funds…
+  reimbursement      Boolean? // pays after the owner spends
+  cycle              String? // rolling | annual | other
+  nextDeadline       DateTime?
+  url                String?
+  notes              String?
+  source             String? // where the details came from
+  lastVerifiedAt     DateTime?
+  lastVerifiedById   String?
+  lastVerifiedBy     User?        @relation("ProgramVerifiedBy", fields: [lastVerifiedById], references: [id], onDelete: SetNull)
+
+  stackRows CapitalStackRow[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("ProgramCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([jurisdiction])
+  @@index([nextDeadline])
+}
+
+enum StackStatus {
+  IDEA
+  APPLIED
+  AWARDED
+  DENIED
+  CLOSED
+}
+
+enum OtherSource {
+  BOND
+  NOTE
+  CAPITAL_RESERVE
+  GESA_FINANCING
+  PRIVATE_EQUITY
+  OWNER_CASH
+  OTHER
+}
+
+/// A source in an opportunity's capital stack: a library program or another source.
+model CapitalStackRow {
+  id                   String          @id @default(cuid())
+  opportunityId        String
+  opportunity          Opportunity     @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  programId            String?
+  program              FundingProgram? @relation(fields: [programId], references: [id], onDelete: Restrict)
+  otherSource          OtherSource? // set when programId is empty
+  label                String? // e.g. "2027 GO bond"
+  amount               Decimal?
+  status               StackStatus     @default(IDEA)
+  applicationDate      DateTime?
+  awardDate            DateTime?
+  reimbursementLagDays Int?
+  notes                String?
+  sortOrder            Int             @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([opportunityId, sortOrder])
+  @@index([programId])
+}
+
+/// In-app notifications (deadline alerts). `key` makes each alert fire once per person.
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key       String // e.g. "deadline:<programId>:<deadline>:<opportunityId>:30"
+  kind      String // "deadline"
+  title     String
+  body      String?
+  link      String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([userId, key])
+  @@index([userId, readAt])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────
