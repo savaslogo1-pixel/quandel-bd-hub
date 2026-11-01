@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ActionForm } from "@/components/ActionForm";
 import { CompanyTag, Empty, Fact, Tabs } from "@/components/ui";
 import { CapitalStack } from "../CapitalStack";
+import { Approvals } from "../Approvals";
+import { loadRules, multiPrimeCheck } from "@/lib/rules";
 import { prisma } from "@/lib/db";
 import { fmtDate, money, ymd } from "@/lib/format";
 import { canDecideGoNoGo, canEditOpportunities, canLogActivity } from "@/lib/permissions";
@@ -40,7 +42,7 @@ export default async function OppPage({ params, searchParams }: { params: Promis
       disclosureBy: true,
       checklist: { include: { doneBy: { select: { name: true, email: true } } } },
       stageChanges: { include: { changedBy: { select: { name: true, email: true } } }, orderBy: { createdAt: "desc" } },
-      _count: { select: { stackRows: true } },
+      _count: { select: { stackRows: true, approvalSteps: true } },
     },
   });
   if (!o) notFound();
@@ -52,6 +54,9 @@ export default async function OppPage({ params, searchParams }: { params: Promis
   const route = suggestCompanies({ projectType: o.projectType, deliveryMethod: o.deliveryMethod, nonEnergyScope: o.nonEnergyScope, org: o.org });
   const missing = route.codes.filter((c) => !g.companyCodes.includes(c));
   const who = (u: { name: string | null; email: string } | null) => (u ? u.name ?? u.email : "—");
+  const mp = o.deliveryMethod === "MULTIPLE_PRIME_BID" || o.deliveryMethod === "SINGLE_PRIME_BID" || !o.deliveryMethod
+    ? multiPrimeCheck(await loadRules(), o.org, o.estimatedValue != null ? Number(o.estimatedValue) : null)
+    : null;
 
   return (
     <>
@@ -86,8 +91,10 @@ export default async function OppPage({ params, searchParams }: { params: Promis
         <p className="muted mt-1.5 text-xs">Exit criteria for {stageName(o.stage)}: {STAGES.find((s) => s.n === o.stage)?.exit}</p>
       </section>
 
-      <Tabs base={`/opportunities/${o.id}`} current={tab} tabs={[["overview", "Overview"], ["stack", `Capital stack · ${o._count.stackRows}`]]} />
-      {tab === "stack" ? (
+      <Tabs base={`/opportunities/${o.id}`} current={tab} tabs={[["overview", "Overview"], ["stack", `Capital stack · ${o._count.stackRows}`], ["approvals", `Approvals · ${o._count.approvalSteps}`]]} />
+      {tab === "approvals" ? (
+        <Approvals oppId={o.id} canEdit={canEdit} />
+      ) : tab === "stack" ? (
         <CapitalStack oppId={o.id} orgState={o.org.state} projectCost={o.estimatedValue != null ? Number(o.estimatedValue) : null} canEdit={canEdit} />
       ) : (
 
@@ -103,6 +110,11 @@ export default async function OppPage({ params, searchParams }: { params: Promis
             <Fact k="Weighted value">{money(weightedValue(o))}</Fact>
             <Fact k="Competitors">{o.competitors ?? "—"}</Fact>
             <Fact k="Win themes">{o.winThemes ?? "—"}</Fact>
+            {mp && (
+              <Fact k={`Multiple-prime · ${mp.label}`}>
+                {mp.threshold == null ? <>Threshold <span className="conf">[confirm]</span> in State rules</> : mp.applies == null ? "Add an estimated value to check" : mp.applies ? <span className="chip chip-warn">Likely applies (≥ {money(mp.threshold)})</span> : <>Below {money(mp.threshold)}</>}
+              </Fact>
+            )}
           </section>
 
           {missing.length > 0 && (

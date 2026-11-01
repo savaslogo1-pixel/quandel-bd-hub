@@ -34,3 +34,7 @@ export const canDecideGoNoGo = (r: Role) => GO_NO_GO.includes(r);
 
 /** Edit the funding program library and capital stacks. */
 export const canEditPrograms = (r: Role) => ACCOUNT_EDITORS.includes(r);
+
+/** Edit state rules (thresholds, waiting periods) and mark them verified. */
+const RULE_EDITORS: Role[] = ["ADMIN", "BD_DIRECTOR", "COMPLIANCE"];
+export const canEditRules = (r: Role) => RULE_EDITORS.includes(r);

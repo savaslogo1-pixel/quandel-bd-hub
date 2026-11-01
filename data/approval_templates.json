@@ -1,0 +1,101 @@
+{
+  "source": "SPEC.md \u00a74.7",
+  "notes": "Approval step templates by state. needsMeeting = the step happens at the owner's board meeting. waitRuleKey = a waiting period read from State rules before the next step can happen. Steps without a rule use the scheduler's buffer days (chosen when scheduling). Add a state by adding a key here.",
+  "templates": {
+    "PA": {
+      "title": "Pennsylvania",
+      "steps": [
+        {
+          "label": "Planning commission consistency letter",
+          "body": "County planning commission",
+          "document": "CONSISTENCY_LETTER",
+          "needsMeeting": false
+        },
+        {
+          "label": "Council / board resolution",
+          "body": "Governing body",
+          "document": "RESOLUTION",
+          "needsMeeting": true
+        },
+        {
+          "label": "Match commitment letter",
+          "body": "Governing body / finance",
+          "document": "SUPPORT_LETTER",
+          "needsMeeting": false
+        },
+        {
+          "label": "Legislator support letters",
+          "body": "State legislators",
+          "document": "SUPPORT_LETTER",
+          "needsMeeting": false
+        },
+        {
+          "label": "MOUs with partners",
+          "body": "Partners",
+          "document": "MOU_IMA",
+          "needsMeeting": false
+        },
+        {
+          "label": "LGUDA debt ordinance",
+          "body": "Governing body",
+          "document": "BOND_ORDINANCE_RESOLUTION",
+          "needsMeeting": true
+        },
+        {
+          "label": "Contract award",
+          "body": "Governing body",
+          "document": "CONTRACT_AWARD",
+          "needsMeeting": true
+        }
+      ]
+    },
+    "NY": {
+      "title": "New York",
+      "steps": [
+        {
+          "label": "SEQR determination",
+          "body": "Lead agency",
+          "document": "SEQR_DETERMINATION",
+          "needsMeeting": true
+        },
+        {
+          "label": "Authorizing resolution",
+          "body": "Governing body",
+          "document": "RESOLUTION",
+          "needsMeeting": true
+        },
+        {
+          "label": "REDC / legislator support letters",
+          "body": "REDC, legislators",
+          "document": "SUPPORT_LETTER",
+          "needsMeeting": false
+        },
+        {
+          "label": "Inter-municipal agreement (IMA)",
+          "body": "Governing bodies",
+          "document": "MOU_IMA",
+          "needsMeeting": true
+        },
+        {
+          "label": "Bond resolution (two-thirds vote)",
+          "body": "Governing body",
+          "document": "BOND_ORDINANCE_RESOLUTION",
+          "needsMeeting": true,
+          "waitRuleKey": "NY.permissive_referendum_days"
+        },
+        {
+          "label": "Permissive referendum period ends",
+          "body": "Clerk",
+          "document": "OTHER",
+          "needsMeeting": false
+        },
+        {
+          "label": "Contract award",
+          "body": "Governing body",
+          "document": "CONTRACT_AWARD",
+          "needsMeeting": true
+        }
+      ]
+    }
+  }
+}

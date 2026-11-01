@@ -17,9 +17,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     ["/pipeline", "Pipeline"],
     ["/organizations", "Organizations"],
     ["/programs", "Programs"],
+    ["/calendar", "Calendar"],
     ["/contacts", "Contacts"],
     ["/activities", "Activities"],
   ];
+  links.push(["/rules", "State rules"]);
   if (isAdmin(user.role)) links.push(["/admin", "Admin"]);
   return (
     <>

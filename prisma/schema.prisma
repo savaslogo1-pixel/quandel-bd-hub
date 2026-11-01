@@ -58,6 +58,8 @@ model User {
   createdPrograms      FundingProgram[]           @relation("ProgramCreatedBy")
   createdStackRows     CapitalStackRow[]
   notifications        Notification[]
+  verifiedRules        StateRule[]                @relation("RuleVerifiedBy")
+  createdApprovalSteps ApprovalStep[]
 
   // NextAuth (Microsoft 365 sign-in)
   accounts Account[]
@@ -240,10 +242,11 @@ model Contact {
   activities        Activity[] @relation("ActivityContacts")
   advisedActivities Activity[] @relation("ActivityFinancialAdvisor")
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  createdById String?
-  createdBy   User?    @relation("ContactCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  createdById   String?
+  createdBy     User?          @relation("ContactCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  approvalSteps ApprovalStep[]
 
   @@index([orgId])
   @@index([nextTouch])
@@ -386,10 +389,16 @@ model Opportunity {
   disclosureBy         User?               @relation("OppDisclosureBy", fields: [disclosureById], references: [id], onDelete: SetNull)
   aeNoConflictCertAt   DateTime? // NY schools: A/E of record no-conflict certification (8 NYCRR § 155.20)
 
-  checklist    OpportunityChecklistItem[]
-  stageChanges OpportunityStageChange[]
-  activities   Activity[]
-  stackRows    CapitalStackRow[]
+  checklist     OpportunityChecklistItem[]
+  stageChanges  OpportunityStageChange[]
+  activities    Activity[]
+  stackRows     CapitalStackRow[]
+  approvalSteps ApprovalStep[]
+
+  /// Approvals timeline (Phase 4): the date the last step must meet, and the template used
+  approvalsDeadline   DateTime?
+  approvalsBufferDays Int?
+  approvalsTemplate   String?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -546,6 +555,77 @@ model Notification {
 
   @@unique([userId, key])
   @@index([userId, readAt])
+}
+
+// ───────────────────────── State rules and approvals (SPEC §4.7, §7) — Phase 4 ─────────────────────────
+
+/// A state-specific rule stored as data (seeded from data/state_rules.json; edited in the app).
+/// The app reads rules by `key`; never hard-code a threshold.
+model StateRule {
+  id               String    @id @default(cuid())
+  key              String    @unique // e.g. "NY.permissive_referendum_days"
+  jurisdiction     String // state code, "Federal" or "HUD"
+  topic            String // Bidding, Meetings, Debt, Energy, Records, Ethics, Lobbying, Procurement…
+  text             String
+  value            Decimal? // null = [confirm]
+  unit             String?
+  source           String?
+  lastVerifiedAt   DateTime?
+  lastVerifiedById String?
+  lastVerifiedBy   User?     @relation("RuleVerifiedBy", fields: [lastVerifiedById], references: [id], onDelete: SetNull)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  createdById      String?
+
+  @@index([jurisdiction, topic])
+}
+
+enum ApprovalDocument {
+  RESOLUTION
+  CONSISTENCY_LETTER
+  SUPPORT_LETTER
+  SEQR_DETERMINATION
+  BOND_ORDINANCE_RESOLUTION
+  MOU_IMA
+  CONTRACT_AWARD
+  OTHER
+}
+
+enum ApprovalStatus {
+  PLANNED
+  SCHEDULED
+  DONE
+}
+
+/// One step on an opportunity's approvals timeline (SPEC §4.7).
+model ApprovalStep {
+  id             String           @id @default(cuid())
+  opportunityId  String
+  opportunity    Opportunity      @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  sortOrder      Int
+  label          String
+  body           String? // who acts: governing body, planning commission, legislators…
+  document       ApprovalDocument @default(OTHER)
+  needsMeeting   Boolean          @default(false) // lands on the owner's board meeting calendar
+  /// Days that must pass after this step before the next one (e.g. a referendum period)
+  waitAfterDays  Int?
+  /// When set, waitAfterDays is read from this StateRule at scheduling time
+  waitRuleKey    String?
+  meetingDate    DateTime? // the step's date (a board meeting when needsMeeting)
+  agendaDeadline DateTime?
+  dateSetBy      String? // "scheduler" or "manual"
+  ownerContactId String?
+  ownerContact   Contact?         @relation(fields: [ownerContactId], references: [id], onDelete: SetNull)
+  status         ApprovalStatus   @default(PLANNED)
+  notes          String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([opportunityId, sortOrder])
+  @@index([meetingDate])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

@@ -1,5 +1,29 @@
 # Changelog
 
+## Phase 4 — 2026-11-01
+- State rules engine (SPEC §7): 27 rules seeded from `data/state_rules.json` into a
+  StateRule table (key, jurisdiction, topic, value, unit, source, last verified). Seeding
+  never overwrites rules already in the database. State rules page grouped by state with
+  yellow badges for unverified or 12-month-old rules; compliance, BD directors and admins
+  edit values and mark them verified (a source is required to verify) or add rules for new states.
+- Multiple-prime check on opportunities: NY Wicks threshold by region (NYC, Nassau/Suffolk/
+  Westchester, or upstate, from the owner's county) and PA Separations Act (value [confirm]).
+- Approvals timeline (SPEC §4.7) as an Approvals tab on each opportunity: steps with body,
+  document, board-meeting flag, waiting period (fixed days or a state rule), date, agenda
+  deadline, owner contact, status and notes. Load the PA or NY template from
+  `data/approval_templates.json`; add, edit, reorder, delete steps; mark on the agenda / done.
+- Backward scheduler: pick the deadline and buffer days; each step gets the latest date that
+  still meets the deadline, board steps land on the owner's regular meetings, agenda
+  deadlines come from the owner's agenda lead time, and the NY bond resolution waits the
+  permissive-referendum period from State rules. Done steps keep their dates. Warnings for a
+  missing meeting pattern, steps that would fall in the past, or a rule with no value.
+  The spec's test case passes: a July 31, 2027 deadline produces dated NY steps
+  (`tests/scheduler.test.ts`).
+- Calendar (SPEC §6): grant deadlines, bid and key dates, board meetings (Tier A and
+  organizations with open opportunities), approval steps with agenda deadlines, and next
+  steps in one list, colored by type; filter by type, company, mine, 3/6/12 months.
+  Training sessions join in Phase 6.
+
 ## Phase 3 — 2026-11-01
 - Funding program library (SPEC §4.5): 52 PA, NY and Federal programs seeded by name from
   `data/programs.json`. Every other field is blank and shows [confirm] until someone fills

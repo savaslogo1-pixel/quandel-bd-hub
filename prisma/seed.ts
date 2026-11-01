@@ -1,9 +1,10 @@
-// Seeds reference data only: the five companies + parent, picklists, and the funding program library.
+// Seeds reference data only: the five companies + parent, picklists, the funding program library and state rules.
 // Source files live in /data so non-developers can edit them. Never seeds people or records.
 import { PrismaClient } from "@prisma/client";
 import companies from "../data/companies.json";
 import picklists from "../data/picklists.json";
 import programs from "../data/programs.json";
+import stateRules from "../data/state_rules.json";
 
 const prisma = new PrismaClient();
 
@@ -33,10 +34,23 @@ async function main() {
       },
     });
   }
+  // State rules: create missing ones only (edits and verification in the app are kept).
+  for (const r of stateRules.rules) {
+    await prisma.stateRule.upsert({
+      where: { key: r.key },
+      update: {},
+      create: {
+        key: r.key, jurisdiction: r.jurisdiction, topic: r.topic, text: r.text, unit: r.unit, source: r.source,
+        value: r.value == null ? null : String(r.value),
+        lastVerifiedAt: r.last_verified ? new Date(r.last_verified + "T00:00:00Z") : null,
+      },
+    });
+  }
   const counts = {
     companies: await prisma.company.count(),
     picklistValues: await prisma.picklistValue.count(),
     programs: await prisma.fundingProgram.count(),
+    stateRules: await prisma.stateRule.count(),
   };
   console.log("Seeded", counts);
 }

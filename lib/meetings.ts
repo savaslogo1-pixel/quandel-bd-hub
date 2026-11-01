@@ -48,3 +48,9 @@ export function meetingsBetween(p: MeetingPattern, from: Date, to: Date): Date[]
 export function addDays(d: Date, n: number): Date {
   return new Date(d.getTime() + n * 86_400_000);
 }
+
+/** The latest meeting on or before `date` (searches back about 13 months). */
+export function latestMeetingOnOrBefore(p: MeetingPattern, date: Date): Date | null {
+  const list = meetingsBetween(p, addDays(date, -400), date);
+  return list.length ? list[list.length - 1] : null;
+}

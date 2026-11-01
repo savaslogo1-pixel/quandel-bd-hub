@@ -45,6 +45,13 @@ Stages, delivery-method checklists and their labels live in `data/pipeline.json`
 Stage gating (what must be true before Pursuit and beyond) is in `lib/pipeline.ts`;
 cross-sell routing is in `lib/routing.ts`.
 
+## State rules and approvals
+
+`data/state_rules.json` seeds the State rules table (values the app reads by key; never
+hard-coded). `data/approval_templates.json` holds the approval-step templates per state.
+Add a state by adding its rules on the State rules page and its template to the JSON file.
+The backward scheduler is in `lib/scheduler.ts` and is covered by `tests/scheduler.test.ts`.
+
 ## Funding programs
 
 `data/programs.json` seeds the library. Running `npm run db:seed` adds programs that aren't
@@ -65,10 +72,10 @@ npm test
 | Role | Can |
 |---|---|
 | Admin | Everything, plus users, roles, company tags and dropdown lists |
-| BD director / Enterprise BD | Add and edit everything; record go/no-go; delete records |
+| BD director / Enterprise BD | Add and edit everything; record go/no-go; edit state rules; delete records |
 | BD lead, QES project developer, Estimator | Add and edit organizations, contacts, opportunities, programs and capital stacks; move stages; log activities |
 | Trainee | Read everything; log activities |
 | Leadership | Read everything; record go/no-go decisions |
-| Compliance | Read everything |
+| Compliance | Read everything; edit and verify state rules |
 
 Anyone can edit or delete an activity they logged.
