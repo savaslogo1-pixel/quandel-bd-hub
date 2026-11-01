@@ -39,14 +39,21 @@ Development sign-in is always off in production builds.
 Change `provider = "sqlite"` to `"postgresql"` in `prisma/schema.prisma`, point
 `DATABASE_URL` at the database, and run `npx prisma migrate deploy && npm run db:seed`.
 
-## Roles (Phase 1)
+## Pipeline rules
+
+Stages, delivery-method checklists and their labels live in `data/pipeline.json`.
+Stage gating (what must be true before Pursuit and beyond) is in `lib/pipeline.ts`;
+cross-sell routing is in `lib/routing.ts`.
+
+## Roles
 
 | Role | Can |
 |---|---|
 | Admin | Everything, plus users, roles, company tags and dropdown lists |
-| BD director / Enterprise BD | Add and edit everything; delete records |
-| BD lead, QES project developer, Estimator | Add and edit organizations and contacts; log activities |
+| BD director / Enterprise BD | Add and edit everything; record go/no-go; delete records |
+| BD lead, QES project developer, Estimator | Add and edit organizations, contacts and opportunities; move stages; log activities |
 | Trainee | Read everything; log activities |
-| Leadership, Compliance | Read everything |
+| Leadership | Read everything; record go/no-go decisions |
+| Compliance | Read everything |
 
 Anyone can edit or delete an activity they logged.

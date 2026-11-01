@@ -1,0 +1,239 @@
+{
+  "source": "SPEC.md \u00a75",
+  "last_verified": "",
+  "notes": "Stages and delivery-method checklists. Item keys are stored on ticked items; change labels freely, but keep keys stable.",
+  "stages": [
+    {
+      "n": 1,
+      "name": "Target",
+      "exit": "Org profiled; tier set"
+    },
+    {
+      "n": 2,
+      "name": "Engaged",
+      "exit": "First meeting held; decision map started"
+    },
+    {
+      "n": 3,
+      "name": "Need identified",
+      "exit": "Project and rough budget known; capital plan or survey reviewed"
+    },
+    {
+      "n": 4,
+      "name": "Funding path",
+      "exit": "Capital stack drafted; programs matched; deadlines in calendar"
+    },
+    {
+      "n": 5,
+      "name": "Pre-procurement",
+      "exit": "Owner approvals scheduled; procurement method known; go/no-go decided"
+    },
+    {
+      "n": 6,
+      "name": "Pursuit",
+      "exit": "RFQ/RFP/bid released; team and proposal underway"
+    },
+    {
+      "n": 7,
+      "name": "Submitted",
+      "exit": "Proposal or bid in"
+    },
+    {
+      "n": 8,
+      "name": "Shortlist / interview",
+      "exit": "Interview held"
+    },
+    {
+      "n": 9,
+      "name": "Won / Lost / No-bid",
+      "exit": "Board vote recorded; reason logged"
+    },
+    {
+      "n": 10,
+      "name": "Contracted",
+      "exit": "Moves to the Projects table"
+    }
+  ],
+  "deliveryMethods": {
+    "MULTIPLE_PRIME_BID": {
+      "label": "Multiple-prime public bid (PA Separations Act / NY Wicks)",
+      "checklist": "public_bid"
+    },
+    "SINGLE_PRIME_BID": {
+      "label": "Single-prime bid",
+      "checklist": "public_bid"
+    },
+    "CM_AGENCY": {
+      "label": "CM agency",
+      "checklist": "cm_agency"
+    },
+    "CM_AT_RISK": {
+      "label": "CM at risk / GMP",
+      "checklist": "cm_at_risk"
+    },
+    "DESIGN_BUILD": {
+      "label": "Design-build",
+      "checklist": null
+    },
+    "GESA_EPC": {
+      "label": "GESA / EPC",
+      "checklist": "gesa_epc"
+    },
+    "HUD_EPC": {
+      "label": "HUD EPC",
+      "checklist": "hud_epc"
+    },
+    "P3_BUNDLE": {
+      "label": "P3 bundle",
+      "checklist": "p3_bundle"
+    },
+    "COOPERATIVE": {
+      "label": "Cooperative purchase (COSTARS, etc.)",
+      "checklist": null
+    },
+    "NEGOTIATED_PRIVATE": {
+      "label": "Negotiated private",
+      "checklist": null
+    }
+  },
+  "checklists": {
+    "public_bid": {
+      "title": "Public bid (multiple prime / Wicks)",
+      "items": [
+        {
+          "key": "prime_contracts",
+          "label": "Prime contracts identified"
+        },
+        {
+          "key": "plan_room",
+          "label": "Plan room access"
+        },
+        {
+          "key": "pre_bid",
+          "label": "Pre-bid"
+        },
+        {
+          "key": "bonding",
+          "label": "Bonding confirmed"
+        },
+        {
+          "key": "bid_tab",
+          "label": "Bid tab recorded"
+        }
+      ]
+    },
+    "gesa_epc": {
+      "title": "GESA / EPC (QES)",
+      "items": [
+        {
+          "key": "benchmark",
+          "label": "Benchmark done"
+        },
+        {
+          "key": "board_education",
+          "label": "Board education presentation"
+        },
+        {
+          "key": "owner_rfq",
+          "label": "RFQ/RFP issued by owner (not us)"
+        },
+        {
+          "key": "audit_agreement",
+          "label": "Audit agreement and fee"
+        },
+        {
+          "key": "iga",
+          "label": "Investment-grade audit"
+        },
+        {
+          "key": "contract_notice",
+          "label": "Contract and public notice"
+        },
+        {
+          "key": "state_review",
+          "label": "State review (NY SED for schools)"
+        }
+      ]
+    },
+    "cm_agency": {
+      "title": "CM agency",
+      "items": [
+        {
+          "key": "rfq_shortlist",
+          "label": "RFQ shortlist"
+        },
+        {
+          "key": "fee_proposal",
+          "label": "Fee proposal"
+        },
+        {
+          "key": "interview",
+          "label": "Interview"
+        }
+      ]
+    },
+    "cm_at_risk": {
+      "title": "CM at risk",
+      "items": [
+        {
+          "key": "rfq_shortlist",
+          "label": "RFQ shortlist"
+        },
+        {
+          "key": "fee_proposal",
+          "label": "Fee proposal"
+        },
+        {
+          "key": "interview",
+          "label": "Interview"
+        },
+        {
+          "key": "gmp",
+          "label": "GMP"
+        }
+      ]
+    },
+    "p3_bundle": {
+      "title": "P3 bundle",
+      "items": [
+        {
+          "key": "inventory",
+          "label": "Inventory"
+        },
+        {
+          "key": "bundle_concept",
+          "label": "Bundle concept"
+        },
+        {
+          "key": "owner_resolution",
+          "label": "Owner resolution"
+        },
+        {
+          "key": "legal_path",
+          "label": "Legal path confirmed"
+        },
+        {
+          "key": "procurement",
+          "label": "Procurement"
+        }
+      ]
+    },
+    "hud_epc": {
+      "title": "HUD EPC",
+      "items": [
+        {
+          "key": "capital_fund_plan",
+          "label": "Capital Fund plan reviewed"
+        },
+        {
+          "key": "hud_rfp_approval",
+          "label": "HUD RFP approval"
+        },
+        {
+          "key": "hud_contract_approval",
+          "label": "HUD contract approval (plan up to 60 business days)"
+        }
+      ]
+    }
+  }
+}

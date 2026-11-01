@@ -10,6 +10,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const user = await requireUser();
   const links: [string, string][] = [
     ["/", "Home"],
+    ["/pipeline", "Pipeline"],
     ["/organizations", "Organizations"],
     ["/contacts", "Contacts"],
     ["/activities", "Activities"],

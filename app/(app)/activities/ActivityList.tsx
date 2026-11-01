@@ -15,6 +15,7 @@ export async function ActivityList({ where, showOrg = true, empty, take = 200 }:
       companies: { select: { code: true }, orderBy: { sortOrder: "asc" } },
       createdBy: { select: { name: true, email: true } },
       financialAdvisorContact: { select: { id: true, name: true } },
+      opportunity: { select: { id: true, name: true } },
     },
     orderBy: { occurredAt: "desc" },
     take,
@@ -30,6 +31,7 @@ export async function ActivityList({ where, showOrg = true, empty, take = 200 }:
               <Link className="font-bold" href={`/activities/${a.id}`}>{a.type[0].toUpperCase() + a.type.slice(1)}</Link>
               {a.contacts.length > 0 && <span>with {a.contacts.map((c, i) => <span key={c.id}>{i > 0 && ", "}<Link href={`/contacts/${c.id}`}>{c.name}</Link></span>)}</span>}
               {showOrg && <span className="muted">· <Link href={`/organizations/${a.org.id}`}>{a.org.name}</Link></span>}
+              {a.opportunity && <span className="muted">· re <Link href={`/opportunities/${a.opportunity.id}`}>{a.opportunity.name}</Link></span>}
               {a.companies.map((c) => <CompanyTag key={c.code} code={c.code} />)}
               {a.financingDiscussed && (
                 <span className={`chip ${a.financialAdvisorContact ? "chip-warn" : "chip-bad"}`} title="Municipal-advisor flag">

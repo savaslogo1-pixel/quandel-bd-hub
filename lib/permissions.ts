@@ -25,3 +25,9 @@ export const canLogActivity = (r: Role) => ACTIVITY_LOGGERS.includes(r);
 export const canDelete = (r: Role) => DELETERS.includes(r);
 /** Manage users, roles, company tags and picklists. */
 export const isAdmin = (r: Role) => r === "ADMIN";
+
+/** Add and edit opportunities, tick checklists, move stages, log compliance confirmations. */
+export const canEditOpportunities = (r: Role) => ACCOUNT_EDITORS.includes(r);
+/** Record go/no-go decisions (SPEC §1: leadership approves go/no-go). */
+const GO_NO_GO: Role[] = ["ADMIN", "BD_DIRECTOR", "LEADERSHIP"];
+export const canDecideGoNoGo = (r: Role) => GO_NO_GO.includes(r);

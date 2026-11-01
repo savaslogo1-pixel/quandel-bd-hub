@@ -44,9 +44,16 @@ model User {
 
   ownedOrganizations Organization[] @relation("OrgRelationshipOwner")
 
-  createdOrganizations Organization[] @relation("OrgCreatedBy")
-  createdContacts      Contact[]      @relation("ContactCreatedBy")
-  createdActivities    Activity[]     @relation("ActivityCreatedBy")
+  createdOrganizations Organization[]             @relation("OrgCreatedBy")
+  createdContacts      Contact[]                  @relation("ContactCreatedBy")
+  createdActivities    Activity[]                 @relation("ActivityCreatedBy")
+  createdOpportunities Opportunity[]              @relation("OppCreatedBy")
+  ownedOpportunities   Opportunity[]              @relation("OppOwner")
+  goNoGoApprovals      Opportunity[]              @relation("OppGoNoGoApprover")
+  procIndependenceLogs Opportunity[]              @relation("OppProcIndependenceBy")
+  disclosureLogs       Opportunity[]              @relation("OppDisclosureBy")
+  checklistTicks       OpportunityChecklistItem[]
+  stageChanges         OpportunityStageChange[]
 
   // NextAuth (Microsoft 365 sign-in)
   accounts Account[]
@@ -67,9 +74,11 @@ model Company {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  users         User[]         @relation("UserCompanies")
-  organizations Organization[] @relation("OrgCompanies")
-  activities    Activity[]     @relation("ActivityCompanies")
+  users                User[]         @relation("UserCompanies")
+  organizations        Organization[] @relation("OrgCompanies")
+  activities           Activity[]     @relation("ActivityCompanies")
+  leadOpportunities    Opportunity[]  @relation("OppLead")
+  supportOpportunities Opportunity[]  @relation("OppSupport")
 }
 
 /// Admin-editable picklists (SPEC §6 Admin). Lists used in Phase 1:
@@ -175,8 +184,9 @@ model Organization {
   status              OrgStatus @default(TARGET)
   source              String? // e.g., "GESA eligible owners workbook"
 
-  contacts   Contact[]
-  activities Activity[]
+  contacts      Contact[]
+  activities    Activity[]
+  opportunities Opportunity[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -246,8 +256,8 @@ model Activity {
   contacts   Contact[]    @relation("ActivityContacts")
   companies  Company[]    @relation("ActivityCompanies") // company tags
 
-  /// Opportunity link arrives in Phase 2 (relation added with the Opportunity model)
   opportunityId String?
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
 
   notes        String?
   nextStep     String?
@@ -273,6 +283,149 @@ model Activity {
   @@index([orgId, occurredAt])
   @@index([nextStepDate])
   @@index([createdById])
+  @@index([opportunityId])
+}
+
+// ───────────────────────── Opportunities (SPEC §4.4, §5, §9) — Phase 2 ─────────────────────────
+
+/// SPEC §4.4 delivery methods. Checklists per method live in data/pipeline.json.
+enum DeliveryMethod {
+  MULTIPLE_PRIME_BID // PA Separations Act / NY Wicks
+  SINGLE_PRIME_BID
+  CM_AGENCY
+  CM_AT_RISK // GMP
+  DESIGN_BUILD
+  GESA_EPC
+  HUD_EPC
+  P3_BUNDLE
+  COOPERATIVE // COSTARS, etc.
+  NEGOTIATED_PRIVATE
+}
+
+enum GoNoGo {
+  GO
+  NO_GO
+  PENDING
+}
+
+enum Outcome {
+  WON
+  LOST
+  NO_BID
+}
+
+/// SPEC §9: the owner's decision after the related-company disclosure.
+enum DisclosureDecision {
+  ONE_TEAM_ACCEPTED
+  SEPARATE_PROCUREMENT_REQUIRED
+  PENDING
+}
+
+model Opportunity {
+  id    String       @id @default(cuid())
+  name  String
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  // Company tags: one lead company plus support companies (a joint pursuit when any support)
+  leadCompanyId    String
+  leadCompany      Company   @relation("OppLead", fields: [leadCompanyId], references: [id])
+  supportCompanies Company[] @relation("OppSupport")
+
+  projectType    String? // PicklistValue(list = "project_type").value
+  deliveryMethod DeliveryMethod?
+  /// Energy project that also needs roof, ADA or other non-energy work (routing: QES + QCG)
+  nonEnergyScope Boolean         @default(false)
+
+  estimatedValue    Decimal?
+  quandelScopeValue Decimal?
+  probability       Int? // 0–100; weighted value = (scope or estimated) × probability, computed
+
+  ownerId String? // pursuit owner
+  owner   User?   @relation("OppOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  stage          Int      @default(1) // 1–10, see data/pipeline.json
+  stageEnteredAt DateTime @default(now())
+
+  goNoGo           GoNoGo?
+  goNoGoReason     String?
+  goNoGoAt         DateTime?
+  goNoGoApproverId String?
+  goNoGoApprover   User?     @relation("OppGoNoGoApprover", fields: [goNoGoApproverId], references: [id], onDelete: SetNull)
+
+  outcome    Outcome?
+  lossReason String? // required for Lost / No-bid
+
+  // Key dates
+  rfqIssueDate              DateTime?
+  preBidDate                DateTime?
+  dueDate                   DateTime?
+  interviewDate             DateTime?
+  boardVoteDate             DateTime?
+  awardDate                 DateTime?
+  constructionStartDate     DateTime?
+  substantialCompletionDate DateTime?
+
+  competitors String? // free text until the Competitors table (Phase 7)
+  winThemes   String?
+
+  // Compliance (SPEC §4.14, §9) — required, not optional
+  /// "Did we help write specs or scoring?" null = not answered; must be false to pursue
+  helpedWriteSpecs     Boolean?
+  procIndependenceAt   DateTime? // QES did not write the owner's GESA/EPC RFP or scoring (stage 5)
+  procIndependenceById String?
+  procIndependenceBy   User?               @relation("OppProcIndependenceBy", fields: [procIndependenceById], references: [id], onDelete: SetNull)
+  disclosureDecision   DisclosureDecision? // QES + construction company on one owner
+  disclosureNote       String?
+  disclosureAt         DateTime?
+  disclosureById       String?
+  disclosureBy         User?               @relation("OppDisclosureBy", fields: [disclosureById], references: [id], onDelete: SetNull)
+  aeNoConflictCertAt   DateTime? // NY schools: A/E of record no-conflict certification (8 NYCRR § 155.20)
+
+  checklist    OpportunityChecklistItem[]
+  stageChanges OpportunityStageChange[]
+  activities   Activity[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("OppCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([stage])
+  @@index([orgId])
+  @@index([leadCompanyId])
+  @@index([ownerId])
+}
+
+/// A ticked item on the delivery-method checklist (items defined in data/pipeline.json).
+model OpportunityChecklistItem {
+  id            String      @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  itemKey       String
+  doneAt        DateTime    @default(now())
+  doneById      String?
+  doneBy        User?       @relation(fields: [doneById], references: [id], onDelete: SetNull)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([opportunityId, itemKey])
+}
+
+/// Stage history: every move, who made it, when.
+model OpportunityStageChange {
+  id            String      @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  fromStage     Int?
+  toStage       Int
+  note          String?
+  changedById   String?
+  changedBy     User?       @relation(fields: [changedById], references: [id], onDelete: SetNull)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([opportunityId, createdAt])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

@@ -9,19 +9,22 @@ import { companies as loadCompanies, picklist } from "@/lib/picklists";
 
 type Full = Activity & { contacts: Contact[]; companies: Company[] };
 
-export async function ActivityForm({ action, orgId, activity, defaultContactId, defaultCompanyIds }: { action: (s: FormState, fd: FormData) => Promise<FormState>; orgId: string; activity?: Full; defaultContactId?: string; defaultCompanyIds: string[] }) {
-  const [types, cos, contacts, advisors] = await Promise.all([
+export async function ActivityForm({ action, orgId, activity, defaultContactId, defaultCompanyIds, defaultOppId, fromOpp }: { action: (s: FormState, fd: FormData) => Promise<FormState>; orgId: string; activity?: Full; defaultContactId?: string; defaultCompanyIds: string[]; defaultOppId?: string; fromOpp?: boolean }) {
+  const [types, cos, contacts, advisors, opps] = await Promise.all([
     picklist(PICKLISTS.activityType),
     loadCompanies(),
     prisma.contact.findMany({ where: { orgId }, orderBy: { name: "asc" } }),
     prisma.contact.findMany({ where: { function: "financial advisor" }, include: { org: { select: { name: true } } }, orderBy: { name: "asc" } }),
+    prisma.opportunity.findMany({ where: { orgId }, select: { id: true, name: true }, orderBy: { name: "asc" } }),
   ]);
   const a = activity;
   const today = new Date().toISOString().slice(0, 10);
   return (
     <ActionForm action={action} submitLabel={a ? "Save changes" : "Log activity"}>
+      {fromOpp && <input type="hidden" name="from" value="opp" />}
       <SelectField name="type" label="Type" required options={types} defaultValue={a?.type ?? "call"} blank={null} />
       <TextField name="occurredAt" label="Date" type="date" required defaultValue={a ? ymd(a.occurredAt) : today} />
+      <SelectField name="opportunityId" label="Opportunity" hint={opps.length ? undefined : "none at this organization yet"} options={opps.map((x) => [x.id, x.name])} defaultValue={a ? a.opportunityId : defaultOppId} />
       <CheckGroup name="companies" label="Company" hint="which Quandel company this touch was for" options={cos.map((c) => [c.id, c.code])} selected={a ? a.companies.map((c) => c.id) : defaultCompanyIds} />
       <CheckGroup
         name="contacts"

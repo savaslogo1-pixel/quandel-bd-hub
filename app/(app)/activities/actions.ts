@@ -29,8 +29,12 @@ async function parse(fd: FormData, orgId: string) {
   if (financingDiscussed && !faId) fe["Financial advisor"] = "Financing was discussed: link the owner's financial advisor. If they aren't in the CRM yet, add them as a contact with function \"financial advisor\".";
   if (faId && !(await prisma.contact.findUnique({ where: { id: faId }, select: { id: true } }))) fe["Financial advisor"] = "Contact not found";
 
+  const oppId = str(fd, "opportunityId");
+  if (oppId && !(await prisma.opportunity.findFirst({ where: { id: oppId, orgId }, select: { id: true } }))) fe.Opportunity = "Pick an opportunity at this organization";
+
   return {
     fe,
+    oppId,
     contactIds: okContacts.map((c) => c.id),
     companyIds,
     faId: financingDiscussed ? faId : null,
@@ -53,7 +57,7 @@ export async function createActivity(orgId: string, _: FormState, fd: FormData):
   const user = await requireUser();
   if (!canLogActivity(user.role)) return { error: "Your role can't log activities." };
   if (!(await prisma.organization.findUnique({ where: { id: orgId }, select: { id: true } }))) return { error: "Organization not found." };
-  const { fe, data, contactIds, companyIds, faId } = await parse(fd, orgId);
+  const { fe, data, contactIds, companyIds, faId, oppId } = await parse(fd, orgId);
   if (Object.keys(fe).length) return { fieldErrors: fe };
   await prisma.activity.create({
     data: {
@@ -62,6 +66,7 @@ export async function createActivity(orgId: string, _: FormState, fd: FormData):
       contacts: { connect: contactIds.map((id) => ({ id })) },
       companies: { connect: companyIds.map((id) => ({ id })) },
       financialAdvisorContact: faId ? { connect: { id: faId } } : undefined,
+      opportunity: oppId ? { connect: { id: oppId } } : undefined,
       createdBy: { connect: { id: user.id } },
     },
   });
@@ -69,7 +74,8 @@ export async function createActivity(orgId: string, _: FormState, fd: FormData):
   revalidatePath(`/organizations/${orgId}`);
   revalidatePath("/activities");
   revalidatePath("/");
-  redirect(`/organizations/${orgId}?tab=activities`);
+  if (oppId) revalidatePath(`/opportunities/${oppId}`);
+  redirect(oppId && fd.get("from") === "opp" ? `/opportunities/${oppId}` : `/organizations/${orgId}?tab=activities`);
 }
 
 function canChange(user: CurrentUser, createdById: string | null) {
@@ -81,7 +87,7 @@ export async function updateActivity(id: string, _: FormState, fd: FormData): Pr
   const a = await prisma.activity.findUnique({ where: { id } });
   if (!a) return { error: "Activity not found." };
   if (!canChange(user, a.createdById)) return { error: "Only the person who logged this activity (or an admin or BD director) can edit it." };
-  const { fe, data, contactIds, companyIds, faId } = await parse(fd, a.orgId);
+  const { fe, data, contactIds, companyIds, faId, oppId } = await parse(fd, a.orgId);
   if (Object.keys(fe).length) return { fieldErrors: fe };
   await prisma.activity.update({
     where: { id },
@@ -90,6 +96,7 @@ export async function updateActivity(id: string, _: FormState, fd: FormData): Pr
       contacts: { set: contactIds.map((i) => ({ id: i })) },
       companies: { set: companyIds.map((i) => ({ id: i })) },
       financialAdvisorContact: faId ? { connect: { id: faId } } : { disconnect: true },
+      opportunity: oppId ? { connect: { id: oppId } } : { disconnect: true },
     },
   });
   await touchContacts(contactIds, data.occurredAt);

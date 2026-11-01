@@ -28,9 +28,10 @@ export default async function Home() {
       prisma.organization.count({ where: { relationshipOwnerId: user.id, tier: "A" } }),
       prisma.activity.count({ where: { createdById: user.id, occurredAt: { gte: new Date(today.getTime() - 30 * 86_400_000) } } }),
       prisma.activity.count({ where: { financingDiscussed: true, financialAdvisorContactId: null } }),
+      prisma.opportunity.count({ where: { ownerId: user.id, stage: { lt: 9 } } }),
     ]),
   ]);
-  const [owned, tierA, last30, maFlags] = counts;
+  const [owned, tierA, last30, maFlags, myOpps] = counts;
   const first = (user.name ?? user.email).split(/[ @]/)[0];
   const h = new Date().getHours();
   return (
@@ -45,7 +46,8 @@ export default async function Home() {
           {canEditAccounts(user.role) && <Link className="btn" href="/organizations/new">Add organization</Link>}
         </div>
       </div>
-      <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-5">
+        <Stat href="/pipeline?mine=1" n={myOpps} label="My open pursuits" />
         <Stat href="/organizations?mine=1" n={owned} label="Organizations I own" />
         <Stat href="/organizations?mine=1&tier=A" n={tierA} label="Tier A I own" />
         <Stat href="/activities?mine=1" n={last30} label="My activities, last 30 days" />

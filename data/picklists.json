@@ -1,5 +1,5 @@
 {
-  "source": "SPEC.md \u00a74.1, \u00a74.2, \u00a74.9",
+  "source": "SPEC.md \u00a74.1, \u00a74.2, \u00a74.4, \u00a74.9",
   "last_verified": "",
   "lists": {
     "org_type": [
@@ -61,6 +61,18 @@
       "in person",
       "text",
       "LinkedIn"
+    ],
+    "project_type": [
+      "new building",
+      "renovation",
+      "addition",
+      "energy",
+      "bridge",
+      "water/wastewater",
+      "road",
+      "site / industrial",
+      "housing",
+      "other"
     ]
   },
   "notes": "preferred_channel values are a starting set (the spec names the field but not the values); edit freely."

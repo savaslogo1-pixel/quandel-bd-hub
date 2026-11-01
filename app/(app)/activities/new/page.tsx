@@ -9,8 +9,8 @@ import { ActivityForm } from "../ActivityForm";
 
 export const metadata = { title: "Log activity" };
 
-export default async function NewActivityPage({ searchParams }: { searchParams: Promise<{ org?: string; contact?: string }> }) {
-  const { org, contact } = await searchParams;
+export default async function NewActivityPage({ searchParams }: { searchParams: Promise<{ org?: string; contact?: string; opp?: string }> }) {
+  const { org, contact, opp } = await searchParams;
   const user = await requireUser();
   if (!canLogActivity(user.role)) redirect("/activities");
   const o = org ? await prisma.organization.findUnique({ where: { id: org }, include: { companies: true } }) : null;
@@ -38,16 +38,21 @@ export default async function NewActivityPage({ searchParams }: { searchParams: 
     );
   }
 
-  // Default company tag: companies the user covers that this org also carries, else the user's own, else the org's.
+  // Default company tags: the opportunity's companies; else companies the user covers that this org
+  // also carries; else the user's own; else the org's.
+  // From an opportunity: that pursuit's lead + support companies.
   const mine = user.companies.map((c) => c.id);
   const overlap = o.companies.filter((c) => mine.includes(c.id)).map((c) => c.id);
-  const defaults = overlap.length ? overlap : mine.length ? mine : o.companies.map((c) => c.id);
+  const oppRow = opp ? await prisma.opportunity.findFirst({ where: { id: opp, orgId: o.id }, select: { leadCompanyId: true, supportCompanies: { select: { id: true } } } }) : null;
+  const defaults = oppRow
+    ? [oppRow.leadCompanyId, ...oppRow.supportCompanies.map((c) => c.id)]
+    : overlap.length ? overlap : mine.length ? mine : o.companies.map((c) => c.id);
 
   return (
     <>
       <PageHeader title="Log activity" sub={<>at <Link href={`/organizations/${o.id}`}>{o.name}</Link></>} />
       <div className="panel">
-        <ActivityForm action={createActivity.bind(null, o.id)} orgId={o.id} defaultContactId={contact} defaultCompanyIds={defaults} />
+        <ActivityForm action={createActivity.bind(null, o.id)} orgId={o.id} defaultContactId={contact} defaultCompanyIds={defaults} defaultOppId={opp} fromOpp={!!opp} />
       </div>
     </>
   );

@@ -29,6 +29,7 @@ export const PICKLISTS = {
   contactFunction: "contact_function",
   activityType: "activity_type",
   preferredChannel: "preferred_channel",
+  projectType: "project_type",
 } as const;
 
 export const BOARD_MEETING_TYPE = "board meeting attended";

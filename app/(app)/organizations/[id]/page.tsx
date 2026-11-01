@@ -5,7 +5,9 @@ import { DECISION_ROLES, DECISION_ROLE_LABELS, ORG_STATUS_LABELS } from "@/lib/c
 import { prisma } from "@/lib/db";
 import { addDays, meetingsBetween, parsePattern, patternText } from "@/lib/meetings";
 import { fmtDate, money, num, todayUTC } from "@/lib/format";
-import { canEditAccounts, canLogActivity } from "@/lib/permissions";
+import { canEditAccounts, canEditOpportunities, canLogActivity } from "@/lib/permissions";
+import { OUTCOME_LABELS, deliveryLabel, stageName } from "@/lib/pipeline";
+import { CompanyTag } from "@/components/ui";
 import { requireUser } from "@/lib/session";
 import { ActivityList } from "../../activities/ActivityList";
 
@@ -28,6 +30,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
       childOrgs: { select: { id: true, name: true } },
       contacts: { include: { influences: { select: { id: true, name: true } } }, orderBy: { name: "asc" } },
       _count: { select: { activities: true } },
+      opportunities: { include: { leadCompany: true, supportCompanies: { orderBy: { sortOrder: "asc" } } }, orderBy: [{ stage: "asc" }, { name: "asc" }] },
     },
   });
   if (!o) notFound();
@@ -60,7 +63,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
           {canEdit && <Link className="btn" href={`${base}/edit`}>Edit</Link>}
         </div>
       </div>
-      <Tabs base={base} current={tab} tabs={[["profile", "Profile"], ["contacts", `Contacts · ${o.contacts.length}`], ["map", "Decision map"], ["activities", `Activities · ${o._count.activities}`]]} />
+      <Tabs base={base} current={tab} tabs={[["profile", "Profile"], ["contacts", `Contacts · ${o.contacts.length}`], ["map", "Decision map"], ["opportunities", `Opportunities · ${o.opportunities.length}`], ["activities", `Activities · ${o._count.activities}`]]} />
 
       {tab === "profile" && (
         <div className="flex flex-col gap-4">
@@ -187,6 +190,31 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             </div>
           </section>
         </div>
+      )}
+
+      {tab === "opportunities" && (
+        <>
+          {canEditOpportunities(user.role) && <div className="mb-2 flex justify-end"><Link className="btn btn-primary" href={`/opportunities/new?org=${o.id}`}>Add opportunity</Link></div>}
+          {o.opportunities.length ? (
+            <div className="tbl-wrap">
+              <table className="tbl">
+                <thead><tr><th>Opportunity</th><th>Stage</th><th>Team</th><th>Delivery method</th><th className="num">Estimated value</th><th className="num">Prob.</th></tr></thead>
+                <tbody>
+                  {o.opportunities.map((x) => (
+                    <tr key={x.id}>
+                      <td><Link className="rowlink" href={`/opportunities/${x.id}`}>{x.name}</Link>{x.outcome && <span className="chip ml-1">{OUTCOME_LABELS[x.outcome]}</span>}</td>
+                      <td>{x.stage} · {stageName(x.stage)}</td>
+                      <td><span className="inline-flex gap-1"><CompanyTag code={x.leadCompany.code} lead />{x.supportCompanies.map((c) => <CompanyTag key={c.id} code={c.code} />)}</span></td>
+                      <td className="text-xs">{deliveryLabel(x.deliveryMethod)}</td>
+                      <td className="num">{money(x.estimatedValue)}</td>
+                      <td className="num">{x.probability != null ? `${x.probability}%` : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : <Empty title="No opportunities yet">Add one when a project and rough budget come into view.</Empty>}
+        </>
       )}
 
       {tab === "activities" && <ActivityList where={{ orgId: o.id }} showOrg={false} empty={<Empty title="No activity logged" action={canLogActivity(user.role) && <Link className="btn btn-primary" href={`/activities/new?org=${o.id}`}>Log activity</Link>}>Log calls, meetings, site walks and board meetings attended.</Empty>} />}
