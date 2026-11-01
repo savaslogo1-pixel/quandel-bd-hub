@@ -1,0 +1,272 @@
+[
+  {
+    "state": "PA",
+    "topic": "Bidding",
+    "key": "PA.multiprime_trigger",
+    "text": "Separations Act multiple-prime trigger",
+    "value": "",
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Bidding",
+    "key": "NY.wicks_upstate",
+    "text": "Wicks Law multiple-prime threshold, upstate",
+    "value": 500000,
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Bidding",
+    "key": "NY.wicks_downstate",
+    "text": "Wicks Law threshold, Nassau / Suffolk / Westchester",
+    "value": 1500000,
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Bidding",
+    "key": "NY.wicks_nyc",
+    "text": "Wicks Law threshold, New York City",
+    "value": 3000000,
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Prevailing wage",
+    "key": "PA.prevailing_wage_threshold",
+    "text": "Prevailing-wage threshold",
+    "value": "",
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Prevailing wage",
+    "key": "NY.prevailing_wage_threshold",
+    "text": "Prevailing-wage threshold",
+    "value": "",
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Meetings",
+    "key": "PA.sunshine_agenda_hours",
+    "text": "Sunshine Act: agenda posted before meeting",
+    "value": 24,
+    "unit": "hours",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Meetings",
+    "key": "NY.oml_notice_hours",
+    "text": "Open Meetings Law: meeting notice",
+    "value": 72,
+    "unit": "hours",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Meetings",
+    "key": "NY.oml_docs_hours",
+    "text": "Open Meetings Law: documents available before meeting",
+    "value": 24,
+    "unit": "hours",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Debt",
+    "key": "PA.lguda",
+    "text": "Debt incurred under the Local Government Unit Debt Act (LGUDA) by ordinance/resolution",
+    "value": "",
+    "unit": "",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Debt",
+    "key": "NY.bond_vote",
+    "text": "Bond resolution requires a two-thirds vote of the governing body",
+    "value": "",
+    "unit": "",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Debt",
+    "key": "NY.permissive_referendum_days",
+    "text": "Permissive referendum period after bond resolution",
+    "value": 30,
+    "unit": "days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Debt",
+    "key": "NY.estoppel_days",
+    "text": "Estoppel period after publication",
+    "value": 20,
+    "unit": "days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Energy",
+    "key": "PA.gesa_cost_test_years",
+    "text": "GESA cost test period",
+    "value": 20,
+    "unit": "years",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Energy",
+    "key": "PA.gesa_public_notice_days",
+    "text": "GESA public notice before contract",
+    "value": 10,
+    "unit": "days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Energy",
+    "key": "PA.gesa_non_energy_cap_pct",
+    "text": "GESA non-energy work cap (\u00a73754(d))",
+    "value": 15,
+    "unit": "%",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Energy",
+    "key": "NY.epc_max_term_years",
+    "text": "Energy Law \u00a79-103 EPC maximum term",
+    "value": 35,
+    "unit": "years",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Energy",
+    "key": "NY.school_epc_payback_years",
+    "text": "Schools: payback limit without building aid; SED approval required",
+    "value": 18,
+    "unit": "years",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "Federal",
+    "topic": "Energy",
+    "key": "HUD.epc_rules",
+    "text": "HUD EPC for housing authorities under PIH 2024-27",
+    "value": "",
+    "unit": "",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "Federal",
+    "topic": "Energy",
+    "key": "HUD.contract_approval_business_days",
+    "text": "HUD contract approval: plan for up to",
+    "value": 60,
+    "unit": "business days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Records",
+    "key": "PA.rtk_response_days",
+    "text": "Right-to-Know response time",
+    "value": 5,
+    "unit": "business days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Records",
+    "key": "NY.foil_ack_days",
+    "text": "FOIL acknowledgement",
+    "value": 5,
+    "unit": "business days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Records",
+    "key": "NY.foil_response_days",
+    "text": "FOIL response",
+    "value": 20,
+    "unit": "business days",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Ethics",
+    "key": "NY.gift_limit",
+    "text": "GML \u00a7805-a gift rule",
+    "value": 75,
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Lobbying",
+    "key": "NY.lobbying_threshold",
+    "text": "Lobbying registration threshold (per year)",
+    "value": 5000,
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "PA",
+    "topic": "Lobbying",
+    "key": "PA.lobbying_threshold",
+    "text": "Lobbying registration threshold",
+    "value": "",
+    "unit": "$",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  },
+  {
+    "state": "NY",
+    "topic": "Procurement",
+    "key": "NY.restricted_period",
+    "text": "State Finance Law \u00a7\u00a7139-j/k: designated contacts only from RFP to award",
+    "value": "",
+    "unit": "",
+    "source": "SPEC.md \u00a77 (verify against statute)",
+    "last_verified": ""
+  }
+]
