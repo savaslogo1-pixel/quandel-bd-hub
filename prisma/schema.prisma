@@ -1,0 +1,314 @@
+// Quandel BD Hub — Phase 1 schema
+// Scope: users and roles, company tags, picklists, Organizations, Contacts, Activities.
+// SQLite for local development; the same schema moves to Postgres for shared use
+// (change `provider` and DATABASE_URL). SQLite has no scalar lists, so tag sets are
+// relations and multi-value picks are join tables.
+//
+// Every business table carries id, createdAt, updatedAt and createdBy (SPEC §4).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────────────────── Users, roles, companies ─────────────────────────
+
+/// SPEC §1. ADMIN manages users, picklists and imports.
+enum Role {
+  ADMIN
+  BD_DIRECTOR // BD director / Enterprise BD: sees every company's pipeline
+  BD_LEAD
+  LEADERSHIP // company president / leadership
+  ESTIMATOR // estimator / preconstruction
+  QES_DEVELOPER
+  COMPLIANCE
+  TRAINEE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique // Quandel M365 address
+  name      String?
+  image     String?
+  role      Role     @default(TRAINEE)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// Companies this person works for or covers (drives default pipeline views)
+  companies Company[] @relation("UserCompanies")
+
+  ownedOrganizations Organization[] @relation("OrgRelationshipOwner")
+
+  createdOrganizations Organization[] @relation("OrgCreatedBy")
+  createdContacts      Contact[]      @relation("ContactCreatedBy")
+  createdActivities    Activity[]     @relation("ActivityCreatedBy")
+
+  // NextAuth (Microsoft 365 sign-in)
+  accounts Account[]
+  sessions Session[]
+}
+
+/// SPEC §2. QCG, QES, PCS, JVS, PYR, ENT. Seeded; editable by admins.
+model Company {
+  id               String   @id @default(cuid())
+  code             String   @unique // QCG | QES | PCS | JVS | PYR | ENT
+  name             String
+  base             String? // "[confirm]" where unknown (PYR)
+  sells            String?
+  buyers           String?
+  procurementPaths String?
+  isParent         Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  users         User[]         @relation("UserCompanies")
+  organizations Organization[] @relation("OrgCompanies")
+  activities    Activity[]     @relation("ActivityCompanies")
+}
+
+/// Admin-editable picklists (SPEC §6 Admin). Lists used in Phase 1:
+///   org_type, contact_function, activity_type, preferred_channel
+model PicklistValue {
+  id        String   @id @default(cuid())
+  list      String
+  value     String // stored on records, e.g. "school district"
+  label     String
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([list, value])
+  @@index([list, active, sortOrder])
+}
+
+// ───────────────────────── Organizations (SPEC §4.1) ─────────────────────────
+
+/// SPEC §3. New states are added here when their training edition is built.
+enum StateCode {
+  PA
+  NY
+  MD
+  NJ
+  DE
+  OH
+  WV
+  VA
+  DC
+}
+
+enum Tier {
+  A
+  B
+  C
+}
+
+enum OrgStatus {
+  TARGET
+  ACTIVE
+  CLIENT
+  DORMANT
+  DO_NOT_PURSUE
+}
+
+model Organization {
+  id      String    @id @default(cuid())
+  name    String
+  orgType String // PicklistValue(list = "org_type").value
+  state   StateCode
+  county  String?
+  region  String? // PA region, NY REDC region, MD county grouping
+  address String?
+  website String?
+
+  parentOrgId String? // e.g., a school's IU or BOCES
+  parentOrg   Organization?  @relation("OrgParent", fields: [parentOrgId], references: [id], onDelete: SetNull)
+  childOrgs   Organization[] @relation("OrgParent")
+
+  // Geography flags (SPEC §3)
+  arcCounty              Boolean @default(false)
+  energyCommunity        Boolean @default(false)
+  opportunityZoneTract   Boolean @default(false)
+  disadvantagedCommunity Boolean @default(false) // NY
+  fiscalStressStatus     String? // NY FSMS designation or PA Act 47 status
+
+  // Public-owner profile
+  population            Int?
+  enrollment            Int?
+  annualBudget          Decimal?
+  fiscalYearStart       String? // e.g., "July 1"
+  debtOutstanding       Decimal?
+  debtLimit             Decimal?
+  recentBondIssues      String?
+  creditRating          String?
+  taxCapOverrideHistory String? // NY
+
+  // Facilities profile
+  buildingCount               Int?
+  oldestBuildingYear          Int?
+  lastMajorRenovationYear     Int?
+  lastEnergyProjectYear       Int?
+  lastEnergyProjectEsco       String?
+  capitalPlanUrl              String?
+  capitalPlanDate             DateTime?
+  buildingConditionSurveyDate DateTime? // NY schools
+
+  // Governance — the meeting pattern feeds the backward scheduler in Phase 4
+  governingBody        String? // e.g., "Board of School Directors"
+  meetingWeekday       Int? // 0 = Sunday … 6 = Saturday
+  meetingWeeksOfMonth  String? // comma list: "2,4"; 5 = last week
+  meetingPatternNote   String? // free text when irregular
+  agendaDeadlineDays   Int? // days before a meeting the agenda closes
+  voteRules            String? // e.g., "two-thirds for bonds"
+  permissiveReferendum Boolean @default(false)
+
+  relationshipOwnerId String?
+  relationshipOwner   User?     @relation("OrgRelationshipOwner", fields: [relationshipOwnerId], references: [id], onDelete: SetNull)
+  companies           Company[] @relation("OrgCompanies") // company tags
+  tier                Tier?
+  status              OrgStatus @default(TARGET)
+  source              String? // e.g., "GESA eligible owners workbook"
+
+  contacts   Contact[]
+  activities Activity[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("OrgCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  // De-duplication key for imports (SPEC §8): name + state + type
+  @@unique([name, state, orgType])
+  @@index([state, orgType])
+  @@index([tier, status])
+  @@index([relationshipOwnerId])
+}
+
+// ───────────────────────── Contacts (SPEC §4.2, §4.3) ─────────────────────────
+
+enum DecisionRole {
+  DECIDER
+  ADVISOR
+  INFLUENCER
+  GATEKEEPER
+  USER
+}
+
+model Contact {
+  id          String       @id @default(cuid())
+  name        String
+  title       String?
+  orgId       String
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  email       String?
+  phone       String?
+  linkedinUrl String?
+
+  decisionRole         DecisionRole?
+  function             String? // PicklistValue(list = "contact_function").value
+  relationshipStrength Int? // 1–5
+  lastTouch            DateTime?
+  nextTouch            DateTime?
+  preferredChannel     String? // PicklistValue(list = "preferred_channel").value
+  optOut               Boolean       @default(false) // opted out of email
+  doNotContact         Boolean       @default(false)
+
+  // Decision map: who influences whom (SPEC §4.3)
+  influences   Contact[] @relation("ContactInfluence")
+  influencedBy Contact[] @relation("ContactInfluence")
+
+  activities        Activity[] @relation("ActivityContacts")
+  advisedActivities Activity[] @relation("ActivityFinancialAdvisor")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("ContactCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([orgId])
+  @@index([nextTouch])
+}
+
+// ───────────────────────── Activities (SPEC §4.9, §4.14) ─────────────────────────
+
+model Activity {
+  id         String       @id @default(cuid())
+  type       String // PicklistValue(list = "activity_type").value
+  occurredAt DateTime
+  orgId      String
+  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contacts   Contact[]    @relation("ActivityContacts")
+  companies  Company[]    @relation("ActivityCompanies") // company tags
+
+  /// Opportunity link arrives in Phase 2 (relation added with the Opportunity model)
+  opportunityId String?
+
+  notes        String?
+  nextStep     String?
+  nextStepDate DateTime?
+  nextStepDone Boolean   @default(false)
+
+  // Board-meeting log (type = "board meeting attended")
+  agendaItems String?
+  votesTaken  String?
+  minutesUrl  String?
+
+  // Municipal-advisor flag: if financing was discussed, the owner's financial
+  // advisor must be linked. Enforced in the app; open flags show in Compliance.
+  financingDiscussed        Boolean  @default(false)
+  financialAdvisorContactId String?
+  financialAdvisorContact   Contact? @relation("ActivityFinancialAdvisor", fields: [financialAdvisorContactId], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("ActivityCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([orgId, occurredAt])
+  @@index([nextStepDate])
+  @@index([createdById])
+}
+
+// ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  ext_expires_in    Int? // returned by Microsoft Entra ID
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
