@@ -1,5 +1,34 @@
 # Changelog
 
+## Phase 5 — 2026-11-02
+- Organization imports (SPEC §8) under Organizations → Import (admins and BD directors):
+  upload .xlsx or .csv (up to 15 MB, 5,000 rows) → pick the sheet and header row (detected
+  automatically) → map columns (best guess from header names, adjustable) and set defaults →
+  preview → import. Nothing is written before the final click.
+- Saved column setups in `data/import_presets.json`, applied automatically when a file matches:
+  GESA eligible public owners (PA), Owners tab; and Quandel target lists, QES Targets tab
+  (tier + QES tag, per SPEC §8).
+- Cleaning: stray leading symbols removed from names; state names or codes; type from the
+  type column, or from the name when the column is missing or vague ("College",
+  "Municipality"); money ("$1.2M"), counts, years (from text), building age → year built;
+  Y/N flags; ESCO names pulled from free text; footnote rows skipped; chosen columns
+  appended to Notes as "Header: value".
+- Duplicates: matched on name + state + type + **county**. Pennsylvania has many same-named
+  townships and boroughs in different counties (225 repeated names in the GESA list, e.g. six
+  Allegheny Townships), so county is part of the key in the importer and in the database.
+  Similar names in the same county ("Schuylkill IU 29" / "Schuylkill Intermediate Unit 29",
+  "Harrisburg City School District" / "Harrisburg School District") count as the same
+  organization; similar names in a different county are flagged for a person to decide.
+  Existing records: fill blanks only (default), replace, or skip.
+- Undo an import: removes the organizations it created unless people have added contacts,
+  activities, opportunities or member organizations; updates are not reversed.
+- Organizations gain Notes and "In Quandel territory" (with a filter).
+- Tested with the real files: GESA list loads 3,199 owners with no errors; the QES Targets tab
+  then updates 151, adds 5, skips its footnote row and flags Capital Area IU 15 (Cumberland in
+  the GESA list, Dauphin in the target list).
+- Not yet: the target lists' Bridge List tab (Phase 7 bridge module), the SitelogIQ project
+  list (Phase 7 competitors), and the NY OSC local-government list (file not provided yet).
+
 ## Phase 4 — 2026-11-01
 - State rules engine (SPEC §7): 27 rules seeded from `data/state_rules.json` into a
   StateRule table (key, jurisdiction, topic, value, unit, source, last verified). Seeding

@@ -1,0 +1,61 @@
+{
+  "source": "Column setups for workbooks Quandel BD uses (SPEC §8). A preset applies when a sheet has all of its `requires` headers. Mapping values are header names; `notes` lists headers appended to the organization's Notes.",
+  "presets": [
+    {
+      "id": "gesa-eligible-owners-pa",
+      "label": "GESA eligible public owners (PA), Owners tab",
+      "sheet": "Owners",
+      "headerRow": 1,
+      "requires": ["Owner", "Type", "County", "ARC county", "Quandel territory", "QES tier", "AUN"],
+      "mapping": {
+        "name": "Owner",
+        "orgType": "Type",
+        "county": "County",
+        "arcCounty": "ARC county",
+        "quandelTerritory": "Quandel territory",
+        "tier": "QES tier",
+        "buildingCount": "Schools",
+        "lastEnergyProjectYear": "Last energy / GESA project",
+        "lastEnergyProjectEsco": "Last energy / GESA project",
+        "recentBondIssues": "Recent bonds or capital plan",
+        "status": "Status",
+        "notes": ["AUN", "Governing code", "Key buildings and age", "Last energy / GESA project", "Grants on file", "Contact", "Status", "Next step"]
+      },
+      "defaults": {
+        "state": "PA",
+        "companyCodesWhenTier": ["QES"],
+        "source": "GESA eligible public owners workbook (PA)",
+        "onDuplicate": "fill",
+        "inferType": true
+      },
+      "notes": "Schools (district school count) maps to building count. Rows with a QES tier get the QES company tag. The workbook's own Source column is kept in Notes only when mapped."
+    },
+    {
+      "id": "quandel-target-lists-qes",
+      "label": "Quandel target lists, QES Targets tab",
+      "sheet": "QES Targets",
+      "headerRow": 1,
+      "requires": ["County", "Organization", "Type", "ARC county", "Coal region", "Tier"],
+      "mapping": {
+        "name": "Organization",
+        "orgType": "Type",
+        "county": "County",
+        "arcCounty": "ARC county",
+        "tier": "Tier",
+        "lastEnergyProjectYear": "Recent energy or GESA project",
+        "lastEnergyProjectEsco": "Recent energy or GESA project",
+        "recentBondIssues": "Recent bond issue or capital plan",
+        "status": "Status",
+        "notes": ["Coal region", "Key buildings / age", "Recent energy or GESA project", "Contact (name, title)", "Status", "Next step", "Notes"]
+      },
+      "defaults": {
+        "state": "PA",
+        "companyCodes": ["QES"],
+        "source": "Quandel target lists (QES Targets tab)",
+        "onDuplicate": "fill",
+        "inferType": true
+      },
+      "notes": "SPEC §8: target lists load with tier and the QES company tag. Coal region (Y/N/Partly) has no field yet, so it goes to Notes. The Bridge List tab loads with the bridge module (Phase 7)."
+    }
+  ]
+}

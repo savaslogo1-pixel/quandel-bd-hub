@@ -61,6 +61,13 @@ maintained. Fill details from current guidelines and mark each program verified.
 Deadline alerts are created when people open the app. To run them on a schedule, set
 `CRON_SECRET` and call `POST /api/alerts/run` with `Authorization: Bearer <secret>` daily.
 
+## Imports
+
+Organizations → Import (admins and BD directors) loads .xlsx or .csv files with a preview
+before anything is saved. Column setups for known workbooks live in
+`data/import_presets.json`; add one by listing the sheet, the headers it requires and the
+header-to-field mapping. Import rules are in `lib/import/orgs.ts`.
+
 ## Tests
 
 ```bash

@@ -59,6 +59,7 @@ model User {
   createdStackRows     CapitalStackRow[]
   notifications        Notification[]
   verifiedRules        StateRule[]                @relation("RuleVerifiedBy")
+  importBatches        ImportBatch[]
   createdApprovalSteps ApprovalStep[]
 
   // NextAuth (Microsoft 365 sign-in)
@@ -151,6 +152,7 @@ model Organization {
   energyCommunity        Boolean @default(false)
   opportunityZoneTract   Boolean @default(false)
   disadvantagedCommunity Boolean @default(false) // NY
+  quandelTerritory       Boolean @default(false) // inside the area Quandel actively covers
   fiscalStressStatus     String? // NY FSMS designation or PA Act 47 status
 
   // Public-owner profile
@@ -184,11 +186,14 @@ model Organization {
   permissiveReferendum Boolean @default(false)
 
   relationshipOwnerId String?
-  relationshipOwner   User?     @relation("OrgRelationshipOwner", fields: [relationshipOwnerId], references: [id], onDelete: SetNull)
-  companies           Company[] @relation("OrgCompanies") // company tags
+  relationshipOwner   User?        @relation("OrgRelationshipOwner", fields: [relationshipOwnerId], references: [id], onDelete: SetNull)
+  companies           Company[]    @relation("OrgCompanies") // company tags
   tier                Tier?
-  status              OrgStatus @default(TARGET)
+  status              OrgStatus    @default(TARGET)
   source              String? // e.g., "GESA eligible owners workbook"
+  notes               String? // free-text research notes (imports can append columns here)
+  importBatchId       String? // set when the organization was created by an import (for undo)
+  importBatch         ImportBatch? @relation(fields: [importBatchId], references: [id], onDelete: SetNull)
 
   contacts      Contact[]
   activities    Activity[]
@@ -199,8 +204,9 @@ model Organization {
   createdById String?
   createdBy   User?    @relation("OrgCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
 
-  // De-duplication key for imports (SPEC §8): name + state + type
-  @@unique([name, state, orgType])
+  // De-duplication key: name + state + type (SPEC §8) + county, because Pennsylvania has many
+  // same-named townships and boroughs in different counties (e.g. six Allegheny Townships).
+  @@unique([name, state, orgType, county])
   @@index([state, orgType])
   @@index([tier, status])
   @@index([relationshipOwnerId])
@@ -626,6 +632,44 @@ model ApprovalStep {
 
   @@index([opportunityId, sortOrder])
   @@index([meetingDate])
+}
+
+// ───────────────────────── Imports (SPEC §8) — Phase 5 ─────────────────────────
+
+enum ImportStatus {
+  DRAFT // uploaded; mapping and preview in progress
+  COMMITTED
+  UNDONE
+}
+
+/// One uploaded file. Parsed rows are stored as JSON until the import is committed.
+model ImportBatch {
+  id          String       @id @default(cuid())
+  target      String // "organizations"
+  fileName    String
+  sheetNames  String // JSON array of sheet names in the workbook
+  sheetName   String?
+  headerRow   Int          @default(1)
+  headers     String // JSON array
+  rows        String // JSON array of arrays (cell text), capped in size
+  rowCount    Int
+  mapping     String? // JSON { field: columnIndex }
+  defaults    String? // JSON { state, tier, status, companies[], source, orgType, onDuplicate }
+  status      ImportStatus @default(DRAFT)
+  created     Int          @default(0)
+  updated     Int          @default(0)
+  skipped     Int          @default(0)
+  errors      Int          @default(0)
+  committedAt DateTime?
+  undoneAt    DateTime?
+  fileData    Bytes? // original upload, kept until commit so another sheet can be picked
+
+  organizations Organization[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

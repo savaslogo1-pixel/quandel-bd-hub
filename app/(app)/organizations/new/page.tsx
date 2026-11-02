@@ -12,7 +12,7 @@ export default async function NewOrgPage() {
   if (!canEditAccounts(user.role)) redirect("/organizations");
   return (
     <>
-      <PageHeader title="Add organization" sub="An owner or partner. Name + state + type must be unique." />
+      <PageHeader title="Add organization" sub="An owner or partner. Name + state + type + county must be unique." />
       <div className="panel"><OrgForm action={createOrganization} defaultOwnerId={user.id} /></div>
     </>
   );

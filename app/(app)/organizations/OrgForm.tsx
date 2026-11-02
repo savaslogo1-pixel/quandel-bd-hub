@@ -35,11 +35,14 @@ export async function OrgForm({ action, org, defaultOwnerId }: { action: (s: For
       <TextField name="address" label="Address" full defaultValue={o?.address} />
       <CheckGroup name="companies" label="Company tags" options={cos.map((c) => [c.id, `${c.code} · ${c.name}`])} selected={o?.companies.map((c) => c.id) ?? []} />
 
+      <TextArea name="notes" label="Notes" hint="research notes; imports can add to this" defaultValue={o?.notes} />
+
       <div className="sect">Geography flags</div>
       <CheckField name="arcCounty" label="ARC county" defaultChecked={o?.arcCounty} />
       <CheckField name="energyCommunity" label="Energy community" defaultChecked={o?.energyCommunity} />
       <CheckField name="opportunityZoneTract" label="Opportunity Zone tract" defaultChecked={o?.opportunityZoneTract} />
       <CheckField name="disadvantagedCommunity" label="Disadvantaged community (NY)" defaultChecked={o?.disadvantagedCommunity} />
+      <CheckField name="quandelTerritory" label="In Quandel territory" defaultChecked={o?.quandelTerritory} />
       <TextField name="fiscalStressStatus" label="Fiscal-stress status" hint="NY FSMS or PA Act 47" defaultValue={o?.fiscalStressStatus} />
 
       <div className="sect">Governance</div>

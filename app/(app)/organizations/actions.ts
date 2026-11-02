@@ -43,7 +43,7 @@ async function parse(fd: FormData) {
   const data = {
     name: name ?? "", orgType: orgType ?? "", state: (state ?? "PA") as StateCode,
     county: str(fd, "county"), region: str(fd, "region"), address: str(fd, "address"), website: str(fd, "website"),
-    arcCounty: bool(fd, "arcCounty"), energyCommunity: bool(fd, "energyCommunity"),
+    arcCounty: bool(fd, "arcCounty"), energyCommunity: bool(fd, "energyCommunity"), quandelTerritory: bool(fd, "quandelTerritory"), notes: str(fd, "notes"),
     opportunityZoneTract: bool(fd, "opportunityZoneTract"), disadvantagedCommunity: bool(fd, "disadvantagedCommunity"),
     fiscalStressStatus: str(fd, "fiscalStressStatus"),
     population: n.population, enrollment: n.enrollment, fiscalYearStart: str(fd, "fiscalYearStart"),
@@ -62,9 +62,17 @@ async function parse(fd: FormData) {
   return { fe, data, parentOrgId, ownerId, companyIds };
 }
 
+/** The unique index treats a blank county as distinct, so check that case by hand. */
+async function duplicateOf(data: { name: string; state: StateCode; orgType: string; county: string | null }, selfId?: string) {
+  return prisma.organization.findFirst({
+    where: { name: data.name, state: data.state, orgType: data.orgType, county: data.county, ...(selfId ? { id: { not: selfId } } : {}) },
+    select: { id: true },
+  });
+}
+
 function uniqueError(e: unknown): FormState | null {
   if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")
-    return { error: "An organization with this name, state and type already exists." };
+    return { error: "An organization with this name, state, type and county already exists." };
   return null;
 }
 
@@ -73,6 +81,7 @@ export async function createOrganization(_: FormState, fd: FormData): Promise<Fo
   if (!canEditAccounts(user.role)) return { error: "Your role can view organizations but not add them." };
   const { fe, data, parentOrgId, ownerId, companyIds } = await parse(fd);
   if (Object.keys(fe).length) return { fieldErrors: fe };
+  if (await duplicateOf(data)) return { error: "An organization with this name, state, type and county already exists." };
   let id: string;
   try {
     const org = await prisma.organization.create({
@@ -100,6 +109,7 @@ export async function updateOrganization(id: string, _: FormState, fd: FormData)
   const { fe, data, parentOrgId, ownerId, companyIds } = await parse(fd);
   if (parentOrgId === id) fe["Parent org"] = "An organization can't be its own parent";
   if (Object.keys(fe).length) return { fieldErrors: fe };
+  if (await duplicateOf(data, id)) return { error: "An organization with this name, state, type and county already exists." };
   try {
     await prisma.organization.update({
       where: { id },

@@ -50,6 +50,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             <CompanyTags codes={o.companies} />
             {o.tier && <span className={`chip ${o.tier === "A" ? "chip-gold" : ""}`}>Tier {o.tier}</span>}
             <span className="chip">{ORG_STATUS_LABELS[o.status]}</span>
+            {o.quandelTerritory && <span className="chip chip-brand">Quandel territory</span>}
             {o.arcCounty && <span className="chip chip-brand">ARC county</span>}
             {o.energyCommunity && <span className="chip chip-brand">Energy community</span>}
             {o.opportunityZoneTract && <span className="chip chip-brand">Opportunity Zone</span>}
@@ -76,6 +77,12 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             <Fact k="Address">{o.address ?? "—"}</Fact>
             <Fact k="Source">{o.source ?? "—"}</Fact>
           </section>
+          {o.notes && (
+            <section>
+              <h2 className="mb-2 text-lg">Notes</h2>
+              <div className="panel whitespace-pre-wrap">{o.notes}</div>
+            </section>
+          )}
           <section>
             <h2 className="mb-2 text-lg">Governance</h2>
             <div className="panel facts">

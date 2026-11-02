@@ -5,7 +5,7 @@ import { ORG_STATUS_LABELS, PICKLISTS, STATES, TIERS } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import { fmtDate } from "@/lib/format";
 import { parsePattern, patternText } from "@/lib/meetings";
-import { canEditAccounts } from "@/lib/permissions";
+import { canEditAccounts, canImport } from "@/lib/permissions";
 import { companies as loadCompanies, picklist } from "@/lib/picklists";
 import { requireUser } from "@/lib/session";
 
@@ -24,6 +24,7 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
   if (sp.tier && TIERS.includes(sp.tier as Tier)) where.tier = sp.tier as Tier;
   if (sp.status && sp.status in ORG_STATUS_LABELS) where.status = sp.status as OrgStatus;
   if (sp.flag === "arc") where.arcCounty = true;
+  if (sp.flag === "territory") where.quandelTerritory = true;
   if (sp.flag === "energy") where.energyCommunity = true;
   if (sp.flag === "oz") where.opportunityZoneTract = true;
   if (sp.flag === "dac") where.disadvantagedCommunity = true;
@@ -55,7 +56,10 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
       <PageHeader
         title="Organizations"
         sub="Owners and partners. Each one carries company tags, a tier and its board's meeting pattern."
-        actions={canEditAccounts(user.role) && <Link className="btn btn-primary" href="/organizations/new">Add organization</Link>}
+        actions={<>
+          {canImport(user.role) && <Link className="btn" href="/admin/import">Import</Link>}
+          {canEditAccounts(user.role) && <Link className="btn btn-primary" href="/organizations/new">Add organization</Link>}
+        </>}
       />
       <form className="filters" method="get">
         <input name="q" type="search" placeholder="Search name, county, region" defaultValue={sp.q} />
@@ -65,7 +69,7 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
         <select name="tier" defaultValue={sp.tier ?? ""}><option value="">All tiers</option>{TIERS.map((t) => <option key={t} value={t}>Tier {t}</option>)}</select>
         <select name="status" defaultValue={sp.status ?? ""}><option value="">All statuses</option>{Object.entries(ORG_STATUS_LABELS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
         <select name="flag" defaultValue={sp.flag ?? ""}>
-          <option value="">Any flag</option><option value="arc">ARC county</option><option value="energy">Energy community</option>
+          <option value="">Any flag</option><option value="territory">Quandel territory</option><option value="arc">ARC county</option><option value="energy">Energy community</option>
           <option value="oz">Opportunity Zone</option><option value="dac">Disadvantaged community (NY)</option><option value="stress">Fiscal stress</option>
         </select>
         <label className="muted text-xs">Last energy project before <input name="energyBefore" inputMode="numeric" placeholder="year" defaultValue={sp.energyBefore} style={{ width: 80 }} /></label>
@@ -98,7 +102,7 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
         </div>
       ) : (
         <Empty title={filtered ? "No organizations match these filters" : "No organizations yet"} action={!filtered && canEditAccounts(user.role) ? <Link className="btn btn-primary" href="/organizations/new">Add organization</Link> : undefined}>
-          {!filtered && "Add a school district, county, authority or other owner to start. Imports from the GESA eligible-owners workbook come in Phase 5."}
+          {!filtered && "Add a school district, county, authority or other owner, or import a workbook such as the GESA eligible-owners list."}
         </Empty>
       )}
       {orgs.length === 500 && <p className="muted mt-2 text-xs">Showing the first 500. Narrow the filters to see more.</p>}

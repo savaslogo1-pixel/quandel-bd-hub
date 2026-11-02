@@ -38,3 +38,7 @@ export const canEditPrograms = (r: Role) => ACCOUNT_EDITORS.includes(r);
 /** Edit state rules (thresholds, waiting periods) and mark them verified. */
 const RULE_EDITORS: Role[] = ["ADMIN", "BD_DIRECTOR", "COMPLIANCE"];
 export const canEditRules = (r: Role) => RULE_EDITORS.includes(r);
+
+/** Run imports (SPEC §6 Admin: imports). */
+const IMPORTERS: Role[] = ["ADMIN", "BD_DIRECTOR"];
+export const canImport = (r: Role) => IMPORTERS.includes(r);

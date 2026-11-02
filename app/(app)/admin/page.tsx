@@ -27,7 +27,7 @@ export default async function AdminPage() {
   ]);
   return (
     <>
-      <PageHeader title="Admin" sub="People, roles, company tags and dropdown lists. New people start as Trainee the first time they sign in." />
+      <PageHeader title="Admin" sub="People, roles, company tags and dropdown lists. New people start as Trainee the first time they sign in." actions={<a className="btn" href="/admin/import">Import organizations</a>} />
       <h2 className="mb-2 text-lg">People</h2>
       <div className="mb-8 flex flex-col gap-3">
         {users.map((u) => (
