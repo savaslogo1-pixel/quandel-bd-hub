@@ -1,5 +1,25 @@
 # Changelog
 
+## Team page update — 2026-11-02
+Brought the shared team page (`prototype/bd-hub.html`, published at
+https://claude.ai/artifact/UFYEMekqpSiJC7joYGes5r) in line with Phases 5–8:
+- Owner directory: the 3,199 owners from the GESA eligible-owners workbook, with QES tiers from the
+  target lists and SitelogIQ work flagged. Search and filter, then add an owner to Accounts.
+- Bridges: the 654 poor-condition bridges from the Bridge List tab. Select bridges into bundles.
+  The bundle estimate mirrors `lib/bridges.ts` and uses only the costs people enter. A bundle can
+  become a P3 opportunity (PCS lead, QCG support). The PA and NY P3 legal paths come from State rules.
+- Competitors: the SitelogIQ profile and its 37 published projects, plus the other ESCOs on file.
+- Projects: reference search; stage-10 opportunities move here.
+- Opportunity Energy tab: a measures-based model that mirrors `lib/energy.ts`, covering payment,
+  budget-neutral, term, cost test, non-energy cap, NY school payback and HUD term.
+- Compliance: trade-secret and NY restricted-period flags. The dashboard adds weighted pipeline
+  by company and phase.
+- Company colors switched to the validated palette.
+- Three rules were added to the shared database (`HUD.epc_max_term_years`, `PA.p3_legal_path`,
+  `NY.p3_legal_path`).
+- Reference lists are published alongside the page from `prototype/data/` and are rebuilt from the
+  uploaded workbooks.
+
 ## Phase 8 — 2026-11-02
 - Compliance log (SPEC §4.14), under Compliance in the menu:
   - Open flags in one list: procurement fairness ("did we help write specs"), related-company

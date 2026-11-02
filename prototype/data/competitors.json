@@ -1,0 +1,495 @@
+{
+  "source": "SPEC.md \u00a74.13; SitelogIQ details and projects from the user's SitelogIQ Pennsylvania competitor brief (Oct 31, 2026). Seed only: creates competitors that don't exist; a new competitor's projects are created with it.",
+  "competitors": [
+    {
+      "key": "sitelogiq",
+      "name": "SitelogIQ",
+      "kind": "ESCO and construction",
+      "competesWith": [
+        "QES",
+        "QCG"
+      ],
+      "aliases": "Reynolds Energy Services Inc. d/b/a SitelogIQ Energy Services\nReynolds Construction, LLC\nReynolds Energy\nReynolds Enterprises\nSiteIQ",
+      "website": "https://www.sitelogiq.com",
+      "headquarters": "IDS Center, 80 South 8th Street, Suite 1850, Minneapolis, MN",
+      "ownership": "AEA Investors (private equity) since April 2020; formed 2018 under Oaktree Capital",
+      "profile": "Pennsylvania business is the former Reynolds of Harrisburg (3300 N. 3rd Street, Harrisburg 17110, (717) 238-5737); signs PA energy contracts as Reynolds Energy Services Inc. d/b/a SitelogIQ Energy Services. Board minutes that mention \"Reynolds Energy\" are often SitelogIQ.\nPA offices: Harrisburg (main), King of Prussia (opened Jan 2024), Wilkes-Barre (opened Jan 2024, inside Quandel territory), Oakmont/Pittsburgh (333 Allegheny Ave., (412) 646-5840). Legacy Baltimore office: Elkridge, MD.\nCredentials: NAESCO-accredited Energy Services Provider (2021, 2023); PSBA Silver alliance partner; CollegeBuys vendor.\nPA names: Rick Evans, President Northeast (runs Pennsylvania; $300M+ of energy projects, K-12 focus); Rose Fetter, PSBA alliance contact. Directory listings also name David Angle, Jeffrey Merritt, Anthony Worrall, Damion Spahr, Mike Arnold and Todd Buzard (confirm current roles).\nPublic work found in PA is almost entirely K-12; non-school exceptions: Fayette County Jail (CM) and Williamsport Municipal Airport Authority.",
+      "pricingNotes": "Free or state-grant-funded facility assessments plus a year of mySiteIQ; Lehighton Area: assessment $26,163 + mySiteIQ $13,082. Grant writing on commission (Lehighton: 4% of grants awarded).",
+      "howTheyWin": "Enter early and cheaply: the free assessment becomes the district's capital plan, and SitelogIQ is first in line to deliver it. Write grants on commission ($5.4M RACP for customers, July 2026). Shape state policy (statewide facility study; lobbying to revive PlanCon). Reach business managers through PSBA before an RFQ is written.",
+      "ourResponse": "Offer our own capital-needs review tied to a funding map (grants, GESA, bonds) before the plan is written. Bring a full funding strategy as part of the team, not a percentage fee. Lead with counties, municipalities, authorities and housing authorities, where SitelogIQ is absent. Same energy-plus-construction offer, plus Quandel construction depth, HUD housing record and the COSTARS GESA contract. Prioritize in-territory districts (Carbon, Schuylkill, Lebanon, Lehigh) and check whether their GESA contracts are signed or still at assessment.",
+      "source": "SitelogIQ in Pennsylvania (competitor brief, Oct 31, 2026), user-provided",
+      "projects": [
+        {
+          "ownerName": "Southern York County School District",
+          "county": "York",
+          "category": "energy_contract",
+          "description": "GESA contract; $7.36M capital transfer for \"greatest needs\" work",
+          "when": "Awarded 2025; contract 2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Southern York County SD",
+          "sourceUrl": "https://citizenportal.ai/articles/6720229/Pennsylvania/School-Districts/Southern-York-County-SD/Southern-York-County-SD-approves-SiteLogic-GEESA-contract-and-736-million-capital-transfer-for-2026-greatest-needs-work"
+        },
+        {
+          "ownerName": "Jersey Shore Area School District",
+          "county": "Lycoming",
+          "category": "energy_contract",
+          "description": "GESA amendments: Avis Elementary HVAC $564K (part school facility grant); middle school HVAC up to $3.25M",
+          "when": "Jan 2025",
+          "year": 2025,
+          "value": null,
+          "sourceTitle": "Williamsport Sun-Gazette: Jersey Shore Area SD (Jan 2025)",
+          "sourceUrl": "https://www.sungazette.com/news/top-news/2025/01/vote-on-jersey-shore-area-school-districts-capital-projects-tabled/"
+        },
+        {
+          "ownerName": "Allentown School District",
+          "county": "Lehigh",
+          "category": "energy_contract",
+          "description": "Recommended as energy services company for GESA projects",
+          "when": "Mar 2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Allentown SD",
+          "sourceUrl": "https://citizenportal.ai/articles/7742617/Pennsylvania/School-Districts/Allentown-City-SD/Board-advances-energy-provider-and-inspection-contracts-approves-tech-purchase-to-regular-agenda"
+        },
+        {
+          "ownerName": "Muncy School District",
+          "county": "Lycoming",
+          "category": "energy_contract",
+          "description": "Selected as energy services company after RFQ",
+          "when": "2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Muncy SD",
+          "sourceUrl": "https://citizenportal.ai/articles/9545955/pennsylvania/school-districts/muncy-sd/muncy-board-selects-sitelogiq-as-energy-services-company-after-rfq"
+        },
+        {
+          "ownerName": "Bensalem Township School District",
+          "county": "Bucks",
+          "category": "energy_contract",
+          "description": "Named a GESA provider (\"Reynolds Energy and SiteIQ\")",
+          "when": "Recent",
+          "year": null,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Bensalem Township SD",
+          "sourceUrl": "https://citizenportal.ai/articles/7619124/Pennsylvania/School-Districts/Bensalem-Township-SD/Board-names-Guaranteed-Energy-Savings-Act-providers-Reynolds-Energy-and-SiteIQ"
+        },
+        {
+          "ownerName": "Radnor Township School District",
+          "county": "Delaware",
+          "category": "energy_contract",
+          "description": "Energy company for administration building audit",
+          "when": "Recent",
+          "year": null,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Radnor Township SD",
+          "sourceUrl": "https://citizenportal.ai/articles/7824877/pennsylvania/school-districts/radnor-township-sd/committee-reviews-recommendation-to-engage-sitelogic-as-escoescrow-firm-for-administration-building-audit"
+        },
+        {
+          "ownerName": "Mount Pleasant Area School District",
+          "county": "Westmoreland",
+          "category": "energy_contract",
+          "description": "SitelogIQ agreement; design, construction, financing",
+          "when": "2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Mount Pleasant Area SD",
+          "sourceUrl": "https://citizenportal.ai/articles/10714347/pennsylvania/school-districts/mount-pleasant-area-sd/district-approves-sitelogiq-agreement-and-buys-turbochef-oven-for-cafeteria"
+        },
+        {
+          "ownerName": "Neshaminy School District",
+          "county": "Bucks",
+          "category": "energy_contract",
+          "description": "Performance contract",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Morrisville Borough School District",
+          "county": "Bucks",
+          "category": "energy_contract",
+          "description": "Energy work and project financing",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Palmyra Area School District",
+          "county": "Lebanon",
+          "category": "energy_contract",
+          "description": "Energy project, Palmyra Middle School",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Armstrong School District",
+          "county": "Armstrong",
+          "category": "energy_contract",
+          "description": "Energy project, Shannock Valley Elementary",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Bethel Park School District",
+          "county": "Allegheny",
+          "category": "energy_contract",
+          "description": "Energy and construction",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Juniata County School District",
+          "county": "Juniata",
+          "category": "energy_contract",
+          "description": "Energy and construction, elementary consolidation",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "East Pennsboro Area School District",
+          "county": "Cumberland",
+          "category": "energy_contract",
+          "description": "Energy, consulting and planning",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Pennridge School District",
+          "county": "Bucks",
+          "category": "energy_contract",
+          "description": "Long-term facility maintenance plan; needs assessments",
+          "when": "Earlier",
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ: Pennridge SD",
+          "sourceUrl": "https://www.sitelogiq.com/projects/pennridge-school-district/"
+        },
+        {
+          "ownerName": "Panther Valley School District",
+          "county": "Carbon",
+          "category": "assessment",
+          "description": "Statewide facility condition assessment study; no cost to district (state grant)",
+          "when": "Oct 2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "Times News: Panther Valley (Oct 2026)",
+          "sourceUrl": "https://www.tnonline.com/20261022/panther-valley-approves-facility-assessment/"
+        },
+        {
+          "ownerName": "Tamaqua Area School District",
+          "county": "Schuylkill",
+          "category": "assessment",
+          "description": "One-year districtwide assessment at no cost; data used in statewide study for lawmakers",
+          "when": "Sept 2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "Times News: Tamaqua Area (Sept 2026)",
+          "sourceUrl": "https://www.tnonline.com/20260919/tamaqua-area-facilities-to-be-assessed/"
+        },
+        {
+          "ownerName": "Spring Grove Area School District",
+          "county": "York",
+          "category": "assessment",
+          "description": "Condition assessment with 360\u00b0 room scans plus one year of mySiteIQ; state grant",
+          "when": "Aug 2026",
+          "year": 2026,
+          "value": null,
+          "sourceTitle": "CitizenPortal: Spring Grove Area SD",
+          "sourceUrl": "https://citizenportal.ai/articles/9145829/Pennsylvania/School-Districts/Spring-Grove-Area-SD/Board-approves-grant-funded-SiteLogic-assessment-to-inventory-district-facilities"
+        },
+        {
+          "ownerName": "Lehighton Area School District",
+          "county": "Carbon",
+          "category": "assessment",
+          "description": "Assessment $26,163 + mySiteIQ $13,082; grant writing at 4% commission",
+          "when": "June 2025",
+          "year": 2025,
+          "value": null,
+          "sourceTitle": "Times News: Lehighton Area (June 2025)",
+          "sourceUrl": "https://www.tnonline.com/20250628/lasd-approves-facility-check/"
+        },
+        {
+          "ownerName": "Woodland Hills School District",
+          "county": "Allegheny",
+          "category": "construction",
+          "description": "Design, construction and financing",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Camp Hill School District",
+          "county": "Cumberland",
+          "category": "construction",
+          "description": "Design and construction",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Peters Township School District",
+          "county": "Washington",
+          "category": "construction",
+          "description": "Construction management, engineering, financing",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Upper Merion Area School District",
+          "county": "Montgomery",
+          "category": "construction",
+          "description": "Construction",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Lower Merion School District",
+          "county": "Montgomery",
+          "category": "construction",
+          "description": "Black Rock Middle School: commissioning and construction",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Neshaminy School District",
+          "county": "Bucks",
+          "category": "construction",
+          "description": "Tawanka Elementary construction; proposal for a new elementary school",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Altoona Area School District",
+          "county": "Blair",
+          "category": "construction",
+          "description": "Altoona Area High School construction",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Cornwall-Lebanon School District",
+          "county": "Lebanon",
+          "category": "construction",
+          "description": "Listed as a SitelogIQ project",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "The Blue Book: Cornwall-Lebanon SD",
+          "sourceUrl": "https://www.thebluebook.com/iProView/657657/sitelogiq/general-contractors//construction-projects/-cornwall-lebanon-school-district-279271/"
+        },
+        {
+          "ownerName": "Fayette County",
+          "county": "Fayette",
+          "category": "construction",
+          "description": "County jail, Uniontown: construction manager; 330 beds; opened Feb 2024",
+          "when": "Feb 2024",
+          "year": 2024,
+          "value": null,
+          "sourceTitle": "SitelogIQ: Fayette County Jail",
+          "sourceUrl": "https://www.sitelogiq.com/projects/fayette-county-jail-2/"
+        },
+        {
+          "ownerName": "Williamsport Municipal Airport Authority",
+          "county": "Lycoming",
+          "category": "construction",
+          "description": "Construction",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "North Allegheny School District",
+          "county": "Allegheny",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): aquatics center",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 1250000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "Wallenpaupack Area School District",
+          "county": "Wayne",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): new Wayne/Pike career and technical school",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 2650000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "Pennsbury School District",
+          "county": "Bucks",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): high school campus realignment",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 500000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "Allentown School District",
+          "county": "Lehigh",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): Union Terrace Elementary campus expansion",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 250000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "Allentown School District",
+          "county": "Lehigh",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): J. Birney Crum Stadium field house",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 500000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "Beaver County Career and Technology Center",
+          "county": "Beaver",
+          "category": "grant_writing",
+          "description": "RACP award (grant writing): roofing",
+          "when": "July 16, 2026",
+          "year": 2026,
+          "value": 250000,
+          "sourceTitle": "SitelogIQ: customers receive $5.4M in RACP awards",
+          "sourceUrl": "https://www.sitelogiq.com/news/sitelogiq-customers-receive-5-4-million-in-racp-grant-awards/"
+        },
+        {
+          "ownerName": "University of Pittsburgh",
+          "county": "Allegheny",
+          "category": "higher_ed",
+          "description": "Hillman Library renovations: commissioning",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ project list",
+          "sourceUrl": "https://www.sitelogiq.com/projects/"
+        },
+        {
+          "ownerName": "Kutztown University",
+          "county": "Berks",
+          "category": "higher_ed",
+          "description": "Technical proposal for commissioning services through the Department of General Services (bid)",
+          "when": null,
+          "year": null,
+          "value": null,
+          "sourceTitle": "SitelogIQ Kutztown University proposal (DGS)",
+          "sourceUrl": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/documents/sitelogiq%20technical%20proposal%20dgs%20408-0068-001-kutztown%20univ.pdf"
+        }
+      ]
+    },
+    {
+      "key": "ameresco",
+      "name": "Ameresco",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "veregy",
+      "name": "Veregy",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "johnson-controls",
+      "name": "Johnson Controls",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "siemens",
+      "name": "Siemens",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "trane",
+      "name": "Trane",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "noresco",
+      "name": "NORESCO",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    },
+    {
+      "key": "nypa",
+      "name": "NYPA",
+      "kind": "ESCO",
+      "competesWith": [
+        "QES"
+      ],
+      "source": "SPEC.md \u00a74.13 (name only)"
+    }
+  ]
+}
