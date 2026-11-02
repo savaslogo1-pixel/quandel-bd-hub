@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
 import { ActionForm } from "@/components/ActionForm";
@@ -39,7 +40,7 @@ export default async function BridgesPage({ searchParams }: { searchParams: Prom
       <PageHeader
         title="Bridges"
         sub="Bridge inventory for the P3 and bundling program (PCS with QCG). Filter, tick bridges and add them to a bundle; the bundle groups them by type and county and builds the estimate."
-        actions={canImport(user.role) && <Link className="btn" href="/bridges/import">Import a bridge list</Link>}
+        actions={<><ExportLinks table="bridges" />{canImport(user.role) && <Link className="btn" href="/bridges/import">Import a bridge list</Link>}</>}
       />
       {bundles.length > 0 && (
         <section className="mb-4 flex flex-wrap gap-2">

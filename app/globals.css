@@ -5,14 +5,22 @@
   --bg: #f3f5f8; --surface: #ffffff; --sunken: #e7ecf2; --line: #d2dae4; --ink: #12253d; --muted: #5a6a7d;
   --brand: #0063a8; --brand-ink: #ffffff; --brand-soft: #dceaf6; --gold: #f8be13; --gold-ink: #3a2b00; --gold-soft: #fdf0c8;
   --ok: #2c7a4b; --ok-soft: #dcefe3; --warn: #8a5d00; --warn-soft: #fbefc8; --bad: #b23a2c; --bad-soft: #f8dcd7;
-  --c-qcg: #0063a8; --c-qes: #2c7a4b; --c-pcs: #b5651d; --c-jvs: #7b4fb0; --c-pyr: #0e8a8a; --c-ent: #6b7684;
+  /* Company colors: validated categorical palette (dataviz reference slots, in this fixed order:
+     QCG blue, QES aqua, PCS orange, JVS violet, PYR magenta, ENT yellow). Light: CVD ΔE ≥ 9.2,
+     normal ΔE ≥ 19.6; QES/PYR/ENT sit below 3:1 on white, so charts always carry labels + a table.
+     --c-*-ink is the text color on a company fill. */
+  --c-qcg: #2a78d6; --c-qes: #1baf7a; --c-pcs: #eb6834; --c-jvs: #6250d6; --c-pyr: #e87ba4; --c-ent: #eda100;
+  --c-qcg-ink: #ffffff; --c-qes-ink: #0b0b0b; --c-pcs-ink: #0b0b0b; --c-jvs-ink: #ffffff; --c-pyr-ink: #0b0b0b; --c-ent-ink: #0b0b0b;
+  --grid: #e1e0d9; --axis: #c3c2b7;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0c141e; --surface: #13202f; --sunken: #09101a; --line: #24364c; --ink: #e3eaf2; --muted: #93a4b8;
     --brand: #5aaae8; --brand-ink: #08131f; --brand-soft: #16314c; --gold: #f8c53a; --gold-ink: #2a1f00; --gold-soft: #3a2e0e;
     --ok: #6cc48f; --ok-soft: #173326; --warn: #e5bd52; --warn-soft: #352b10; --bad: #f08a7c; --bad-soft: #3b1d19;
-    --c-qcg: #5aaae8; --c-qes: #6cc48f; --c-pcs: #e39a5a; --c-jvs: #b994e0; --c-pyr: #4fc9c9; --c-ent: #9aa6b3;
+    --c-qcg: #3987e5; --c-qes: #199e70; --c-pcs: #d95926; --c-jvs: #9085e9; --c-pyr: #d55181; --c-ent: #c98500;
+    --c-qcg-ink: #0b0b0b; --c-qes-ink: #0b0b0b; --c-pcs-ink: #0b0b0b; --c-jvs-ink: #0b0b0b; --c-pyr-ink: #0b0b0b; --c-ent-ink: #0b0b0b;
+    --grid: #2c3a4c; --axis: #3c4e64;
     color-scheme: dark;
   }
 }
@@ -52,10 +60,9 @@ a { color: var(--brand); }
 .chip-bad { background: var(--bad-soft); color: var(--bad); }
 .chip-gold { background: var(--gold); color: var(--gold-ink); }
 .chip-brand { background: var(--brand-soft); color: var(--brand); }
-.co { display: inline-flex; font-family: var(--font-mono); font-size: 10.5px; padding: 1px 6px; border-radius: 3px; color: #fff; letter-spacing: .03em; }
-@media (prefers-color-scheme: dark) { .co { color: #0b1520; } }
-.co-QCG { background: var(--c-qcg); } .co-QES { background: var(--c-qes); } .co-PCS { background: var(--c-pcs); }
-.co-JVS { background: var(--c-jvs); } .co-PYR { background: var(--c-pyr); } .co-ENT { background: var(--c-ent); }
+.co { display: inline-flex; font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; padding: 1px 6px; border-radius: 3px; letter-spacing: .03em; }
+.co-QCG { background: var(--c-qcg); color: var(--c-qcg-ink); } .co-QES { background: var(--c-qes); color: var(--c-qes-ink); } .co-PCS { background: var(--c-pcs); color: var(--c-pcs-ink); }
+.co-JVS { background: var(--c-jvs); color: var(--c-jvs-ink); } .co-PYR { background: var(--c-pyr); color: var(--c-pyr-ink); } .co-ENT { background: var(--c-ent); color: var(--c-ent-ink); }
 .conf { color: var(--warn); font-family: var(--font-mono); font-size: 12px; }
 
 .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }

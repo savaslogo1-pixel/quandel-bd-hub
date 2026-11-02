@@ -6,3 +6,8 @@ prisma/*.db
 prisma/*.db-journal
 next-env.d.ts
 *.tsbuildinfo
+shadow.db
+shadow.db-journal
+prisma/shadow.db*
+prisma/e2e-*.db*
+prisma/link-test.db*

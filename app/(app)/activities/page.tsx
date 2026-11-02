@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { Prisma } from "@prisma/client";
 import { Empty, PageHeader } from "@/components/ui";
@@ -25,7 +26,7 @@ export default async function ActivitiesPage({ searchParams }: { searchParams: P
   const filtered = Object.values(sp).some(Boolean);
   return (
     <>
-      <PageHeader title="Activities" sub="Calls, meetings, site walks, board meetings and more, newest first." actions={canLogActivity(user.role) && <Link className="btn btn-primary" href="/activities/new">Log activity</Link>} />
+      <PageHeader title="Activities" sub="Calls, meetings, site walks, board meetings and more, newest first." actions={<><ExportLinks table="activities" />{canLogActivity(user.role) && <Link className="btn btn-primary" href="/activities/new">Log activity</Link>}</>} />
       <form className="filters" method="get">
         <select name="type" defaultValue={sp.type ?? ""}><option value="">All types</option>{types.map((t) => <option key={t}>{t}</option>)}</select>
         <select name="co" defaultValue={sp.co ?? ""}><option value="">All companies</option>{cos.map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}</select>

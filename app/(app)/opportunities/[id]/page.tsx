@@ -11,7 +11,7 @@ import { fmtDate, money, ymd } from "@/lib/format";
 import { canDecideGoNoGo, canEditOpportunities, canLogActivity } from "@/lib/permissions";
 import {
   DISCLOSURE_LABELS, GO_NO_GO_LABELS, OUTCOME_LABELS, STAGES, checklistFor, complianceFlags, deliveryLabel,
-  isJointQES, isNySchool, needsProcIndependence, stageName, weightedValue,
+  isJointQES, isNySchool, isNyStateProcurement, needsProcIndependence, stageName, weightedValue,
 } from "@/lib/pipeline";
 import { suggestCompanies } from "@/lib/routing";
 import { requireUser } from "@/lib/session";
@@ -227,6 +227,18 @@ export default async function OppPage({ params, searchParams }: { params: Promis
                     <input type="checkbox" name="aeNoConflictCert" defaultChecked={!!o.aeNoConflictCertAt} />
                     <span>A/E of record no-conflict certification received (8 NYCRR § 155.20){o.aeNoConflictCertAt && <span className="muted text-xs"> · {fmtDate(o.aeNoConflictCertAt)}</span>}</span>
                   </label>
+                )}
+                {o.stage >= 6 && (
+                  <label className="check full">
+                    <input type="checkbox" name="tradeSecretsMarked" defaultChecked={o.tradeSecretsMarked} />
+                    <span>Trade secrets and confidential pricing marked on the submission (PA Right-to-Know / NY FOIL)</span>
+                  </label>
+                )}
+                {isNyStateProcurement(g) && (
+                  <>
+                    <label className="check full"><input type="checkbox" name="restrictedPeriod" defaultChecked={o.restrictedPeriod} /> <span>NY restricted period in effect (State Finance Law §§ 139-j/k): contact only the designated contacts from RFP to award</span></label>
+                    <label className="field full"><span>Designated contacts</span><input name="designatedContacts" defaultValue={o.designatedContacts ?? ""} /></label>
+                  </>
                 )}
               </ActionForm>
             ) : null}

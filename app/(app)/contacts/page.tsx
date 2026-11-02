@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { DecisionRole, Prisma } from "@prisma/client";
 import { Empty, PageHeader, Strength } from "@/components/ui";
@@ -29,7 +30,7 @@ export default async function ContactsPage({ searchParams }: { searchParams: Pro
   const filtered = Object.values(sp).some(Boolean);
   return (
     <>
-      <PageHeader title="Contacts" sub="Decision-makers and influencers at every owner. Sorted by next touch." actions={canEditAccounts(user.role) && <Link className="btn btn-primary" href="/contacts/new">Add contact</Link>} />
+      <PageHeader title="Contacts" sub="Decision-makers and influencers at every owner. Sorted by next touch." actions={<><ExportLinks table="contacts" />{canEditAccounts(user.role) && <Link className="btn btn-primary" href="/contacts/new">Add contact</Link>}</>} />
       <form className="filters" method="get">
         <input name="q" type="search" placeholder="Search name, title, email, organization" defaultValue={sp.q} />
         <select name="role" defaultValue={sp.role ?? ""}><option value="">All decision roles</option>{DECISION_ROLES.map((r) => <option key={r} value={r}>{DECISION_ROLE_LABELS[r]}</option>)}</select>

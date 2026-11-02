@@ -73,6 +73,10 @@ model User {
   capstoneEvents       CapstoneEvent[]
   createdProjects      Project[]                  @relation("ProjectCreatedBy")
   createdBundles       BridgeBundle[]
+  giftsGiven           GiftEntry[]                @relation("GiftGiver")
+  giftsApproved        GiftEntry[]                @relation("GiftApprover")
+  giftsReviewed        GiftEntry[]                @relation("GiftReviewer")
+  lobbying             LobbyingEntry[]            @relation("LobbyingBy")
   createdApprovalSteps ApprovalStep[]
 
   // NextAuth (Microsoft 365 sign-in)
@@ -222,6 +226,7 @@ model Organization {
   projects           Project[]
   competitorProjects CompetitorProject[]
   bridges            Bridge[]            @relation("BridgeOwnerOrg")
+  gifts              GiftEntry[]
 
   contacts      Contact[]
   activities    Activity[]
@@ -282,6 +287,7 @@ model Contact {
   createdBy     User?          @relation("ContactCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
   approvalSteps ApprovalStep[]
   referenceFor  Project[]      @relation("ProjectReference")
+  giftsReceived GiftEntry[]
 
   @@index([orgId])
   @@index([nextTouch])
@@ -444,6 +450,11 @@ model Opportunity {
   guaranteedSavingsOverride Decimal? // annual guaranteed savings when not the sum of measures
   measures                  EnergyMeasure[]
   mvReports                 MvReport[]
+
+  // Records and procurement rules (SPEC §4.14)
+  tradeSecretsMarked Boolean @default(false) // trade secrets marked on the submission (RTK / FOIL)
+  restrictedPeriod   Boolean @default(false) // NY State Finance Law §§ 139-j/k restricted period in effect
+  designatedContacts String? // the agency's designated contacts during the restricted period
 
   // Competitors (SPEC §4.13): who we're up against, and who won when we lost
   rivalCompetitors Competitor[]   @relation("OppCompetitors")
@@ -1167,6 +1178,54 @@ model CompetitorProject {
 
   @@index([orgId])
   @@index([competitorId])
+}
+
+// ───────────────────────── Compliance log (SPEC §4.14) — Phase 8 ─────────────────────────
+
+/// Gift or hospitality given to someone at a public owner (PA Ethics Act; NY GML § 805-a; local codes).
+model GiftEntry {
+  id                 String        @id @default(cuid())
+  date               DateTime
+  kind               String // gift | meal | event | travel | other
+  description        String
+  value              Decimal
+  state              String // jurisdiction whose rules apply
+  recipientName      String
+  recipientContactId String?
+  recipientContact   Contact?      @relation(fields: [recipientContactId], references: [id], onDelete: SetNull)
+  orgId              String?
+  org                Organization? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+  giverId            String
+  giver              User          @relation("GiftGiver", fields: [giverId], references: [id], onDelete: Cascade)
+  approverId         String? // who approved it inside Quandel
+  approver           User?         @relation("GiftApprover", fields: [approverId], references: [id], onDelete: SetNull)
+  reviewedById       String? // compliance review
+  reviewedBy         User?         @relation("GiftReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt         DateTime?
+  reviewNote         String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([date])
+  @@index([giverId])
+}
+
+/// Lobbying time and expense, by jurisdiction, toward registration thresholds.
+model LobbyingEntry {
+  id           String   @id @default(cuid())
+  date         DateTime
+  jurisdiction String // state code
+  hours        Decimal
+  expenses     Decimal  @default(0)
+  subject      String // bill, program or decision lobbied on
+  officials    String? // who was contacted
+  notes        String?
+  userId       String
+  user         User     @relation("LobbyingBy", fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([jurisdiction, date])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

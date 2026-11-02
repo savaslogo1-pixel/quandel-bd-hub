@@ -1,5 +1,43 @@
 # Changelog
 
+## Phase 8 — 2026-11-02
+- Compliance log (SPEC §4.14), under Compliance in the menu:
+  - Open flags in one list: procurement fairness ("did we help write specs"), related-company
+    disclosure, procurement independence, NY A/E certification, go/no-go, trade secrets not
+    marked on a submission (new), NY State Finance Law §§ 139-j/k restricted period not recorded
+    for state-agency pursuits (new), financing talks without the owner's financial advisor,
+    gifts over a jurisdiction's limit / without an approver / awaiting review, lobbying near
+    (80%) or over a registration threshold.
+  - Gifts and hospitality: date, kind, value, recipient, organization, jurisdiction, internal
+    approver (not the giver), compliance review with a note. Limits read from State rules
+    (NY $75; PA and others [confirm]).
+  - Lobbying: hours and compensation + expenses by jurisdiction, year-to-date use of each
+    registration threshold from State rules (NY $5,000; PA [confirm]).
+  - Municipal-advisor log of every financing discussion and the advisor it went to.
+  - Attestations: who has signed this year's ethics attestation; logging gifts or lobbying
+    requires it. Reviewers (compliance, BD directors, admins) see everyone's entries; others
+    see their own.
+  - Opportunity Compliance panel records trade secrets marked and the NY restricted period with
+    designated contacts; logging an activity during a restricted period shows a warning.
+- Dashboards (SPEC §11), under Dashboard:
+  - Enterprise: open opportunities, value, weighted pipeline, joint pursuits, win rate, Tier A
+    coverage, compliance flags; weighted pipeline by company and phase (chart + company × stage
+    table with all companies listed); win rate by delivery method; cross-sell pairs; funding for
+    clients (planned, applied, awarded, denied) and program deadlines in 90 days; Tier A coverage
+    with the gap list; training completion by company, quiz average, deliverables awaiting
+    review; compliance flags and lobbying vs thresholds.
+  - Per company: QCG bid calendar and CM interviews; QES audits in progress, guaranteed savings
+    under management, M&V due; PCS DOT lettings and bridge bundles with estimates; JVS MD / DC /
+    VA pipeline; PYR shared figures (its metrics are [confirm] in the spec).
+  - Company colors moved to a validated categorical palette (colorblind-safe in light and dark);
+    pipeline phases use a validated four-step blue ramp. Every chart has direct value labels,
+    hover titles and a table.
+- Exports (SPEC §11): CSV and Excel for organizations, contacts, activities, opportunities,
+  programs, capital stacks, projects, competitor projects, bridges, municipal-advisor log,
+  compliance flags, training gradebook, and (reviewers only) gifts and lobbying. Cells that
+  start with = + - @ are prefixed so spreadsheets don't run them as formulas.
+- Tests: compliance thresholds, new flags, export safety (99 checks in total).
+
 ## Phase 7 — 2026-11-02
 - QES energy module (SPEC §4.10): energy baseline on organizations (utility accounts, kWh,
   therms, spend, EUI, baseline years); Energy tab on opportunities with measures (cost,

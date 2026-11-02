@@ -46,3 +46,7 @@ export const canImport = (r: Role) => IMPORTERS.includes(r);
 /** Run training: write quizzes, edit sessions, assign, review deliverables, score capstones (SPEC §10.4). */
 const FACILITATORS: Role[] = ["ADMIN", "BD_DIRECTOR"];
 export const canFacilitate = (r: Role) => FACILITATORS.includes(r);
+
+/** See and review everyone's gifts, lobbying and flags (SPEC §1: Compliance reviews the ethics log). */
+const COMPLIANCE_REVIEWERS: Role[] = ["ADMIN", "BD_DIRECTOR", "COMPLIANCE"];
+export const canReviewCompliance = (r: Role) => COMPLIANCE_REVIEWERS.includes(r);

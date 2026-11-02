@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import { CompanyTags, Empty, PageHeader } from "@/components/ui";
 import { prisma } from "@/lib/db";
@@ -19,7 +20,7 @@ export default async function CompetitorsPage() {
   });
   return (
     <>
-      <PageHeader title="Competitors" sub="Who we compete with, their public work with owners, and our record against them. Projects link to organizations in the CRM so their activity shows on each account." actions={canEditAccounts(user.role) && <Link className="btn btn-primary" href="/competitors/new">Add competitor</Link>} />
+      <PageHeader title="Competitors" sub="Who we compete with, their public work with owners, and our record against them. Projects link to organizations in the CRM so their activity shows on each account." actions={<><ExportLinks table="competitor-projects" />{canEditAccounts(user.role) && <Link className="btn btn-primary" href="/competitors/new">Add competitor</Link>}</>} />
       {list.length ? (
         <div className="tbl-wrap">
           <table className="tbl">

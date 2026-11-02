@@ -43,7 +43,12 @@ export type GateOpp = {
   aeNoConflictCertAt: Date | null;
   companyCodes: string[]; // lead + support
   org: { state: string; orgType: string };
+  tradeSecretsMarked?: boolean;
+  restrictedPeriod?: boolean;
 };
+
+/** NY State Finance Law §§ 139-j/k: state-agency procurements have a restricted period from RFP to award. */
+export const isNyStateProcurement = (o: Pick<GateOpp, "org">) => o.org.state === "NY" && o.org.orgType === "state agency";
 
 export const involvesQES = (o: Pick<GateOpp, "companyCodes">) => o.companyCodes.includes("QES");
 /** SPEC §9: QES and a construction company both on one owner → disclosure required. */
@@ -84,6 +89,8 @@ export function complianceFlags(o: GateOpp): { level: "bad" | "warn"; text: stri
   if (needsProcIndependence(o) && o.stage >= 5 && !o.procIndependenceAt) f.push({ level: "warn", text: "Procurement independence not logged" });
   if (isNySchool(o) && o.stage >= 5 && !o.aeNoConflictCertAt) f.push({ level: "warn", text: "A/E no-conflict certification missing" });
   if (o.stage >= 6 && o.goNoGo !== "GO") f.push({ level: "warn", text: "No Go decision on record" });
+  if (o.stage >= 7 && o.stage <= 9 && o.tradeSecretsMarked === false) f.push({ level: "warn", text: "Trade secrets not marked on the submission" });
+  if (isNyStateProcurement(o) && o.stage >= 6 && o.stage <= 8 && o.restrictedPeriod === false) f.push({ level: "warn", text: "NY state procurement: record the restricted period and designated contacts" });
   return f;
 }
 

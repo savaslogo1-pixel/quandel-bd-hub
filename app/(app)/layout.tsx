@@ -14,6 +14,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const unread = await prisma.notification.count({ where: { userId: user.id, readAt: null } });
   const links: [string, string][] = [
     ["/", "Home"],
+    ["/dashboard", "Dashboard"],
     ["/pipeline", "Pipeline"],
     ["/organizations", "Organizations"],
     ["/programs", "Programs"],
@@ -25,7 +26,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     ["/contacts", "Contacts"],
     ["/activities", "Activities"],
   ];
-  links.push(["/rules", "State rules"]);
+  links.push(["/compliance", "Compliance"], ["/rules", "State rules"]);
   if (isAdmin(user.role)) links.push(["/admin", "Admin"]);
   return (
     <>

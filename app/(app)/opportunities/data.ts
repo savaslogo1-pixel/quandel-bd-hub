@@ -14,6 +14,7 @@ type WithRels = {
   lossReason: string | null; helpedWriteSpecs: boolean | null; procIndependenceAt: Date | null;
   disclosureDecision: GateOpp["disclosureDecision"]; aeNoConflictCertAt: Date | null;
   leadCompany: { code: string }; supportCompanies: { code: string }[]; org: { state: string; orgType: string };
+  tradeSecretsMarked?: boolean; restrictedPeriod?: boolean;
 };
 
 export function toGate(o: WithRels): GateOpp {
@@ -23,6 +24,7 @@ export function toGate(o: WithRels): GateOpp {
     aeNoConflictCertAt: o.aeNoConflictCertAt,
     companyCodes: [o.leadCompany.code, ...o.supportCompanies.map((c) => c.code)],
     org: { state: o.org.state, orgType: o.org.orgType },
+    tradeSecretsMarked: o.tradeSecretsMarked, restrictedPeriod: o.restrictedPeriod,
   };
 }
 

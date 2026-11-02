@@ -15,13 +15,19 @@ export async function ActivityForm({ action, orgId, activity, defaultContactId, 
     loadCompanies(),
     prisma.contact.findMany({ where: { orgId }, orderBy: { name: "asc" } }),
     prisma.contact.findMany({ where: { function: "financial advisor" }, include: { org: { select: { name: true } } }, orderBy: { name: "asc" } }),
-    prisma.opportunity.findMany({ where: { orgId }, select: { id: true, name: true }, orderBy: { name: "asc" } }),
+    prisma.opportunity.findMany({ where: { orgId }, select: { id: true, name: true, restrictedPeriod: true, designatedContacts: true, stage: true }, orderBy: { name: "asc" } }),
   ]);
+  const restricted = opps.filter((x) => x.restrictedPeriod && x.stage < 9);
   const a = activity;
   const today = new Date().toISOString().slice(0, 10);
   return (
     <ActionForm action={action} submitLabel={a ? "Save changes" : "Log activity"}>
       {fromOpp && <input type="hidden" name="from" value="opp" />}
+      {restricted.length > 0 && (
+        <p className="banner banner-warn full mb-0" role="note">
+          <b>Restricted period.</b> {restricted.map((x) => x.name).join(", ")} is in a NY procurement restricted period (State Finance Law §§ 139-j/k). Contact only the designated contacts{restricted[0].designatedContacts ? `: ${restricted.map((x) => x.designatedContacts).filter(Boolean).join("; ")}` : ""}. Other contacts must be logged and may disqualify the bid.
+        </p>
+      )}
       <SelectField name="type" label="Type" required options={types} defaultValue={a?.type ?? "call"} blank={null} />
       <TextField name="occurredAt" label="Date" type="date" required defaultValue={a ? ymd(a.occurredAt) : today} />
       <SelectField name="opportunityId" label="Opportunity" hint={opps.length ? undefined : "none at this organization yet"} options={opps.map((x) => [x.id, x.name])} defaultValue={a ? a.opportunityId : defaultOppId} />

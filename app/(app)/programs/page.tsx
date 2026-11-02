@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { Prisma, ProgramType } from "@prisma/client";
 import { Confirm, Empty, PageHeader, VerifiedBadge } from "@/components/ui";
@@ -34,7 +35,7 @@ export default async function ProgramsPage({ searchParams }: { searchParams: Pro
       <PageHeader
         title="Funding program library"
         sub="One record per program, by state. Blank fields show [confirm] until someone fills them from the current guidelines and marks the program verified."
-        actions={canEditPrograms(user.role) && <Link className="btn btn-primary" href="/programs/new">Add program</Link>}
+        actions={<><ExportLinks table="programs" />{canEditPrograms(user.role) && <Link className="btn btn-primary" href="/programs/new">Add program</Link>}</>}
       />
       {needs > 0 && !sp.ver && <p className="banner banner-warn">{needs} of {programs.length} programs here are unverified or more than 12 months old. <Link href="/programs?ver=needs">Show them</Link></p>}
       <form className="filters" method="get">

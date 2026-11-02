@@ -82,6 +82,13 @@ Bridges → Import; bundle estimates use only the costs estimating enters (`lib/
 `data/competitors.json` seeds competitors and their published projects; projects link to
 organizations automatically after each organization import.
 
+## Compliance, dashboards and exports
+
+Gift limits and lobbying thresholds are State rules (`NY.gift_limit`, `NY.lobbying_threshold`,
+`PA.lobbying_threshold`…); add a state's values there. Flags are assembled in
+`lib/complianceData.ts`. Dashboards read from `lib/dashboard.ts`. Every export is defined in
+`lib/export.ts` and served at `/api/export/<table>?format=csv|xlsx`.
+
 ## Tests
 
 ```bash
@@ -97,6 +104,6 @@ npm test
 | BD lead, QES project developer, Estimator | Add and edit organizations, contacts, opportunities, programs and capital stacks; move stages; log activities |
 | Trainee | Read everything; log activities; take training |
 | Leadership | Read everything; record go/no-go decisions |
-| Compliance | Read everything; edit and verify state rules |
+| Compliance | Read everything; review gifts and lobbying; export the ethics log; edit and verify state rules |
 
 Anyone can edit or delete an activity they logged.

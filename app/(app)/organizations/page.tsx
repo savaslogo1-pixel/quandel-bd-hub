@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { Prisma, OrgStatus, StateCode, Tier } from "@prisma/client";
 import { CompanyTags, Empty, PageHeader } from "@/components/ui";
@@ -59,6 +60,7 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
         title="Organizations"
         sub="Owners and partners. Each one carries company tags, a tier and its board's meeting pattern."
         actions={<>
+          <ExportLinks table="organizations" />
           {canImport(user.role) && <Link className="btn" href="/admin/import">Import</Link>}
           {canEditAccounts(user.role) && <Link className="btn btn-primary" href="/organizations/new">Add organization</Link>}
         </>}

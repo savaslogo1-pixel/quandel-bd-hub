@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { DeliveryMethod, Prisma, StateCode } from "@prisma/client";
 import { Empty, PageHeader } from "@/components/ui";
@@ -48,7 +49,7 @@ export default async function PipelinePage({ searchParams }: { searchParams: Pro
       <PageHeader
         title="Pipeline"
         sub="One shared stage list. Each delivery method adds its own checklist. Drag a card to move it; moves into Pursuit and beyond check go/no-go and compliance first."
-        actions={canEditOpportunities(user.role) && <Link className="btn btn-primary" href="/opportunities/new">Add opportunity</Link>}
+        actions={<><ExportLinks table="opportunities" />{canEditOpportunities(user.role) && <Link className="btn btn-primary" href="/opportunities/new">Add opportunity</Link>}</>}
       />
       <form className="filters" method="get">
         <input name="q" type="search" placeholder="Search opportunities or owners" defaultValue={sp.q} />

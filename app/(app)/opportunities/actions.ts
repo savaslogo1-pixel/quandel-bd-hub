@@ -194,6 +194,8 @@ export async function setCompliance(id: string, _: FormState, fd: FormData): Pro
       aeNoConflictCertAt: ae ? o.aeNoConflictCertAt ?? new Date() : null,
       disclosureDecision: dd,
       disclosureNote,
+      ...(fd.has("restrictedPeriod") || fd.has("designatedContacts") || o.restrictedPeriod ? { restrictedPeriod: bool(fd, "restrictedPeriod"), designatedContacts: str(fd, "designatedContacts") } : {}),
+      ...(o.stage >= 6 ? { tradeSecretsMarked: bool(fd, "tradeSecretsMarked") } : {}),
       ...(dd !== o.disclosureDecision || disclosureNote !== o.disclosureNote ? { disclosureAt: dd ? new Date() : null, disclosureById: dd ? user.id : null } : {}),
     },
   });

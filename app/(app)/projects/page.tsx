@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import type { DeliveryMethod, Prisma, StateCode } from "@prisma/client";
 import { CompanyTags, Empty, PageHeader } from "@/components/ui";
@@ -37,7 +38,7 @@ export default async function ProjectsPage({ searchParams }: { searchParams: Pro
   const filtered = Object.values(sp).some(Boolean);
   return (
     <>
-      <PageHeader title="Projects and references" sub='Won and completed work across all five companies. Search like a qualification package: owner type, delivery method, size, year. For example, school district + GESA / EPC + $5M.' actions={canEditAccounts(user.role) && <Link className="btn btn-primary" href="/projects/new">Add project</Link>} />
+      <PageHeader title="Projects and references" sub='Won and completed work across all five companies. Search like a qualification package: owner type, delivery method, size, year. For example, school district + GESA / EPC + $5M.' actions={<><ExportLinks table="projects" />{canEditAccounts(user.role) && <Link className="btn btn-primary" href="/projects/new">Add project</Link>}</>} />
       <form className="filters" method="get">
         <input type="search" name="q" placeholder="Search name, owner, results" defaultValue={sp.q} />
         <select name="co" defaultValue={sp.co ?? ""}><option value="">All companies</option>{cos.map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}</select>

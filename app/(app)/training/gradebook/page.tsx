@@ -1,3 +1,4 @@
+import { ExportLinks } from "@/components/ExportLinks";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CompanyTags, PageHeader } from "@/components/ui";
@@ -30,7 +31,7 @@ export default async function Gradebook({ searchParams }: { searchParams: Promis
   })();
   return (
     <>
-      <PageHeader title="Gradebook" sub="Completion, quiz scores and deliverables by person. A cell shows the session's state: ✓ complete, the best quiz score, or what's still open." />
+      <PageHeader title="Gradebook" sub="Completion, quiz scores and deliverables by person. A cell shows the session's state: ✓ complete, the best quiz score, or what's still open." actions={<ExportLinks table="training" />} />
       <form className="filters" method="get">
         <select name="ed" defaultValue={ed?.code}>{editions.map((e) => <option key={e.id} value={e.code}>{e.title}</option>)}</select>
         <select name="co" defaultValue={sp.co ?? ""}><option value="">All companies</option>{cos.map((c) => <option key={c.code} value={c.code}>{c.code}</option>)}</select>
