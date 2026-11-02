@@ -42,3 +42,7 @@ export const canEditRules = (r: Role) => RULE_EDITORS.includes(r);
 /** Run imports (SPEC §6 Admin: imports). */
 const IMPORTERS: Role[] = ["ADMIN", "BD_DIRECTOR"];
 export const canImport = (r: Role) => IMPORTERS.includes(r);
+
+/** Run training: write quizzes, edit sessions, assign, review deliverables, score capstones (SPEC §10.4). */
+const FACILITATORS: Role[] = ["ADMIN", "BD_DIRECTOR"];
+export const canFacilitate = (r: Role) => FACILITATORS.includes(r);

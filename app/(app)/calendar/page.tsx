@@ -40,7 +40,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
     <>
       <PageHeader
         title="Calendar"
-        sub={`Grant deadlines, bid dates, board meetings, approval steps and next steps in one list: two weeks back, ${months} months ahead. Board meetings show for Tier A organizations and organizations with open opportunities.`}
+        sub={`Grant deadlines, bid dates, board meetings, approval steps and next steps and training dates in one list: two weeks back, ${months} months ahead. Board meetings show for Tier A organizations and organizations with open opportunities.`}
       />
       <div className="filters">
         {(Object.keys(CAL_TYPES) as CalType[]).map((t) => (

@@ -1,13 +1,14 @@
 import { prisma } from "./db";
 import { addDays, meetingsBetween, parsePattern } from "./meetings";
 
-export type CalType = "grant" | "bid" | "board" | "approval" | "next";
+export type CalType = "grant" | "bid" | "board" | "approval" | "next" | "training";
 export const CAL_TYPES: Record<CalType, { label: string; color: string }> = {
   grant: { label: "Grant deadline", color: "#c99400" },
   bid: { label: "Bid / procurement date", color: "var(--brand)" },
   board: { label: "Board meeting", color: "#7b4fb0" },
   approval: { label: "Approval step", color: "#0e8a8a" },
   next: { label: "Next step", color: "var(--ok)" },
+  training: { label: "Training", color: "#b5651d" },
 };
 
 export type CalEvent = { date: Date; type: CalType; title: string; sub: string; href: string; companies: string[] };
@@ -20,12 +21,13 @@ const KEY_DATES = [
 /**
  * One calendar (SPEC §6): grant deadlines, bid dates, board meetings, approval steps and next steps.
  * Board meetings are listed for Tier A organizations and organizations with open opportunities.
- * Training sessions join in Phase 6.
+ * Training: capstone dates and training due dates (assignments to the person or their companies when "mine").
  */
 export async function calendarEvents(from: Date, to: Date, opts: { userId?: string } = {}): Promise<CalEvent[]> {
   const inRange = { gte: from, lte: to };
   const mineOpp = opts.userId ? { OR: [{ ownerId: opts.userId }, { createdById: opts.userId }] } : {};
-  const [programs, opps, steps, orgs, acts] = await Promise.all([
+  const me = opts.userId ? await prisma.user.findUnique({ where: { id: opts.userId }, select: { companies: { select: { id: true } } } }) : null;
+  const [programs, opps, steps, orgs, acts, capstones, assignments] = await Promise.all([
     prisma.fundingProgram.findMany({
       where: { nextDeadline: inRange, ...(opts.userId ? { stackRows: { some: { opportunity: mineOpp } } } : {}) },
       select: { id: true, name: true, jurisdiction: true, nextDeadline: true },
@@ -49,6 +51,11 @@ export async function calendarEvents(from: Date, to: Date, opts: { userId?: stri
       where: { nextStepDate: inRange, nextStepDone: false, nextStep: { not: null }, ...(opts.userId ? { createdById: opts.userId } : {}) },
       include: { org: { select: { name: true } }, companies: { select: { code: true } } },
     }),
+    prisma.capstoneEvent.findMany({ where: { scheduledAt: inRange }, include: { edition: true } }),
+    prisma.trainingAssignment.findMany({
+      where: { dueDate: inRange, ...(opts.userId ? { OR: [{ userId: opts.userId }, { companyId: { in: (me?.companies ?? []).map((c) => c.id) } }] } : {}) },
+      include: { session: { include: { edition: true } }, edition: true, user: { select: { name: true, email: true } }, company: { select: { code: true } } },
+    }),
   ]);
   const ev: CalEvent[] = [];
   for (const p of programs) ev.push({ date: p.nextDeadline!, type: "grant", title: `${p.name} deadline`, sub: p.jurisdiction, href: `/programs/${p.id}`, companies: [] });
@@ -70,5 +77,11 @@ export async function calendarEvents(from: Date, to: Date, opts: { userId?: stri
       ev.push({ date: d, type: "board", title: `${o.governingBody ?? "Board"} meeting`, sub: o.agendaDeadlineDays != null ? `${o.name} · agenda closes ${addDays(d, -o.agendaDeadlineDays).toISOString().slice(5, 10).replace("-", "/")}` : o.name, href: `/organizations/${o.id}?tab=map`, companies: o.companies.map((c) => c.code) });
   }
   for (const a of acts) ev.push({ date: a.nextStepDate!, type: "next", title: a.nextStep!, sub: a.org.name, href: `/activities/${a.id}`, companies: a.companies.map((c) => c.code) });
+  for (const c of capstones) ev.push({ date: c.scheduledAt!, type: "training", title: `Capstone: ${c.title}`, sub: `${c.edition.title} edition`, href: "/training/capstone", companies: [] });
+  for (const a of assignments) {
+    const what = a.session ? `${a.session.edition.code} Session ${a.session.code}: ${a.session.title}` : `${a.edition?.title} edition`;
+    const who = a.user ? a.user.name ?? a.user.email : a.company ? `everyone in ${a.company.code}` : "";
+    ev.push({ date: a.dueDate!, type: "training", title: `Training due: ${what}`, sub: who, href: a.sessionId ? `/training/sessions/${a.sessionId}` : "/training", companies: a.company ? [a.company.code] : [] });
+  }
   return ev.sort((a, b) => a.date.getTime() - b.date.getTime() || a.type.localeCompare(b.type));
 }

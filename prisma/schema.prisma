@@ -60,6 +60,17 @@ model User {
   notifications        Notification[]
   verifiedRules        StateRule[]                @relation("RuleVerifiedBy")
   importBatches        ImportBatch[]
+  sessionProgress      SessionProgress[]
+  quizAttempts         QuizAttempt[]
+  submissions          DeliverableSubmission[]    @relation("SubmissionBy")
+  reviews              DeliverableSubmission[]    @relation("SubmissionReviewer")
+  assignments          TrainingAssignment[]       @relation("AssignedTo")
+  assignedByMe         TrainingAssignment[]       @relation("AssignedBy")
+  certificates         Certificate[]
+  attestations         EthicsAttestation[]
+  ninetyDayPlan        NinetyDayPlan?
+  libraryItems         LibraryItem[]
+  capstoneEvents       CapstoneEvent[]
   createdApprovalSteps ApprovalStep[]
 
   // NextAuth (Microsoft 365 sign-in)
@@ -81,11 +92,12 @@ model Company {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
-  users                User[]         @relation("UserCompanies")
-  organizations        Organization[] @relation("OrgCompanies")
-  activities           Activity[]     @relation("ActivityCompanies")
-  leadOpportunities    Opportunity[]  @relation("OppLead")
-  supportOpportunities Opportunity[]  @relation("OppSupport")
+  users                User[]               @relation("UserCompanies")
+  organizations        Organization[]       @relation("OrgCompanies")
+  activities           Activity[]           @relation("ActivityCompanies")
+  leadOpportunities    Opportunity[]        @relation("OppLead")
+  supportOpportunities Opportunity[]        @relation("OppSupport")
+  trainingAssignments  TrainingAssignment[]
 }
 
 /// Admin-editable picklists (SPEC §6 Admin). Lists used in Phase 1:
@@ -670,6 +682,263 @@ model ImportBatch {
   updatedAt   DateTime @updatedAt
   createdById String?
   createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+}
+
+// ───────────────────────── Training: "Projects, Partners, Programs" (SPEC §10) — Phase 6 ─────────────────────────
+// Course → Edition (state) → Session → Module. Deck content is never copied in: sessions link to the decks.
+
+enum EditionStatus {
+  COMPLETE
+  PLANNED
+}
+
+model TrainingEdition {
+  id           String               @id @default(cuid())
+  code         String               @unique // PA, NY, MD…
+  title        String
+  status       EditionStatus        @default(PLANNED)
+  sortOrder    Int                  @default(0)
+  sessions     TrainingSession[]
+  certificates Certificate[]
+  assignments  TrainingAssignment[]
+  capstones    CapstoneEvent[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+/// What a session's deliverable is built with (SPEC §10.2).
+enum DeliverableKind {
+  LINK // a document or file
+  CAPITAL_STACK // built with the real capital-stack tool on a practice opportunity
+  APPROVALS // built with the real approvals tool
+  CAPSTONE // scored on the 100-point rubric
+}
+
+model TrainingSession {
+  id               String           @id @default(cuid())
+  editionId        String
+  edition          TrainingEdition  @relation(fields: [editionId], references: [id], onDelete: Cascade)
+  code             String // "1", "1B", "2"…
+  title            String
+  sortOrder        Int              @default(0)
+  deckUrl          String?
+  notesUrl         String? // speaker notes
+  glossaryUrl      String?
+  templateUrl      String? // deliverable template
+  deliverableTitle String?
+  deliverableKind  DeliverableKind?
+  applyIt          String? // "Apply it" task in the live CRM
+  applyItHref      String? // where in the CRM to do it
+  passPct          Int              @default(80) // quiz pass mark (SPEC: 80%)
+
+  modules     TrainingModule[]
+  questions   QuizQuestion[]
+  attempts    QuizAttempt[]
+  progress    SessionProgress[]
+  submissions DeliverableSubmission[]
+  assignments TrainingAssignment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([editionId, code])
+}
+
+model TrainingModule {
+  id        String          @id @default(cuid())
+  sessionId String
+  session   TrainingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  title     String
+  url       String?
+  sortOrder Int             @default(0)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+/// Multiple-choice question, one correct answer. Facilitators write these in the app.
+model QuizQuestion {
+  id           String          @id @default(cuid())
+  sessionId    String
+  session      TrainingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  prompt       String
+  options      String // JSON array of answer texts
+  correctIndex Int
+  explanation  String?
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  createdById  String?
+}
+
+model QuizAttempt {
+  id        String          @id @default(cuid())
+  sessionId String
+  session   TrainingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers   String // JSON { questionId: chosenIndex }
+  correct   Int
+  total     Int
+  scorePct  Int
+  passed    Boolean
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([userId, sessionId])
+}
+
+model SessionProgress {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId      String
+  session        TrainingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  deckReviewedAt DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([userId, sessionId])
+}
+
+enum SubmissionStatus {
+  SUBMITTED
+  ACCEPTED
+  NEEDS_REVISION
+}
+
+model DeliverableSubmission {
+  id              String           @id @default(cuid())
+  sessionId       String
+  session         TrainingSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User             @relation("SubmissionBy", fields: [userId], references: [id], onDelete: Cascade)
+  link            String?
+  opportunityId   String? // when built in the CRM (capital stack, approvals, capstone)
+  fileName        String?
+  fileType        String?
+  fileData        Bytes?
+  note            String?
+  status          SubmissionStatus @default(SUBMITTED)
+  score           Int? // 0–100
+  rubricScores    String? // JSON { criterion: points } for rubric-scored deliverables
+  ethicsViolation Boolean          @default(false)
+  feedback        String? // coaching notes
+  reviewedById    String?
+  reviewedBy      User?            @relation("SubmissionReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([status])
+  @@index([userId, sessionId])
+}
+
+/// Assign a session (or a whole edition) to a person or to everyone tagged with a company.
+model TrainingAssignment {
+  id           String           @id @default(cuid())
+  sessionId    String?
+  session      TrainingSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  editionId    String?
+  edition      TrainingEdition? @relation(fields: [editionId], references: [id], onDelete: Cascade)
+  userId       String?
+  user         User?            @relation("AssignedTo", fields: [userId], references: [id], onDelete: Cascade)
+  companyId    String?
+  company      Company?         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  dueDate      DateTime?
+  note         String?
+  assignedById String?
+  assignedBy   User?            @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model Certificate {
+  id        String          @id @default(cuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  editionId String
+  edition   TrainingEdition @relation(fields: [editionId], references: [id], onDelete: Cascade)
+  issuedAt  DateTime        @default(now())
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([userId, editionId])
+}
+
+/// Annual ethics attestation (required before logging gifts or lobbying).
+model EthicsAttestation {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  year       Int
+  statement  String // the text that was attested, as shown at the time
+  attestedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, year])
+}
+
+model CapstoneEvent {
+  id             String          @id @default(cuid())
+  editionId      String
+  edition        TrainingEdition @relation(fields: [editionId], references: [id], onDelete: Cascade)
+  title          String
+  scheduledAt    DateTime?
+  minutesPerTeam Int?
+  notes          String?
+  teams          CapstoneTeam[]
+  createdById    String?
+  createdBy      User?           @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model CapstoneTeam {
+  id              String        @id @default(cuid())
+  eventId         String
+  event           CapstoneEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name            String
+  memberIds       String // JSON array of user ids
+  opportunityId   String? // the practice or live opportunity the plan is about
+  boardRoles      String? // JSON { role: name or user id } for the mock board
+  rubricScores    String? // JSON { criterion: points }
+  ethicsViolation Boolean       @default(false)
+  total           Int?
+  feedback        String?
+  scoredById      String?
+  scoredAt        DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+/// First-90-days tracker for new BD leads (SPEC §10.4).
+model NinetyDayPlan {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startDate DateTime
+  checks    String // JSON { itemKey: ISO date done }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Reference library (SPEC §10.3): glossary terms, cheat sheets, playbooks, guides, MA cards.
+model LibraryItem {
+  id          String   @id @default(cuid())
+  kind        String // glossary | cheat_sheet | playbook | guide | ma_card
+  title       String
+  body        String?
+  url         String?
+  states      String? // comma list: PA,NY
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([kind])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

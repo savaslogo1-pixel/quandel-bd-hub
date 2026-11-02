@@ -68,6 +68,13 @@ before anything is saved. Column setups for known workbooks live in
 `data/import_presets.json`; add one by listing the sheet, the headers it requires and the
 header-to-field mapping. Import rules are in `lib/import/orgs.ts`.
 
+## Training
+
+`data/training.json` seeds editions, sessions (with deck links), deliverables, the capstone
+rubric, mock-board roles, the first-90-days items and the attestation wording. Seeding only
+creates what's missing; facilitators edit sessions and write quizzes in the app.
+Facilitators are admins and BD directors.
+
 ## Tests
 
 ```bash
@@ -79,9 +86,9 @@ npm test
 | Role | Can |
 |---|---|
 | Admin | Everything, plus users, roles, company tags and dropdown lists |
-| BD director / Enterprise BD | Add and edit everything; record go/no-go; edit state rules; delete records |
+| BD director / Enterprise BD | Add and edit everything; record go/no-go; edit state rules; run training (quizzes, reviews, assignments, capstone); delete records |
 | BD lead, QES project developer, Estimator | Add and edit organizations, contacts, opportunities, programs and capital stacks; move stages; log activities |
-| Trainee | Read everything; log activities |
+| Trainee | Read everything; log activities; take training |
 | Leadership | Read everything; record go/no-go decisions |
 | Compliance | Read everything; edit and verify state rules |
 

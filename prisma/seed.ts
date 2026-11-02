@@ -5,6 +5,7 @@ import companies from "../data/companies.json";
 import picklists from "../data/picklists.json";
 import programs from "../data/programs.json";
 import stateRules from "../data/state_rules.json";
+import training from "../data/training.json";
 
 const prisma = new PrismaClient();
 
@@ -46,11 +47,31 @@ async function main() {
       },
     });
   }
+  // Training editions and sessions: create missing ones only (facilitator edits are kept).
+  for (const e of training.editions) {
+    const ed = await prisma.trainingEdition.upsert({
+      where: { code: e.code },
+      update: {},
+      create: { code: e.code, title: e.title, status: e.status as "COMPLETE" | "PLANNED", sortOrder: e.sortOrder },
+    });
+    for (const s of e.sessions) {
+      await prisma.trainingSession.upsert({
+        where: { editionId_code: { editionId: ed.id, code: s.code } },
+        update: {},
+        create: {
+          editionId: ed.id, code: s.code, title: s.title, sortOrder: s.sortOrder, deckUrl: s.deckUrl,
+          deliverableTitle: s.deliverableTitle, deliverableKind: s.deliverableKind as "LINK" | "CAPITAL_STACK" | "APPROVALS" | "CAPSTONE" | null,
+          applyIt: s.applyIt, applyItHref: s.applyItHref,
+        },
+      });
+    }
+  }
   const counts = {
     companies: await prisma.company.count(),
     picklistValues: await prisma.picklistValue.count(),
     programs: await prisma.fundingProgram.count(),
     stateRules: await prisma.stateRule.count(),
+    trainingSessions: await prisma.trainingSession.count(),
   };
   console.log("Seeded", counts);
 }

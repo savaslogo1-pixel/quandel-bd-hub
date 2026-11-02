@@ -1,0 +1,435 @@
+{
+  "source": "SPEC.md \u00a710; deck links are the published course pages",
+  "notes": "Seed only: creates editions and sessions that don't exist and never overwrites ones already in the database. Quizzes are written by facilitators in the app. Never copy deck content here.",
+  "course": "Projects, Partners, Programs",
+  "editions": [
+    {
+      "code": "PA",
+      "title": "Pennsylvania",
+      "status": "COMPLETE",
+      "sortOrder": 1,
+      "sessions": [
+        {
+          "code": "1",
+          "title": "Foundations",
+          "sortOrder": 1,
+          "deckUrl": "https://claude.ai/artifact/MCQUXEzw3hQ7P6jaad6SjJ",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "1B",
+          "title": "Institutional buyers",
+          "sortOrder": 2,
+          "deckUrl": "https://claude.ai/artifact/UPwtm4tbYsnjG5aVRtUaqi",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "2",
+          "title": "Who decides",
+          "sortOrder": 3,
+          "deckUrl": "https://claude.ai/artifact/W85x1AgWQTkUg7oydr2DAp",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": "Build the decision map for one Tier A target",
+          "applyItHref": "/organizations?tier=A&mine=1"
+        },
+        {
+          "code": "3",
+          "title": "Procurement and delivery",
+          "sortOrder": 4,
+          "deckUrl": "https://claude.ai/artifact/Sb6DNUFoAd7sZ8Et3DLnXy",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "4",
+          "title": "Positioning before the RFP",
+          "sortOrder": 5,
+          "deckUrl": "https://claude.ai/artifact/CpxkDqoxqkJhRri6kFY312",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "5",
+          "title": "Grant applications",
+          "sortOrder": 6,
+          "deckUrl": "https://claude.ai/artifact/QxNRAQjPQkDpHgxSN2sV25",
+          "deliverableTitle": "Grant readiness checklist",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "6",
+          "title": "State capital",
+          "sortOrder": 7,
+          "deckUrl": "https://claude.ai/artifact/6QFfHfMQAehVDvwh7HhRJQ",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "7",
+          "title": "Federal programs",
+          "sortOrder": 8,
+          "deckUrl": "https://claude.ai/artifact/T4fF4vwCWpUmwFFXaVKHs5",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "8",
+          "title": "Tax credits",
+          "sortOrder": 9,
+          "deckUrl": "https://claude.ai/artifact/RMEjYuKEamm4xCRzJfBzCN",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "9",
+          "title": "Capital stacking",
+          "sortOrder": 10,
+          "deckUrl": "https://claude.ai/artifact/Q2yaMm2wxRZ2iZtNNLRKAB",
+          "deliverableTitle": "Capital stack, built with the capital-stack tool on a practice opportunity",
+          "deliverableKind": "CAPITAL_STACK",
+          "applyIt": "Build a capital stack on a practice opportunity with the capital-stack tool",
+          "applyItHref": "/pipeline"
+        },
+        {
+          "code": "10",
+          "title": "P3 and bridges",
+          "sortOrder": 11,
+          "deckUrl": "https://claude.ai/artifact/NdtgVrinmTqmasnSfAhUuv",
+          "deliverableTitle": "Bridge bundle screening memo",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "11",
+          "title": "Energy savings contracts (QES)",
+          "sortOrder": 12,
+          "deckUrl": "https://claude.ai/artifact/F367iazeYQ5NZzE8cpC86S",
+          "deliverableTitle": "Energy opportunity brief",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "12",
+          "title": "Approvals, governance and ethics",
+          "sortOrder": 13,
+          "deckUrl": "https://claude.ai/artifact/GW1qMxHi2dmG1YNVBJvQSM",
+          "deliverableTitle": "Approvals checklist and backward timeline, built with the approvals tool",
+          "deliverableKind": "APPROVALS",
+          "applyIt": "Load your state's approvals template on a practice opportunity and schedule it back from a deadline",
+          "applyItHref": "/pipeline"
+        },
+        {
+          "code": "13",
+          "title": "Capstone",
+          "sortOrder": 14,
+          "deckUrl": "https://claude.ai/artifact/Xwp1tNvUCRAdwRTFeQnyCc",
+          "deliverableTitle": "Capstone plan, scored on the 100-point rubric",
+          "deliverableKind": "CAPSTONE",
+          "applyIt": null,
+          "applyItHref": null
+        }
+      ]
+    },
+    {
+      "code": "NY",
+      "title": "New York",
+      "status": "COMPLETE",
+      "sortOrder": 2,
+      "sessions": [
+        {
+          "code": "1",
+          "title": "Foundations",
+          "sortOrder": 1,
+          "deckUrl": "https://claude.ai/artifact/Ks3ud5z48KQgAERaqvGHPs",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "1B",
+          "title": "Institutional buyers",
+          "sortOrder": 2,
+          "deckUrl": "https://claude.ai/artifact/GrNsA7bv9d5tfjgeQ9CEBo",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "2",
+          "title": "Who decides",
+          "sortOrder": 3,
+          "deckUrl": "https://claude.ai/artifact/4sP7Dsxvvycf2YZFVUiXby",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": "Build the decision map for one Tier A target",
+          "applyItHref": "/organizations?tier=A&mine=1"
+        },
+        {
+          "code": "3",
+          "title": "Procurement and delivery",
+          "sortOrder": 4,
+          "deckUrl": "https://claude.ai/artifact/Puxxddfq9mcBqLrA2JbwYR",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "4",
+          "title": "Positioning before the RFP",
+          "sortOrder": 5,
+          "deckUrl": "https://claude.ai/artifact/CV1XifVMbi2Pf9C2ZvB9k8",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "5",
+          "title": "Grant applications",
+          "sortOrder": 6,
+          "deckUrl": "https://claude.ai/artifact/4QMTNLWvDS8GXnvBgqeNwZ",
+          "deliverableTitle": "Grant readiness checklist",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "6",
+          "title": "State capital",
+          "sortOrder": 7,
+          "deckUrl": "https://claude.ai/artifact/V5hTLimDYaL9xHuF9EDDov",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "7",
+          "title": "Federal programs",
+          "sortOrder": 8,
+          "deckUrl": "https://claude.ai/artifact/YSXNEw8F4z3yjLFZ39GVcw",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "8",
+          "title": "Tax credits",
+          "sortOrder": 9,
+          "deckUrl": "https://claude.ai/artifact/KMo8kDJtaaWeschuGrgr4G",
+          "deliverableTitle": null,
+          "deliverableKind": null,
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "9",
+          "title": "Capital stacking",
+          "sortOrder": 10,
+          "deckUrl": "https://claude.ai/artifact/XApHk84oNYHuizdYFnkoZ5",
+          "deliverableTitle": "Capital stack, built with the capital-stack tool on a practice opportunity",
+          "deliverableKind": "CAPITAL_STACK",
+          "applyIt": "Build a capital stack on a practice opportunity with the capital-stack tool",
+          "applyItHref": "/pipeline"
+        },
+        {
+          "code": "10",
+          "title": "P3 and bridges",
+          "sortOrder": 11,
+          "deckUrl": "https://claude.ai/artifact/Db742FL4ycCxyMtibkqocg",
+          "deliverableTitle": "Bridge bundle screening memo",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "11",
+          "title": "Energy savings contracts (QES)",
+          "sortOrder": 12,
+          "deckUrl": "https://claude.ai/artifact/V3dWSjwtKTpZE2EwhvaiKK",
+          "deliverableTitle": "Energy opportunity brief",
+          "deliverableKind": "LINK",
+          "applyIt": null,
+          "applyItHref": null
+        },
+        {
+          "code": "12",
+          "title": "Approvals, governance and ethics",
+          "sortOrder": 13,
+          "deckUrl": "https://claude.ai/artifact/3V2UHL8Z6po24ax3vx82XN",
+          "deliverableTitle": "Approvals checklist and backward timeline, built with the approvals tool",
+          "deliverableKind": "APPROVALS",
+          "applyIt": "Load your state's approvals template on a practice opportunity and schedule it back from a deadline",
+          "applyItHref": "/pipeline"
+        },
+        {
+          "code": "13",
+          "title": "Capstone",
+          "sortOrder": 14,
+          "deckUrl": "https://claude.ai/artifact/EzfBd8WLNcWG3BVHKW6iLX",
+          "deliverableTitle": "Capstone plan, scored on the 100-point rubric",
+          "deliverableKind": "CAPSTONE",
+          "applyIt": null,
+          "applyItHref": null
+        }
+      ]
+    },
+    {
+      "code": "MD",
+      "title": "Maryland",
+      "status": "PLANNED",
+      "sortOrder": 3,
+      "sessions": []
+    },
+    {
+      "code": "NJ",
+      "title": "New Jersey",
+      "status": "PLANNED",
+      "sortOrder": 4,
+      "sessions": []
+    },
+    {
+      "code": "DE",
+      "title": "Delaware",
+      "status": "PLANNED",
+      "sortOrder": 5,
+      "sessions": []
+    },
+    {
+      "code": "OH",
+      "title": "Ohio",
+      "status": "PLANNED",
+      "sortOrder": 6,
+      "sessions": []
+    },
+    {
+      "code": "WV",
+      "title": "West Virginia",
+      "status": "PLANNED",
+      "sortOrder": 7,
+      "sessions": []
+    },
+    {
+      "code": "VA",
+      "title": "Virginia",
+      "status": "PLANNED",
+      "sortOrder": 8,
+      "sessions": []
+    }
+  ],
+  "capstoneRubric": {
+    "criteria": [
+      {
+        "key": "stack",
+        "label": "Capital stack",
+        "max": 25
+      },
+      {
+        "key": "approvals",
+        "label": "Approvals",
+        "max": 20
+      },
+      {
+        "key": "delivery",
+        "label": "Delivery method",
+        "max": 15
+      },
+      {
+        "key": "need",
+        "label": "Need",
+        "max": 15
+      },
+      {
+        "key": "answers",
+        "label": "Answers to the board",
+        "max": 15
+      },
+      {
+        "key": "ethics",
+        "label": "Ethics",
+        "max": 10
+      }
+    ],
+    "ethicsViolationScoresZero": true
+  },
+  "mockBoardRoles": [
+    "President / supervisor",
+    "Finance chair",
+    "Solicitor / attorney",
+    "Manager / clerk",
+    "Resident"
+  ],
+  "ninetyDays": [
+    {
+      "key": "targets",
+      "phase": "30 days",
+      "label": "10 targets profiled",
+      "auto": "ownedOrgs",
+      "goal": 10
+    },
+    {
+      "key": "calendars",
+      "phase": "30 days",
+      "label": "Meeting calendars recorded for those targets",
+      "auto": "ownedOrgsWithPattern",
+      "goal": 10
+    },
+    {
+      "key": "minutes",
+      "phase": "30 days",
+      "label": "Two years of board minutes read for each target"
+    },
+    {
+      "key": "meetings",
+      "phase": "60 days",
+      "label": "First meetings held",
+      "auto": "meetingActivities",
+      "goal": 10
+    },
+    {
+      "key": "matching",
+      "phase": "60 days",
+      "label": "Programs matched to targets",
+      "auto": "stackRowsOnOwnedOpps",
+      "goal": 1
+    },
+    {
+      "key": "pursuits",
+      "phase": "90 days",
+      "label": "Two live pursuit plans",
+      "auto": "ownedOpenOpps",
+      "goal": 2
+    },
+    {
+      "key": "grant",
+      "phase": "90 days",
+      "label": "One grant package"
+    }
+  ],
+  "attestationStatement": "I have reviewed the gift, hospitality, lobbying and municipal-advisor rules that apply in the states where I work (including the PA Ethics Act and NY General Municipal Law \u00a7 805-a), and Quandel's own policy. I will log gifts, hospitality and lobbying in the BD Hub, and I will refer owners' financing questions to their financial advisor. [confirm wording with Compliance]"
+}

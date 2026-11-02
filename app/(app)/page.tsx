@@ -6,6 +6,8 @@ import { canEditAccounts, canLogActivity } from "@/lib/permissions";
 import { requireUser } from "@/lib/session";
 import { ActivityList } from "./activities/ActivityList";
 import { markNextStepDone } from "./activities/actions";
+import { learnerSessions } from "@/lib/training/progress";
+import { canFacilitate } from "@/lib/permissions";
 
 export default async function Home() {
   const user = await requireUser();
@@ -33,6 +35,8 @@ export default async function Home() {
     prisma.notification.findMany({ where: { userId: user.id, readAt: null }, orderBy: { createdAt: "desc" }, take: 8 }),
   ]);
   const [owned, tierA, last30, maFlags, myOpps] = counts;
+  const training = (await learnerSessions(user.id)).filter((v) => v.dueDate && !v.parts.complete).sort((a, b) => a.dueDate!.getTime() - b.dueDate!.getTime());
+  const toReview = canFacilitate(user.role) ? await prisma.deliverableSubmission.count({ where: { status: "SUBMITTED" } }) : 0;
   const first = (user.name ?? user.email).split(/[ @]/)[0];
   const h = new Date().getHours();
   return (
@@ -85,6 +89,23 @@ export default async function Home() {
               {alerts.map((n) => (
                 <li key={n.id}><div className="min-w-0 flex-1">{n.link ? <Link className="font-semibold" href={n.link}>{n.title}</Link> : <b>{n.title}</b>}<div className="muted text-xs">{n.body}</div></div></li>
               ))}
+            </ul>
+          </section>
+        )}
+        {(training.length > 0 || toReview > 0) && (
+          <section className="panel">
+            <div className="mb-1 flex items-baseline"><h2 className="flex-1 text-lg">Training</h2><Link className="text-xs" href="/training">My learning</Link></div>
+            {toReview > 0 && <p className="mb-1"><Link href="/training/review">{toReview} deliverable{toReview === 1 ? "" : "s"} waiting for your review</Link></p>}
+            <ul className="rows">
+              {training.slice(0, 5).map((v) => {
+                const d = daysFromToday(v.dueDate!);
+                return (
+                  <li key={v.id}>
+                    <Link href={`/training/sessions/${v.id}`} className="min-w-0 flex-1 font-semibold">{v.editionCode} Session {v.code}: {v.title}</Link>
+                    <span className={`chip ${d < 0 ? "chip-bad" : d <= 7 ? "chip-warn" : ""}`}>{d < 0 ? `${-d}d overdue` : `due ${fmtDate(v.dueDate, { year: false })}`}</span>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         )}

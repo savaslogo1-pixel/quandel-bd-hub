@@ -1,5 +1,36 @@
 # Changelog
 
+## Phase 6 — 2026-11-02
+- Training area for "Projects, Partners, Programs" (SPEC §10): course → edition → session →
+  module. Pennsylvania and New York editions with all 14 sessions each, seeded from
+  `data/training.json` with links to the published decks (no deck content copied in);
+  MD, NJ, DE, OH, WV and VA editions listed as planned.
+- My learning: progress bar per edition, assigned sessions with due dates, session cards
+  showing deck / quiz / deliverable status, certificates, and the annual ethics attestation
+  (required before logging gifts or lobbying in Phase 8; wording marked [confirm] for Compliance).
+- Session page: deck, speaker notes and glossary links, modules, quiz, "Apply it" task with a
+  link into the CRM, and the deliverable. A session is complete when the deck has been gone
+  through, the quiz passed (once it has questions) and the deliverable accepted (when it has one).
+- Quizzes: left empty for facilitators to write in the app (5–10 multiple-choice questions,
+  explanations, on/off). Auto-graded, 80% to pass (adjustable per session), retakes allowed,
+  answers and explanations shown after each attempt.
+- Deliverables (S5, S9–S13 from the spec): upload a file (up to 10 MB), paste a link, or pick the
+  opportunity built with the real capital-stack or approvals tool. Facilitators accept or send
+  back with coaching notes; the capstone is scored on the 100-point rubric (stack 25,
+  approvals 20, delivery 15, need 15, answers 15, ethics 10; any ethics violation = 0).
+  Files download only for the person who submitted them and facilitators.
+- Facilitator pages (admins and BD directors): review queue, gradebook (by edition and company,
+  quiz average, ethics status, certificates), assign sessions or editions to people or to
+  everyone in a company with due dates, capstone scheduler (teams, mock-board roles, timer,
+  rubric scoring).
+- Certificates issued automatically when every session in an edition is complete; printable page.
+- First 90 days tracker for new BD leads with live counts from the CRM (targets owned, meeting
+  calendars, meetings logged, programs matched, open pursuits) and check-offs.
+- Reference library: glossary, program cheat sheets, playbooks, board-meeting guides and
+  municipal-advisor cards (empty for facilitators to fill), plus the delivery-method checklists.
+- Training due dates on Home and in the calendar; capstone dates in the calendar.
+- `tests/training.test.ts`: quiz grading, 80% pass mark, capstone rubric and the ethics zero, completion rules.
+
 ## Phase 5 — 2026-11-02
 - Organization imports (SPEC §8) under Organizations → Import (admins and BD directors):
   upload .xlsx or .csv (up to 15 MB, 5,000 rows) → pick the sheet and header row (detected
