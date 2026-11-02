@@ -4,6 +4,7 @@ import type { ImportBatch, Prisma } from "@prisma/client";
 import { PICKLISTS } from "../constants";
 import { prisma } from "../db";
 import { picklist } from "../picklists";
+import { linkCompetitorProjects } from "../competitors";
 import { buildPreview, updateData, type Defaults, type ExistingOrg, type Mapping, type PreviewRow } from "./orgs";
 
 export function parsed(b: ImportBatch) {
@@ -92,6 +93,7 @@ export async function commitBatch(b: ImportBatch, userId: string) {
     }));
 
   const counts = { created: creates.length, updated: updates.length, skipped: rows.filter((r) => r.action === "skip").length, errors: rows.filter((r) => r.action === "error").length };
+  await linkCompetitorProjects(); // newly imported owners may match published competitor work
   await prisma.importBatch.update({ where: { id: b.id }, data: { ...counts, status: "COMMITTED", committedAt: new Date(), fileData: null, createdById: b.createdById ?? userId } });
   return counts;
 }

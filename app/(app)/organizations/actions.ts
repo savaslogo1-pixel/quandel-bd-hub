@@ -31,6 +31,7 @@ async function parse(fd: FormData) {
     lastMajorRenovationYear: int(fd, "lastMajorRenovationYear"), lastEnergyProjectYear: int(fd, "lastEnergyProjectYear"),
     agendaDeadlineDays: int(fd, "agendaDeadlineDays"), meetingWeekday: int(fd, "meetingWeekday"),
     annualBudget: dec(fd, "annualBudget"), debtOutstanding: dec(fd, "debtOutstanding"), debtLimit: dec(fd, "debtLimit"),
+    annualKwh: int(fd, "annualKwh"), annualTherms: int(fd, "annualTherms"), annualUtilitySpend: dec(fd, "annualUtilitySpend"), eui: dec(fd, "eui"),
   };
   Object.assign(fe, badNumbers(n));
   const weeks = all(fd, "meetingWeeksOfMonth").map(Number).filter((w) => w >= 1 && w <= 5).sort();
@@ -58,6 +59,8 @@ async function parse(fd: FormData) {
     meetingWeeksOfMonth: weeks.length ? weeks.join(",") : null, meetingPatternNote: str(fd, "meetingPatternNote"),
     agendaDeadlineDays: n.agendaDeadlineDays, voteRules: str(fd, "voteRules"), permissiveReferendum: bool(fd, "permissiveReferendum"),
     tier, status, source: str(fd, "source"),
+    utilityAccounts: str(fd, "utilityAccounts"), annualKwh: n.annualKwh, annualTherms: n.annualTherms,
+    annualUtilitySpend: n.annualUtilitySpend, eui: n.eui, baselineYears: str(fd, "baselineYears"),
   };
   return { fe, data, parentOrgId, ownerId, companyIds };
 }

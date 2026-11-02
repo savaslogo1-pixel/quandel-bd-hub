@@ -206,9 +206,12 @@ export const dupKey = (name: string, state: string, orgType: string, county?: st
  * Loose key for "probably the same organization": ignores word order, "&"/"and",
  * "Intermediate Unit"/"IU", and filler words like City, Area, The, Of, County.
  */
-const FILLER = new Set(["the", "of", "city", "area", "county", "and"]);
+const FILLER = new Set(["the", "of", "city", "area", "county", "and", "pennsylvania"]);
 export function looseName(name: string): string {
   return normalizeName(name)
+    .replace(/\bsd\b/g, "school district")
+    .replace(/\btwp\b/g, "township")
+    .replace(/\bctc\b/g, "career tech center")
     .replace(/\bintermediate unit\b/g, "iu")
     .replace(/\btechnology\b|\btechnical\b/g, "tech")
     .replace(/\bcenters\b/g, "center")

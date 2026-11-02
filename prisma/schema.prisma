@@ -71,6 +71,8 @@ model User {
   ninetyDayPlan        NinetyDayPlan?
   libraryItems         LibraryItem[]
   capstoneEvents       CapstoneEvent[]
+  createdProjects      Project[]                  @relation("ProjectCreatedBy")
+  createdBundles       BridgeBundle[]
   createdApprovalSteps ApprovalStep[]
 
   // NextAuth (Microsoft 365 sign-in)
@@ -98,6 +100,8 @@ model Company {
   leadOpportunities    Opportunity[]        @relation("OppLead")
   supportOpportunities Opportunity[]        @relation("OppSupport")
   trainingAssignments  TrainingAssignment[]
+  projects             Project[]            @relation("ProjectCompanies")
+  competitors          Competitor[]         @relation("CompetitorRivals")
 }
 
 /// Admin-editable picklists (SPEC §6 Admin). Lists used in Phase 1:
@@ -207,6 +211,18 @@ model Organization {
   importBatchId       String? // set when the organization was created by an import (for undo)
   importBatch         ImportBatch? @relation(fields: [importBatchId], references: [id], onDelete: SetNull)
 
+  // Energy baseline (SPEC §4.10, QES)
+  utilityAccounts    String? // account numbers or a short description
+  annualKwh          Int?
+  annualTherms       Int?
+  annualUtilitySpend Decimal?
+  eui                Decimal? // site energy use intensity, kBtu/sq ft/yr
+  baselineYears      String? // e.g. "2023–2025"
+
+  projects           Project[]
+  competitorProjects CompetitorProject[]
+  bridges            Bridge[]            @relation("BridgeOwnerOrg")
+
   contacts      Contact[]
   activities    Activity[]
   opportunities Opportunity[]
@@ -265,6 +281,7 @@ model Contact {
   createdById   String?
   createdBy     User?          @relation("ContactCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
   approvalSteps ApprovalStep[]
+  referenceFor  Project[]      @relation("ProjectReference")
 
   @@index([orgId])
   @@index([nextTouch])
@@ -417,6 +434,23 @@ model Opportunity {
   approvalsDeadline   DateTime?
   approvalsBufferDays Int?
   approvalsTemplate   String?
+
+  // Energy savings contract (SPEC §4.10, QES)
+  guaranteeTermYears        Int? // years savings are guaranteed / financing term
+  ipmvpOption               String? // A, B, C or D
+  financingRatePct          Decimal?
+  nonEnergyCost             Decimal? // roof, ADA and other non-energy scope in the contract
+  otherFunding              Decimal? // grants, rebates and cash that reduce the financed amount
+  guaranteedSavingsOverride Decimal? // annual guaranteed savings when not the sum of measures
+  measures                  EnergyMeasure[]
+  mvReports                 MvReport[]
+
+  // Competitors (SPEC §4.13): who we're up against, and who won when we lost
+  rivalCompetitors Competitor[]   @relation("OppCompetitors")
+  lostToId         String?
+  lostTo           Competitor?    @relation("OppLostTo", fields: [lostToId], references: [id], onDelete: SetNull)
+  projects         Project[]
+  bundles          BridgeBundle[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -939,6 +973,200 @@ model LibraryItem {
   updatedAt   DateTime @updatedAt
 
   @@index([kind])
+}
+
+// ───────────────────────── Phase 7: energy, bridges, projects, competitors ─────────────────────────
+
+/// An energy conservation measure (ECM) on a QES opportunity (SPEC §4.10).
+model EnergyMeasure {
+  id                  String      @id @default(cuid())
+  opportunityId       String
+  opportunity         Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  name                String
+  category            String? // lighting, HVAC, controls, solar, envelope, water…
+  cost                Decimal?
+  annualSavings       Decimal? // $ per year, guaranteed
+  annualKwhSaved      Int?
+  annualThermsSaved   Int?
+  electivePayEligible Boolean     @default(false)
+  electivePayAmount   Decimal? // expected elective-pay proceeds that reduce the financed amount
+  usefulLifeYears     Int?
+  notes               String?
+  sortOrder           Int         @default(0)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  createdById         String?
+}
+
+enum MvStatus {
+  DUE
+  RECEIVED
+  REVIEWED
+}
+
+/// Measurement and verification report after award: guaranteed vs actual savings.
+model MvReport {
+  id                String      @id @default(cuid())
+  opportunityId     String
+  opportunity       Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  year              Int // guarantee year 1, 2, …
+  dueDate           DateTime?
+  guaranteedSavings Decimal?
+  actualSavings     Decimal?
+  status            MvStatus    @default(DUE)
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  createdById       String?
+
+  @@unique([opportunityId, year])
+}
+
+/// A bridge from the National Bridge Inventory or a county list (SPEC §4.11).
+model Bridge {
+  id              String         @id @default(cuid())
+  structureId     String? // NBI structure number when known
+  name            String // as published, e.g. "SR 2015 over Schuylkill River"
+  state           String         @default("PA")
+  county          String
+  municipality    String?
+  ownerName       String? // likely or verified owner as text
+  ownerVerified   Boolean        @default(false)
+  ownerOrgId      String?
+  ownerOrg        Organization?  @relation("BridgeOwnerOrg", fields: [ownerOrgId], references: [id], onDelete: SetNull)
+  routeType       String? // State route, Local road…
+  condition       String? // Poor, Fair, Good
+  yearBuilt       Int?
+  lengthFt        Decimal?
+  widthFt         Decimal?
+  bridgeType      String? // e.g. concrete box beam, steel stringer
+  adt             Int? // average daily traffic
+  bundleCandidate Boolean? // from the source list (Y/N)
+  status          String?
+  notes           String?
+  source          String?
+  importBatchId   String?
+  bundles         BundleBridge[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  /// Identity for re-imports: the NBI structure number when known, otherwise
+  /// name + county + year built + traffic (+ position among identical rows). Published lists
+  /// repeat names (twin spans, same road over the same creek), so name alone isn't unique.
+  importKey String? @unique
+
+  @@index([county])
+  @@index([name])
+}
+
+/// A group of bridges priced and pursued together (P3 or bundled contract).
+model BridgeBundle {
+  id              String         @id @default(cuid())
+  name            String
+  state           String         @default("PA")
+  status          String         @default("concept") // concept | owner resolution | procurement | awarded | dropped
+  notes           String?
+  // Estimate inputs (left blank until an estimator fills them)
+  unitCostPerSqFt Decimal? // used for bridges with length × width and no own estimate
+  designPct       Decimal?
+  cmPct           Decimal?
+  contingencyPct  Decimal?
+  opportunityId   String?
+  opportunity     Opportunity?   @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+  bridges         BundleBridge[]
+  createdById     String?
+  createdBy       User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model BundleBridge {
+  id        String       @id @default(cuid())
+  bundleId  String
+  bundle    BridgeBundle @relation(fields: [bundleId], references: [id], onDelete: Cascade)
+  bridgeId  String
+  bridge    Bridge       @relation(fields: [bridgeId], references: [id], onDelete: Cascade)
+  estimate  Decimal? // this bridge's construction estimate, when known
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([bundleId, bridgeId])
+}
+
+/// Won and completed work across the five companies (SPEC §4.12), for references and qualifications.
+model Project {
+  id                    String          @id @default(cuid())
+  name                  String
+  orgId                 String
+  org                   Organization    @relation(fields: [orgId], references: [id], onDelete: Restrict)
+  companies             Company[]       @relation("ProjectCompanies")
+  opportunityId         String?
+  opportunity           Opportunity?    @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+  projectType           String?
+  deliveryMethod        DeliveryMethod?
+  value                 Decimal?
+  status                String          @default("active") // active | completed
+  startYear             Int?
+  completionYear        Int?
+  referenceContactId    String?
+  referenceContact      Contact?        @relation("ProjectReference", fields: [referenceContactId], references: [id], onDelete: SetNull)
+  results               String? // outcomes, e.g. energy savings achieved
+  annualSavingsAchieved Decimal?
+  photoUrls             String? // one link per line
+  notes                 String?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  createdById           String?
+  createdBy             User?           @relation("ProjectCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([orgId])
+}
+
+/// A competitor (SPEC §4.13). `competesWith` = the Quandel companies they go up against.
+model Competitor {
+  id            String              @id @default(cuid())
+  key           String              @unique // seed key, e.g. "sitelogiq"
+  name          String
+  aliases       String? // other names on contracts and in minutes, one per line
+  kind          String? // ESCO, general contractor, CM…
+  competesWith  Company[]           @relation("CompetitorRivals")
+  website       String?
+  headquarters  String?
+  ownership     String?
+  profile       String? // summary, offices, people, credentials
+  pricingNotes  String?
+  howTheyWin    String?
+  ourResponse   String?
+  source        String?
+  projects      CompetitorProject[]
+  opportunities Opportunity[]       @relation("OppCompetitors")
+  winsAgainstUs Opportunity[]       @relation("OppLostTo")
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+}
+
+/// A competitor's public project or engagement with an owner.
+model CompetitorProject {
+  id           String        @id @default(cuid())
+  competitorId String
+  competitor   Competitor    @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  ownerName    String // as published
+  county       String?
+  state        String        @default("PA")
+  orgId        String? // linked CRM organization
+  org          Organization? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+  category     String // energy_contract | assessment | construction | grant_writing | higher_ed | other
+  description  String
+  when         String? // as published: "Mar 2026", "Earlier"
+  year         Int?
+  value        Decimal?
+  sourceTitle  String?
+  sourceUrl    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([orgId])
+  @@index([competitorId])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────

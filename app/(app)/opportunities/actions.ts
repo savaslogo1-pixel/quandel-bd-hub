@@ -82,6 +82,7 @@ export async function createOpportunity(_: FormState, fd: FormData): Promise<For
       org: { connect: { id: orgId } },
       leadCompany: { connect: { id: leadCompanyId } },
       supportCompanies: { connect: supportIds.map((id) => ({ id })) },
+      rivalCompetitors: { connect: all(fd, "rivalCompetitors").map((id) => ({ id })) },
       owner: ownerId ? { connect: { id: ownerId } } : undefined,
       createdBy: { connect: { id: user.id } },
       stageChanges: { create: { toStage: startStage, changedById: user.id, note: "Created" } },
@@ -103,6 +104,7 @@ export async function updateOpportunity(id: string, _: FormState, fd: FormData):
       org: { connect: { id: orgId } },
       leadCompany: { connect: { id: leadCompanyId } },
       supportCompanies: { set: supportIds.map((i) => ({ id: i })) },
+      rivalCompetitors: { set: all(fd, "rivalCompetitors").map((i) => ({ id: i })) },
       owner: ownerId ? { connect: { id: ownerId } } : { disconnect: true },
     },
   });
@@ -164,7 +166,8 @@ export async function setOutcome(id: string, _: FormState, fd: FormData): Promis
   const lossReason = str(fd, "lossReason");
   if (outcome !== "WON" && !lossReason) return { fieldErrors: { Reason: "Required for Lost or No-bid" } };
   const boardVoteDate = date(fd, "boardVoteDate");
-  const o = await prisma.opportunity.update({ where: { id }, data: { outcome, lossReason, ...(boardVoteDate ? { boardVoteDate } : {}) } });
+  const lostToId = outcome === "LOST" ? str(fd, "lostToId") : null;
+  const o = await prisma.opportunity.update({ where: { id }, data: { outcome, lossReason, lostToId, ...(boardVoteDate ? { boardVoteDate } : {}) } });
   revalidate(id, o.orgId);
   return undefined;
 }

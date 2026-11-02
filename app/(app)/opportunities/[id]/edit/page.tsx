@@ -13,7 +13,7 @@ export default async function EditOppPage({ params }: { params: Promise<{ id: st
   const { id } = await params;
   const user = await requireUser();
   if (!canEditOpportunities(user.role)) redirect(`/opportunities/${id}`);
-  const o = await prisma.opportunity.findUnique({ where: { id }, include: { supportCompanies: true } });
+  const o = await prisma.opportunity.findUnique({ where: { id }, include: { supportCompanies: true, rivalCompetitors: { select: { id: true } } } });
   if (!o) notFound();
   return (
     <>

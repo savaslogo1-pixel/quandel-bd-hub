@@ -271,6 +271,36 @@
       "unit": null,
       "source": "SPEC.md \u00a77 (verify against statute)",
       "last_verified": null
+    },
+    {
+      "key": "HUD.epc_max_term_years",
+      "jurisdiction": "Federal",
+      "topic": "Energy",
+      "text": "HUD energy performance contract (PIH 2024-27) maximum term",
+      "value": 20,
+      "unit": "years",
+      "source": "GESA eligible owners workbook, Not Listed tab (verify against PIH 2024-27)",
+      "last_verified": null
+    },
+    {
+      "key": "PA.p3_legal_path",
+      "jurisdiction": "PA",
+      "topic": "P3",
+      "text": "Transportation P3s (including bridge bundles) go through the PA P3 Board under Act 88 of 2012",
+      "value": null,
+      "unit": null,
+      "source": "SPEC.md \u00a74.11 (verify)",
+      "last_verified": null
+    },
+    {
+      "key": "NY.p3_legal_path",
+      "jurisdiction": "NY",
+      "topic": "P3",
+      "text": "Design-build authority is limited (state agencies; Westchester); check before proposing a bridge bundle",
+      "value": null,
+      "unit": null,
+      "source": "SPEC.md \u00a74.11 (verify)",
+      "last_verified": null
     }
   ]
 }

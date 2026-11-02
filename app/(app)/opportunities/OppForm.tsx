@@ -8,9 +8,10 @@ import { ymd } from "@/lib/format";
 import { DELIVERY_METHODS, STAGES, deliveryLabel } from "@/lib/pipeline";
 import { companies as loadCompanies, picklist } from "@/lib/picklists";
 
-type Full = Opportunity & { supportCompanies: Company[] };
+type Full = Opportunity & { supportCompanies: Company[]; rivalCompetitors?: { id: string }[] };
 
 export async function OppForm({ action, opp, orgId, defaultOwnerId }: { action: (s: FormState, fd: FormData) => Promise<FormState>; opp?: Full; orgId?: string; defaultOwnerId?: string }) {
+  const rivals = await prisma.competitor.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } });
   const [types, cos, orgs, users] = await Promise.all([
     picklist(PICKLISTS.projectType),
     loadCompanies(),
@@ -49,7 +50,8 @@ export async function OppForm({ action, opp, orgId, defaultOwnerId }: { action: 
       <TextField name="substantialCompletionDate" label="Substantial completion" type="date" defaultValue={ymd(o?.substantialCompletionDate)} />
 
       <div className="sect">Positioning</div>
-      <TextField name="competitors" label="Competitors" full hint="comma-separated for now" defaultValue={o?.competitors} />
+      <CheckGroup name="rivalCompetitors" label="Competitors" hint="from the Competitors list" options={rivals.map((r) => [r.id, r.name])} selected={o?.rivalCompetitors?.map((r) => r.id) ?? []} />
+      <TextField name="competitors" label="Other competitors" full hint="not in the list yet, comma-separated" defaultValue={o?.competitors} />
       <TextArea name="winThemes" label="Win themes" defaultValue={o?.winThemes} />
     </ActionForm>
   );

@@ -1,12 +1,20 @@
 {
-  "source": "Column setups for workbooks Quandel BD uses (SPEC §8). A preset applies when a sheet has all of its `requires` headers. Mapping values are header names; `notes` lists headers appended to the organization's Notes.",
+  "source": "Column setups for workbooks Quandel BD uses (SPEC \u00a78). A preset applies when a sheet has all of its `requires` headers. Mapping values are header names; `notes` lists headers appended to the organization's Notes.",
   "presets": [
     {
       "id": "gesa-eligible-owners-pa",
       "label": "GESA eligible public owners (PA), Owners tab",
       "sheet": "Owners",
       "headerRow": 1,
-      "requires": ["Owner", "Type", "County", "ARC county", "Quandel territory", "QES tier", "AUN"],
+      "requires": [
+        "Owner",
+        "Type",
+        "County",
+        "ARC county",
+        "Quandel territory",
+        "QES tier",
+        "AUN"
+      ],
       "mapping": {
         "name": "Owner",
         "orgType": "Type",
@@ -19,23 +27,42 @@
         "lastEnergyProjectEsco": "Last energy / GESA project",
         "recentBondIssues": "Recent bonds or capital plan",
         "status": "Status",
-        "notes": ["AUN", "Governing code", "Key buildings and age", "Last energy / GESA project", "Grants on file", "Contact", "Status", "Next step"]
+        "notes": [
+          "AUN",
+          "Governing code",
+          "Key buildings and age",
+          "Last energy / GESA project",
+          "Grants on file",
+          "Contact",
+          "Status",
+          "Next step"
+        ]
       },
       "defaults": {
         "state": "PA",
-        "companyCodesWhenTier": ["QES"],
+        "companyCodesWhenTier": [
+          "QES"
+        ],
         "source": "GESA eligible public owners workbook (PA)",
         "onDuplicate": "fill",
         "inferType": true
       },
-      "notes": "Schools (district school count) maps to building count. Rows with a QES tier get the QES company tag. The workbook's own Source column is kept in Notes only when mapped."
+      "notes": "Schools (district school count) maps to building count. Rows with a QES tier get the QES company tag. The workbook's own Source column is kept in Notes only when mapped.",
+      "target": "organizations"
     },
     {
       "id": "quandel-target-lists-qes",
       "label": "Quandel target lists, QES Targets tab",
       "sheet": "QES Targets",
       "headerRow": 1,
-      "requires": ["County", "Organization", "Type", "ARC county", "Coal region", "Tier"],
+      "requires": [
+        "County",
+        "Organization",
+        "Type",
+        "ARC county",
+        "Coal region",
+        "Tier"
+      ],
       "mapping": {
         "name": "Organization",
         "orgType": "Type",
@@ -46,16 +73,47 @@
         "lastEnergyProjectEsco": "Recent energy or GESA project",
         "recentBondIssues": "Recent bond issue or capital plan",
         "status": "Status",
-        "notes": ["Coal region", "Key buildings / age", "Recent energy or GESA project", "Contact (name, title)", "Status", "Next step", "Notes"]
+        "notes": [
+          "Coal region",
+          "Key buildings / age",
+          "Recent energy or GESA project",
+          "Contact (name, title)",
+          "Status",
+          "Next step",
+          "Notes"
+        ]
       },
       "defaults": {
         "state": "PA",
-        "companyCodes": ["QES"],
+        "companyCodes": [
+          "QES"
+        ],
         "source": "Quandel target lists (QES Targets tab)",
         "onDuplicate": "fill",
         "inferType": true
       },
-      "notes": "SPEC §8: target lists load with tier and the QES company tag. Coal region (Y/N/Partly) has no field yet, so it goes to Notes. The Bridge List tab loads with the bridge module (Phase 7)."
+      "notes": "SPEC \u00a78: target lists load with tier and the QES company tag. Coal region (Y/N/Partly) has no field yet, so it goes to Notes. The Bridge List tab loads with the bridge module (Phase 7).",
+      "target": "organizations"
+    },
+    {
+      "id": "quandel-target-lists-bridges",
+      "target": "bridges",
+      "label": "Quandel target lists, Bridge List tab",
+      "sheet": "Bridge List",
+      "headerRow": 1,
+      "requires": [
+        "County",
+        "Bridge (as published)",
+        "Year built",
+        "Vehicles/day",
+        "Likely owner (from name)"
+      ],
+      "mapping": {},
+      "defaults": {
+        "condition": "Poor",
+        "source": "Quandel target lists: Bridge List (FHWA 2025 National Bridge Inventory via Bridge Report Card)"
+      },
+      "notes": "The workbook's README says the tab lists every poor-condition bridge in the 11 counties, so condition is set to Poor. Columns are matched by name."
     }
   ]
 }

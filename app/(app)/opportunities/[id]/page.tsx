@@ -4,6 +4,7 @@ import { ActionForm } from "@/components/ActionForm";
 import { CompanyTag, Empty, Fact, Tabs } from "@/components/ui";
 import { CapitalStack } from "../CapitalStack";
 import { Approvals } from "../Approvals";
+import { Energy } from "../Energy";
 import { loadRules, multiPrimeCheck } from "@/lib/rules";
 import { prisma } from "@/lib/db";
 import { fmtDate, money, ymd } from "@/lib/format";
@@ -37,12 +38,15 @@ export default async function OppPage({ params, searchParams }: { params: Promis
       leadCompany: true,
       supportCompanies: { orderBy: { sortOrder: "asc" } },
       owner: true,
+      rivalCompetitors: { select: { id: true, name: true } },
+      lostTo: { select: { id: true, name: true } },
+      projects: { select: { id: true, name: true } },
       goNoGoApprover: true,
       procIndependenceBy: true,
       disclosureBy: true,
       checklist: { include: { doneBy: { select: { name: true, email: true } } } },
       stageChanges: { include: { changedBy: { select: { name: true, email: true } } }, orderBy: { createdAt: "desc" } },
-      _count: { select: { stackRows: true, approvalSteps: true } },
+      _count: { select: { stackRows: true, approvalSteps: true, measures: true } },
     },
   });
   if (!o) notFound();
@@ -76,6 +80,7 @@ export default async function OppPage({ params, searchParams }: { params: Promis
         <div className="flex flex-wrap gap-2">
           {canLogActivity(user.role) && <Link className="btn btn-primary" href={`/activities/new?org=${o.org.id}&opp=${o.id}`}>Log activity</Link>}
           {canEdit && <Link className="btn" href={`/opportunities/${o.id}/edit`}>Edit</Link>}
+          {o.projects.length ? <Link className="btn" href={`/projects/${o.projects[0].id}`}>Project record</Link> : canEdit && (o.stage === 10 || o.outcome === "WON") && <Link className="btn" href={`/projects/new?opp=${o.id}`}>Create project record</Link>}
         </div>
       </div>
 
@@ -91,8 +96,10 @@ export default async function OppPage({ params, searchParams }: { params: Promis
         <p className="muted mt-1.5 text-xs">Exit criteria for {stageName(o.stage)}: {STAGES.find((s) => s.n === o.stage)?.exit}</p>
       </section>
 
-      <Tabs base={`/opportunities/${o.id}`} current={tab} tabs={[["overview", "Overview"], ["stack", `Capital stack · ${o._count.stackRows}`], ["approvals", `Approvals · ${o._count.approvalSteps}`]]} />
-      {tab === "approvals" ? (
+      <Tabs base={`/opportunities/${o.id}`} current={tab} tabs={[["overview", "Overview"], ["stack", `Capital stack · ${o._count.stackRows}`], ["approvals", `Approvals · ${o._count.approvalSteps}`], ["energy", `Energy · ${o._count.measures}`]]} />
+      {tab === "energy" ? (
+        <Energy oppId={o.id} canEdit={canEdit} />
+      ) : tab === "approvals" ? (
         <Approvals oppId={o.id} canEdit={canEdit} />
       ) : tab === "stack" ? (
         <CapitalStack oppId={o.id} orgState={o.org.state} projectCost={o.estimatedValue != null ? Number(o.estimatedValue) : null} canEdit={canEdit} />
@@ -108,7 +115,7 @@ export default async function OppPage({ params, searchParams }: { params: Promis
             <Fact k="Quandel scope">{money(o.quandelScopeValue)}</Fact>
             <Fact k="Probability">{o.probability != null ? `${o.probability}%` : "—"}</Fact>
             <Fact k="Weighted value">{money(weightedValue(o))}</Fact>
-            <Fact k="Competitors">{o.competitors ?? "—"}</Fact>
+            <Fact k="Competitors">{o.rivalCompetitors.length || o.competitors ? <>{o.rivalCompetitors.map((r, i) => <span key={r.id}>{i > 0 && ", "}<Link href={`/competitors/${r.id}`}>{r.name}</Link></span>)}{o.competitors && `${o.rivalCompetitors.length ? ", " : ""}${o.competitors}`}</> : "—"}{o.lostTo && <div className="text-xs" style={{ color: "var(--bad)" }}>Lost to <Link href={`/competitors/${o.lostTo.id}`}>{o.lostTo.name}</Link></div>}</Fact>
             <Fact k="Win themes">{o.winThemes ?? "—"}</Fact>
             {mp && (
               <Fact k={`Multiple-prime · ${mp.label}`}>
@@ -233,6 +240,7 @@ export default async function OppPage({ params, searchParams }: { params: Promis
                 <ActionForm action={setOutcome.bind(null, o.id)} className="form" submitLabel="Save result">
                   <label className="field"><span>Outcome</span><select name="outcome" defaultValue={o.outcome ?? ""}><option value="">Choose</option><option value="WON">Won</option><option value="LOST">Lost</option><option value="NO_BID">No-bid</option></select></label>
                   <label className="field"><span>Board vote</span><input type="date" name="boardVoteDate" defaultValue={ymd(o.boardVoteDate)} /></label>
+                  <label className="field full"><span>If lost, who won</span><select name="lostToId" defaultValue={o.lostToId ?? ""}><option value="">—</option>{(await prisma.competitor.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } })).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
                   <label className="field full"><span>Reason <span className="hint">required for Lost or No-bid</span></span><textarea name="lossReason" defaultValue={o.lossReason ?? ""} /></label>
                 </ActionForm>
               ) : <p>{o.outcome ? OUTCOME_LABELS[o.outcome] : "—"} {o.lossReason}</p>}

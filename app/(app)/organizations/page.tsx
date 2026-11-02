@@ -11,7 +11,7 @@ import { requireUser } from "@/lib/session";
 
 export const metadata = { title: "Organizations" };
 
-type SP = { q?: string; state?: string; type?: string; co?: string; tier?: string; status?: string; flag?: string; energyBefore?: string; mine?: string };
+type SP = { q?: string; state?: string; type?: string; co?: string; tier?: string; status?: string; flag?: string; energyBefore?: string; mine?: string; rival?: string };
 
 export default async function OrganizationsPage({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;
@@ -33,7 +33,9 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
   if (sp.energyBefore && Number.isInteger(before))
     where.AND = [{ OR: [{ lastEnergyProjectYear: null }, { lastEnergyProjectYear: { lt: before } }] }];
   if (sp.mine) where.relationshipOwnerId = user.id;
+  if (sp.rival) where.competitorProjects = { some: { competitorId: sp.rival } };
 
+  const rivals = await prisma.competitor.findMany({ where: { projects: { some: {} } }, select: { id: true, name: true }, orderBy: { name: "asc" } });
   const [orgs, orgTypes, cos] = await Promise.all([
     prisma.organization.findMany({
       where,
@@ -72,6 +74,7 @@ export default async function OrganizationsPage({ searchParams }: { searchParams
           <option value="">Any flag</option><option value="territory">Quandel territory</option><option value="arc">ARC county</option><option value="energy">Energy community</option>
           <option value="oz">Opportunity Zone</option><option value="dac">Disadvantaged community (NY)</option><option value="stress">Fiscal stress</option>
         </select>
+        {rivals.length > 0 && <select name="rival" defaultValue={sp.rival ?? ""}><option value="">Any competitor</option>{rivals.map((r) => <option key={r.id} value={r.id}>{r.name} accounts</option>)}</select>}
         <label className="muted text-xs">Last energy project before <input name="energyBefore" inputMode="numeric" placeholder="year" defaultValue={sp.energyBefore} style={{ width: 80 }} /></label>
         <label className="check"><input type="checkbox" name="mine" value="1" defaultChecked={!!sp.mine} /> Mine</label>
         <button className="btn btn-sm" type="submit">Apply</button>

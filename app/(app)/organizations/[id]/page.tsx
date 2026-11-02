@@ -29,6 +29,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
       parentOrg: true,
       childOrgs: { select: { id: true, name: true } },
       contacts: { include: { influences: { select: { id: true, name: true } } }, orderBy: { name: "asc" } },
+      competitorProjects: { include: { competitor: { select: { id: true, name: true } } }, orderBy: { year: { sort: "desc", nulls: "last" } } },
       _count: { select: { activities: true } },
       opportunities: { include: { leadCompany: true, supportCompanies: { orderBy: { sortOrder: "asc" } } }, orderBy: [{ stage: "asc" }, { name: "asc" }] },
     },
@@ -56,6 +57,7 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
             {o.opportunityZoneTract && <span className="chip chip-brand">Opportunity Zone</span>}
             {o.disadvantagedCommunity && <span className="chip chip-brand">Disadvantaged community</span>}
             {o.fiscalStressStatus && <span className="chip chip-warn">{o.fiscalStressStatus}</span>}
+            {[...new Map(o.competitorProjects.map((p) => [p.competitor.id, p.competitor])).values()].map((c) => <Link key={c.id} href={`/competitors/${c.id}`} className="chip chip-bad">{c.name} account</Link>)}
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -68,6 +70,20 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
 
       {tab === "profile" && (
         <div className="flex flex-col gap-4">
+          {o.competitorProjects.length > 0 && (
+            <section className="panel" style={{ borderColor: "var(--bad)" }}>
+              <h2 className="mb-1 text-lg">Competitor activity</h2>
+              <ul className="rows">
+                {o.competitorProjects.map((p) => (
+                  <li key={p.id}>
+                    <div className="min-w-0 flex-1 text-[13.5px]"><Link href={`/competitors/${p.competitor.id}`} className="font-semibold">{p.competitor.name}</Link>: {p.description}{p.value != null && ` (${money(p.value)})`}</div>
+                    <span className="muted text-xs">{p.when}{p.sourceUrl && <> · <a href={p.sourceUrl} target="_blank" rel="noopener noreferrer">source</a></>}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="muted mt-1 text-xs">From published sources; check the board minutes to see whether it's at assessment, audit or contract stage.</p>
+            </section>
+          )}
           <section className="panel facts">
             <Fact k="Relationship owner">{o.relationshipOwner ? o.relationshipOwner.name ?? o.relationshipOwner.email : "—"}</Fact>
             <Fact k="County · region">{[o.county, o.region].filter(Boolean).join(" · ") || "—"}</Fact>
@@ -105,6 +121,17 @@ export default async function OrgPage({ params, searchParams }: { params: Promis
               <Fact k="Recent bond issues">{o.recentBondIssues ?? "—"}</Fact>
               <Fact k="Credit rating">{o.creditRating ?? "—"}</Fact>
               {o.state === "NY" && <Fact k="Tax-cap override history">{o.taxCapOverrideHistory ?? "—"}</Fact>}
+            </div>
+          </section>
+          <section>
+            <h2 className="mb-2 text-lg">Energy baseline</h2>
+            <div className="panel facts">
+              <Fact k="Utility accounts">{o.utilityAccounts ?? "—"}</Fact>
+              <Fact k="Annual kWh">{num(o.annualKwh)}</Fact>
+              <Fact k="Annual therms">{num(o.annualTherms)}</Fact>
+              <Fact k="Annual utility spend">{money(o.annualUtilitySpend)}</Fact>
+              <Fact k="EUI">{o.eui != null ? String(o.eui) : "—"}</Fact>
+              <Fact k="Baseline years">{o.baselineYears ?? "—"}</Fact>
             </div>
           </section>
           <section>

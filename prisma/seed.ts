@@ -6,6 +6,8 @@ import picklists from "../data/picklists.json";
 import programs from "../data/programs.json";
 import stateRules from "../data/state_rules.json";
 import training from "../data/training.json";
+import competitors from "../data/competitors.json";
+import { linkCompetitorProjects } from "../lib/competitors";
 
 const prisma = new PrismaClient();
 
@@ -66,12 +68,28 @@ async function main() {
       });
     }
   }
+  // Competitors: create missing ones (with their published projects); never overwrite edits.
+  for (const c of competitors.competitors) {
+    if (await prisma.competitor.findUnique({ where: { key: c.key } })) continue;
+    const { projects = [], competesWith, ...rest } = c as typeof c & { projects?: Record<string, unknown>[] };
+    await prisma.competitor.create({
+      data: {
+        ...(rest as { key: string; name: string }),
+        competesWith: { connect: competesWith.map((code) => ({ code })) },
+        projects: { create: projects.map((p) => ({ ...(p as { ownerName: string; category: string; description: string }), value: p.value == null ? null : String(p.value) })) },
+      },
+    });
+  }
+  const link = await linkCompetitorProjects();
   const counts = {
     companies: await prisma.company.count(),
     picklistValues: await prisma.picklistValue.count(),
     programs: await prisma.fundingProgram.count(),
     stateRules: await prisma.stateRule.count(),
     trainingSessions: await prisma.trainingSession.count(),
+    competitors: await prisma.competitor.count(),
+    competitorProjects: await prisma.competitorProject.count(),
+    competitorProjectsLinkedNow: link.linked,
   };
   console.log("Seeded", counts);
 }

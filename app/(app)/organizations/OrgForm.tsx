@@ -65,6 +65,14 @@ export async function OrgForm({ action, org, defaultOwnerId }: { action: (s: For
       <TextField name="creditRating" label="Credit rating" defaultValue={o?.creditRating} />
       <TextField name="taxCapOverrideHistory" label="Tax-cap override history (NY)" defaultValue={o?.taxCapOverrideHistory} />
 
+      <div className="sect">Energy baseline (QES)</div>
+      <TextField name="utilityAccounts" label="Utility accounts" full defaultValue={o?.utilityAccounts} />
+      <TextField name="annualKwh" label="Annual kWh" inputMode="numeric" defaultValue={o?.annualKwh} />
+      <TextField name="annualTherms" label="Annual therms" inputMode="numeric" defaultValue={o?.annualTherms} />
+      <TextField name="annualUtilitySpend" label="Annual utility spend ($)" inputMode="decimal" defaultValue={dec(o?.annualUtilitySpend)} />
+      <TextField name="eui" label="EUI (kBtu/sq ft/yr)" inputMode="decimal" defaultValue={dec(o?.eui)} />
+      <TextField name="baselineYears" label="Baseline years" placeholder="e.g., 2023–2025" defaultValue={o?.baselineYears} />
+
       <div className="sect">Facilities</div>
       <TextField name="buildingCount" label="Building count" inputMode="numeric" defaultValue={o?.buildingCount} />
       <TextField name="oldestBuildingYear" label="Oldest building (year)" inputMode="numeric" defaultValue={o?.oldestBuildingYear} />

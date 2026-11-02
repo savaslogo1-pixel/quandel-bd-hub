@@ -1,5 +1,36 @@
 # Changelog
 
+## Phase 7 — 2026-11-02
+- QES energy module (SPEC §4.10): energy baseline on organizations (utility accounts, kWh,
+  therms, spend, EUI, baseline years); Energy tab on opportunities with measures (cost,
+  guaranteed savings, kWh/therms, simple payback, elective-pay eligibility and amount),
+  contract terms (term, rate, IPMVP option, non-energy cost, grants/rebates/cash, optional
+  guaranteed-savings figure) and checks driven by State rules:
+  budget-neutral (annual payment on the financed amount ≤ guaranteed savings), PA GESA
+  term / cost test / 15% non-energy cap / 10-day notice, NY term limit / schools 18-year
+  payback / SED approval, HUD term / approvals. Missing rule values show "needs input", never pass.
+  M&V tracker: annual reports with guaranteed vs actual savings and shortfall.
+- Bridge bundler (SPEC §4.11): bridge import (NBI or county lists; saved setup for the target
+  lists' Bridge List tab, condition Poor per its README); 654 bridges load, keeping twin spans
+  and same-named bridges with different years as separate bridges; filters by county, owner,
+  route, age, traffic, unbundled; tick bridges into bundles; bundle page groups by type and
+  county and estimates construction (own estimate, or deck area × unit cost) plus design, CM
+  and contingency percentages, all entered by estimating (no default costs); state P3 legal
+  path from State rules; start a P3 bundle opportunity (PCS lead with QCG) to use the capital stack.
+- Projects and references (SPEC §4.12): won and completed work with owner, companies, value,
+  delivery method, years, reference contact, results, savings achieved, photo links; created
+  from opportunities at Contracted or added directly; reference search by owner type,
+  delivery method, minimum value ("5M"), state, company, completion year, has-reference.
+- Competitors (SPEC §4.13): SitelogIQ profile and 37 Pennsylvania projects from the user's
+  competitor brief (sources linked), plus Ameresco, Veregy, Johnson Controls, Siemens, Trane,
+  NORESCO and NYPA by name. Projects link to CRM organizations by similar name and county
+  (34 of 37 against the GESA owners list); organization pages show "Competitor activity"
+  and a competitor badge; filter organizations by competitor; pick competitors on
+  opportunities and record who won a lost pursuit; competitor page shows our record.
+- State rules added (unverified): HUD EPC maximum term (20 years, from the GESA workbook's
+  Not Listed tab), PA and NY P3 legal paths (text from the spec).
+- Tests: energy math and state checks, bundle estimate, bridge import (91 checks in total).
+
 ## Phase 6 — 2026-11-02
 - Training area for "Projects, Partners, Programs" (SPEC §10): course → edition → session →
   module. Pennsylvania and New York editions with all 14 sessions each, seeded from

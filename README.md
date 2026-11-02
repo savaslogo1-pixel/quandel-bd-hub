@@ -75,6 +75,13 @@ rubric, mock-board roles, the first-90-days items and the attestation wording. S
 creates what's missing; facilitators edit sessions and write quizzes in the app.
 Facilitators are admins and BD directors.
 
+## Energy, bridges, projects, competitors
+
+Energy checks read limits from State rules (`lib/energy.ts`). Bridge lists load from
+Bridges → Import; bundle estimates use only the costs estimating enters (`lib/bridges.ts`).
+`data/competitors.json` seeds competitors and their published projects; projects link to
+organizations automatically after each organization import.
+
 ## Tests
 
 ```bash
