@@ -7,6 +7,7 @@ import { Approvals } from "../Approvals";
 import { Energy } from "../Energy";
 import { loadRules, multiPrimeCheck } from "@/lib/rules";
 import { prisma } from "@/lib/db";
+import { KIND_LABELS } from "@/lib/bidFeed/parse";
 import { fmtDate, money, ymd } from "@/lib/format";
 import { canDecideGoNoGo, canEditOpportunities, canLogActivity } from "@/lib/permissions";
 import {
@@ -41,6 +42,7 @@ export default async function OppPage({ params, searchParams }: { params: Promis
       rivalCompetitors: { select: { id: true, name: true } },
       lostTo: { select: { id: true, name: true } },
       projects: { select: { id: true, name: true } },
+      bidFeedItem: { select: { id: true, sourceUrl: true, sourceName: true, valueText: true, why: true, kind: true, typeLabel: true } },
       goNoGoApprover: true,
       procIndependenceBy: true,
       disclosureBy: true,
@@ -111,7 +113,15 @@ export default async function OppPage({ params, searchParams }: { params: Promis
             <Fact k="Project type">{o.projectType ?? "—"}{o.nonEnergyScope && <div className="muted text-xs">+ non-energy work</div>}</Fact>
             <Fact k="Delivery method">{deliveryLabel(o.deliveryMethod)}</Fact>
             <Fact k="Pursuit owner">{who(o.owner)}</Fact>
-            <Fact k="Estimated value">{money(o.estimatedValue)}</Fact>
+            <Fact k="Estimated value">{money(o.estimatedValue)}{o.bidFeedItem?.valueText && o.bidFeedItem.valueText !== money(o.estimatedValue) && <div className="muted text-xs">{o.bidFeedItem.valueText}</div>}</Fact>
+            {o.bidFeedItem && (
+              <Fact k="Bid feed">
+                <Link href="/bid-feed">{o.bidFeedItem.typeLabel ?? KIND_LABELS[o.bidFeedItem.kind]}</Link>
+                {o.bidFeedItem.sourceUrl && <> · <a href={o.bidFeedItem.sourceUrl} target="_blank" rel="noopener noreferrer">{o.bidFeedItem.sourceName ?? "Source"}</a></>}
+                {!o.bidFeedItem.sourceUrl && o.bidFeedItem.sourceName && <> · {o.bidFeedItem.sourceName}</>}
+                {o.bidFeedItem.why && <div className="text-xs">{o.bidFeedItem.why}</div>}
+              </Fact>
+            )}
             <Fact k="Quandel scope">{money(o.quandelScopeValue)}</Fact>
             <Fact k="Probability">{o.probability != null ? `${o.probability}%` : "—"}</Fact>
             <Fact k="Weighted value">{money(weightedValue(o))}</Fact>

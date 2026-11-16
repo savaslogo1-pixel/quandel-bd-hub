@@ -1,0 +1,1331 @@
+{
+ "last_updated": "2026-11-15",
+ "scope": "Pennsylvania only",
+ "companies": [
+  {
+   "key": "QCG",
+   "name": "Quandel Construction Group",
+   "base": "Harrisburg, PA (HQ) + Scranton office",
+   "focus": "Commercial CM, CM-at-risk, GC, design-build and owner's rep for education, healthcare, civic/government, higher ed, senior living, industrial",
+   "screen": [
+    "CM / CM-at-risk / owner's rep RFQs",
+    "GC prime bids \u2265 ~$2M on state (DGS), higher-ed, K-12, healthcare, municipal buildings",
+    "Statewide PA, strongest in central PA and NEPA"
+   ]
+  },
+  {
+   "key": "QES",
+   "name": "Quandel Energy Solutions (QES, ESCO)",
+   "base": "Harrisburg, PA",
+   "focus": "Guaranteed Energy Savings Act (GESA) / ESPC, energy audits, capital planning, HVAC & energy-driven facility upgrades; COSTARS #030-E23-031 Energy Consulting",
+   "screen": [
+    "GESA / ESCO RFQs from school districts, municipalities, authorities, state",
+    "Facility condition assessments, capital planning, HVAC replacement programs",
+    "Solar/geothermal and utility-reduction projects"
+   ]
+  },
+  {
+   "key": "JVS",
+   "name": "J. Vinton Schafer",
+   "base": "Abingdon, MD",
+   "focus": "CM, GC and design-build for civic/government, corporate, higher ed and PK-12 (Maryland-based)",
+   "screen": [
+    "Under the PA-only scope: southern-tier PA (York, Adams, Lancaster, Chester) K-12, higher ed and civic work near the MD line",
+    "Most Schafer work is in Maryland, so few PA items are tagged to it"
+   ]
+  },
+  {
+   "key": "PERF",
+   "name": "Performance Construction",
+   "base": "Pottsville, PA",
+   "focus": "Self-performing heavy civil, concrete, bridges, dams, water/wastewater treatment plants, site work; COSTARS #016-E24-368 Water & Wastewater",
+   "screen": [
+    "Municipal authority WWTP / pump station / clarifier / biosolids bids",
+    "County & municipal bridge and culvert replacements (incl. P3 bridge bundling, Schuylkill to Berks)",
+    "Concrete & site packages on large CM-led projects"
+   ]
+  },
+  {
+   "key": "PYR",
+   "name": "Pyramid Construction",
+   "base": "Wormleysburg & Hershey, PA",
+   "focus": "Central PA commercial GC/CM, self-perform, facilities services across civic, healthcare, higher ed, K-12, multifamily, senior living",
+   "screen": [
+    "Central PA (Dauphin, Cumberland, Perry, Lebanon, Lancaster, York) bids roughly $0.5M\u2013$10M",
+    "Municipal buildings, school renovations, housing authority work, IDIQ / work-order contracts"
+   ]
+  }
+ ],
+ "open_solicitations": [
+  {
+   "title": "Rachel Carson Office Building \u2013 Interior & HVAC Renovations (GC, RFP)",
+   "owner": "PA Dept. of General Services",
+   "county": "Dauphin",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "type": "RFP",
+   "value": "GC $11M\u2013$12M (separate low-bid MEP: HVAC $12M\u2013$13M, Elec $7M\u2013$8M, Plumb $2M\u2013$3M, due 1/5/2027)",
+   "due": "2026-12-08 14:00",
+   "pre_bid": "2026-11-06 (held)",
+   "why": "Large state office renovation 10 minutes from Quandel HQ; GC best-value RFP",
+   "priority": "High",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%200948-0103%20Phase%201%20%28RFP%29",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%200948-0103%20Phase%201%20%28RFP%29"
+  },
+  {
+   "title": "Keystone Building \u2013 CMS Renovations (GC/HVAC/Elec, RFP)",
+   "owner": "PA Dept. of General Services",
+   "county": "Dauphin",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "type": "RFP",
+   "value": "GC $4M\u2013$5M; HVAC $2M\u2013$3M; Elec $4M\u2013$5M",
+   "due": "2026-11-17 14:00",
+   "pre_bid": "2026-10-16 (held)",
+   "why": "Capitol Complex renovation in Harrisburg; due in 2 days",
+   "priority": "High",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0948-0107%20Phase%201%20-%20RFP",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0948-0107%20Phase%201%20-%20RFP"
+  },
+  {
+   "title": "Fort Indiantown Gap \u2013 Fitzpatrick Hall Readiness Center Renovation & Addition (GC/HVAC)",
+   "owner": "PA Dept. of Military & Veterans Affairs (via DGS)",
+   "county": "Lebanon",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "type": "IFB",
+   "value": "GC $4M\u2013$5M; HVAC $2M\u2013$3M (plumbing/electrical are small-business reserve)",
+   "due": "2026-12-17 13:00",
+   "pre_bid": "2026-11-30 13:00, Fort Indiantown Gap (submit attendee names in advance)",
+   "why": "Central PA renovation/addition squarely in Pyramid/Quandel range",
+   "priority": "High",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%200962-0041%20Phase%201",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%200962-0041%20Phase%201"
+  },
+  {
+   "title": "Lincoln University \u2013 HVAC Upgrades, Thurgood Marshall Living Learning Center (RFP)",
+   "owner": "Lincoln University (via DGS)",
+   "county": "Chester",
+   "companies": [
+    "QCG",
+    "QES"
+   ],
+   "type": "RFP",
+   "value": "GC $2M\u2013$3M; HVAC $5M\u2013$6M; Elec $2M\u2013$3M",
+   "due": "2026-11-24 14:00",
+   "pre_bid": "2026-10-26 (held)",
+   "why": "Higher-ed residence hall HVAC renewal; GC prime plus energy angle",
+   "priority": "Medium",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-1101-0057%20Phase%201%20-%20RFP",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-1101-0057%20Phase%201%20-%20RFP"
+  },
+  {
+   "title": "Cheyney University \u2013 Ada S. Georges Dining Hall Infrastructure Upgrades",
+   "owner": "Cheyney University / PASSHE (via DGS)",
+   "county": "Delaware",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "value": "GC $3M\u2013$4M; HVAC $1M\u2013$2M; Plumb $0.7M\u2013$0.8M; Elec $1M\u2013$2M",
+   "due": "2026-12-02 11:00",
+   "pre_bid": "2026-10-27 (held)",
+   "why": "Higher-ed infrastructure renovation, multi-prime GC",
+   "priority": "Medium",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0403-0087%20%20Phase%201",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0403-0087%20%20Phase%201"
+  },
+  {
+   "title": "SCI Camp Hill \u2013 Sewer Upgrade (GC)",
+   "owner": "PA Dept. of Corrections (via DGS)",
+   "county": "Cumberland",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "value": "GC $2M\u2013$3M",
+   "due": "2026-12-10 14:00",
+   "pre_bid": "2026-11-18 10:00 at SCI Camp Hill (clearance form was due 7 days prior)",
+   "why": "Sewer/civil work near Harrisburg suited to Performance self-perform",
+   "priority": "Medium",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0573-0034%20%20Phase%201",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0573-0034%20%20Phase%201"
+  },
+  {
+   "title": "Thaddeus Stevens College \u2013 Roof Renovations to Dormitories (GC)",
+   "owner": "Thaddeus Stevens College of Technology (via DGS)",
+   "county": "Lancaster",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB",
+   "value": "GC $1M\u2013$2M",
+   "due": "2026-12-17 14:00",
+   "pre_bid": "2026-11-30 11:30, Alms House, Lancaster",
+   "why": "Small higher-ed GC in Pyramid's territory",
+   "priority": "Low",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0417-0053%20%20Phase%201",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0417-0053%20%20Phase%201"
+  },
+  {
+   "title": "Temple University \u2013 Burk Mansion Renovations (General Construction package)",
+   "owner": "Temple University (DGS delegation)",
+   "county": "Philadelphia",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "value": "Not stated",
+   "due": "2026-11-18 14:00",
+   "why": "Historic renovation, multi-prime GC; outside core geography",
+   "priority": "Low",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=1104-81%20GC",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=1104-81%20GC"
+  },
+  {
+   "title": "Commonwealth University Lock Haven \u2013 Work Order Contracts for Construction, Renovation & Repair",
+   "owner": "Commonwealth University (PASSHE)",
+   "county": "Clinton",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB (IDIQ)",
+   "value": "Multiple-award; work orders under $100K each",
+   "due": "2026-12-15 13:00",
+   "why": "Open-end GC/concrete/sitework work-order contract; steady small work",
+   "priority": "Low",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=CWU-L-2027/1",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=CWU-L-2027/1"
+  },
+  {
+   "title": "Commonwealth University Lock Haven \u2013 Bentley Street Level Renovation (3,810 SF)",
+   "owner": "Commonwealth University (PASSHE)",
+   "county": "Clinton",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB",
+   "value": "Not stated",
+   "due": "2026-12-08 13:00",
+   "why": "Small interior renovation",
+   "priority": "Low",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=CWU-89-L",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=CWU-89-L"
+  },
+  {
+   "title": "DGS Job Order Contracting (JOC) Consultant \u2013 program + construction management services",
+   "owner": "PA Dept. of General Services",
+   "county": "Statewide",
+   "companies": [
+    "QCG"
+   ],
+   "type": "RFP",
+   "value": "2-yr contract + 3 one-yr renewals",
+   "due": "2026-12-08 13:00",
+   "pre_bid": "2026-11-20 13:00 pre-proposal (RSVP by 11:00 to jzarr@pa.gov)",
+   "why": "CM-type services for statewide JOC program; mostly a JOC system/unit-price-book provider role, so fit is partial",
+   "priority": "Low",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=6100066691",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=6100066691"
+  },
+  {
+   "title": "DHS \u2013 Strategic Facilities Planning Consulting Services (Selinsgrove Center, Danville State Hospital)",
+   "owner": "PA Dept. of Human Services (via DGS)",
+   "county": "Dauphin / Snyder / Montour",
+   "companies": [
+    "QCG",
+    "QES"
+   ],
+   "type": "RFP",
+   "value": "Not stated",
+   "due": "2026-11-24 14:00",
+   "pre_bid": "2026-10-22/23 (held)",
+   "why": "Facility planning engagement that shapes future state capital work; fits project planning and capital planning services",
+   "priority": "Medium",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0021-P001%20Phase%201",
+   "source": "PA eMarketplace",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0021-P001%20Phase%201"
+  },
+  {
+   "title": "Guaranteed Energy Savings Program (GESA) \u2013 Commonwealth ESCO ITQ (open enrollment)",
+   "owner": "PA Dept. of General Services",
+   "county": "Statewide",
+   "companies": [
+    "QES"
+   ],
+   "type": "ITQ / prequal",
+   "value": "Program contract",
+   "due": "Open enrollment",
+   "why": "Qualified-ESCO list for state GESA projects; confirm QES is enrolled",
+   "priority": "Medium",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=4400016426_",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=4400016426_"
+  },
+  {
+   "title": "Southeast Psychiatric Treatment Center at Norristown State Hospital (GC RFP + multi-prime)",
+   "owner": "PA Dept. of Human Services (via DGS)",
+   "county": "Montgomery",
+   "companies": [
+    "QCG"
+   ],
+   "type": "RFP",
+   "value": "GC $108M\u2013$109M (multi-prime packages also listed)",
+   "due": "Stayed by Commonwealth Court; new date by addendum",
+   "why": "Major state healthcare build; watch for the stay to lift",
+   "priority": "Watch",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0509-0040%20Phase%201%20%28RFP%29",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-0509-0040%20Phase%201%20%28RFP%29"
+  },
+  {
+   "title": "Pennsylvania Joint Laboratory Facility \u2013 Revised Rebid (GC RFP)",
+   "owner": "PA Dept. of Health (via DGS)",
+   "county": "Dauphin",
+   "companies": [
+    "QCG"
+   ],
+   "type": "RFP",
+   "value": "GC $118M\u2013$119M",
+   "due": "Stayed by Commonwealth Court; new date by addendum",
+   "why": "Major Harrisburg-area lab build; watch for the stay to lift",
+   "priority": "Watch",
+   "url": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-1050-0001%20Phase%201%20%20Revised%20Rebid",
+   "source": "PA eMarketplace",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=DGS%20C-1050-0001%20Phase%201%20%20Revised%20Rebid"
+  },
+  {
+   "title": "Penn State UP \u2013 Pollock Halls Phase 3C trade packages (building concrete, site concrete, earthwork/site utilities)",
+   "owner": "Penn State (CM: Clayco)",
+   "county": "Centre",
+   "companies": [
+    "PERF"
+   ],
+   "type": "Trade bid (sub to CM)",
+   "value": "Not stated",
+   "due": "2026-11-24 15:00",
+   "why": "Concrete and site packages for a full dorm renovation; Performance self-perform scope; bid via BuildingConnected",
+   "priority": "Medium",
+   "url": "https://www.opp.psu.edu/project/up-pollock-halls-phase-3c",
+   "source": "Penn State OPP",
+   "pre_bid": "",
+   "notes": "",
+   "id": "https://www.opp.psu.edu/project/up-pollock-halls-phase-3c"
+  },
+  {
+   "title": "Trout Run & Matsunk WPCC Clarifier and Thickener Modifications",
+   "owner": "Upper Merion Sanitary & Stormwater Authority",
+   "county": "Montgomery",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-19 11:00",
+   "why": "Wastewater plant process/concrete work",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/259081",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/259081"
+  },
+  {
+   "title": "Superstructure Replacement \u2013 Bridges LDT-102 and LDT-103",
+   "owner": "Londonderry Township",
+   "county": "Dauphin",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-18 11:00",
+   "why": "Township bridge superstructure replacements near Harrisburg",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/258856",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/258856"
+  },
+  {
+   "title": "Gascola Equalization Facility Concrete Repairs & Installations",
+   "owner": "Municipality of Penn Hills",
+   "county": "Allegheny",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-18 10:30",
+   "why": "Heavy concrete at a wastewater facility; western PA",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/256546",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/256546"
+  },
+  {
+   "title": "Second Stage Final Clarifier Repairs, Contract 2026-02",
+   "owner": "Pleasant Hills Authority",
+   "county": "Allegheny",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-24 10:00",
+   "why": "Clarifier concrete/mechanical repairs; western PA",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/258989",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/258989"
+  },
+  {
+   "title": "Naamans Creek Pump Station Upgrades",
+   "owner": "Southern Delaware County Authority",
+   "county": "Delaware",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-07 10:00",
+   "why": "Pump station upgrade",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261380",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261380"
+  },
+  {
+   "title": "Biosolids Project 011139.0465 (General EBA26-2 / Electrical EBA26-3)",
+   "owner": "Ephrata Borough Authority",
+   "county": "Lancaster",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-08 10:00",
+   "why": "Biosolids facility conveyors, piping, building mods; optional pre-bid open house 11/18",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/260443",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/260443"
+  },
+  {
+   "title": "R003721.0448 \u2013 2024 Bridge Replacement Program",
+   "owner": "County of York",
+   "county": "York",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-08 10:00",
+   "why": "Multi-bridge county program; fits the P3 bridge strategy",
+   "priority": "High",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261718",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261718"
+  },
+  {
+   "title": "Pump Station No. 4 Modifications (General & Electrical)",
+   "owner": "Montour Township",
+   "county": "Columbia",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-08 11:00",
+   "why": "Municipal pump station",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/259636",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/259636"
+  },
+  {
+   "title": "Labott Road Culvert Replacement",
+   "owner": "Jackson Township",
+   "county": "York",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-08 10:00",
+   "why": "Culvert replacement",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/262073",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/262073"
+  },
+  {
+   "title": "Sleepy Hollow & Moyer Road Culvert Replacements",
+   "owner": "West Hanover Township",
+   "county": "Dauphin",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-19 11:00",
+   "why": "Culvert replacements near Harrisburg",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/259697",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/259697"
+  },
+  {
+   "title": "2025-24 Oyster Point Reservoir Sediment Removal",
+   "owner": "City of Lancaster",
+   "county": "Lancaster",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-11-19 11:00",
+   "why": "Reservoir/dam-related civil work",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/248926",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/248926"
+  },
+  {
+   "title": "WWTP Influent Pump Improvements (General/Process Mechanical + Electrical)",
+   "owner": "Porter-Tower Joint Municipal Authority",
+   "county": "Schuylkill",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-16 12:00",
+   "why": "Schuylkill County wastewater plant (Performance's home county); mandatory pre-bid per notice",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/260921",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/260921"
+  },
+  {
+   "title": "Exeter Commons Utilities and Lot 2 Site Improvements",
+   "owner": "Wyoming Avenue Development Group, LLC (private)",
+   "county": "Luzerne",
+   "companies": [
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-01 14:00",
+   "why": "Private development site/utility work in NEPA",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/260650",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/260650"
+  },
+  {
+   "title": "Tyrone Township Municipal Building \u2013 Phase 2",
+   "owner": "Tyrone Township",
+   "county": "Perry",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB",
+   "due": "2026-11-18 17:00",
+   "why": "Small municipal building in Pyramid's backyard",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261453",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261453"
+  },
+  {
+   "title": "Renovations + Addition to Existing Building, New Storage Garage & Salt Storage Building",
+   "owner": "Jackson Township",
+   "county": "York",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB",
+   "due": "2026-12-08 13:00",
+   "why": "Municipal public-works campus",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261682",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261682"
+  },
+  {
+   "title": "Lower Saucon Public Works Facility",
+   "owner": "Lower Saucon Township",
+   "county": "Northampton",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-11-24 14:00",
+   "why": "New municipal public-works facility",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/259965",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/259965"
+  },
+  {
+   "title": "Borough of Conshohocken Public Safety Facility",
+   "owner": "Borough of Conshohocken",
+   "county": "Montgomery",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-09 14:00",
+   "why": "New civic public-safety building",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261356",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261356"
+  },
+  {
+   "title": "Upper Providence Township Municipal Complex Renovations & Addition",
+   "owner": "Upper Providence Township",
+   "county": "Delaware",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-17 14:00",
+   "why": "Municipal complex renovation/addition",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/262278",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/262278"
+  },
+  {
+   "title": "Learning Commons \u2013 Renovations Project",
+   "owner": "Northampton Community College",
+   "county": "Northampton",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-15 14:00",
+   "why": "Higher-ed renovation in Lehigh Valley",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261667",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261667"
+  },
+  {
+   "title": "AGCS \u2013 State Road Administration Renovation 26-004",
+   "owner": "Avon Grove Charter School",
+   "county": "Chester",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "type": "IFB",
+   "due": "2026-12-15 14:30",
+   "why": "School renovation: canopy, facade, windows, roof, interior, new DOAS/MEP",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261299",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261299"
+  },
+  {
+   "title": "Athletic Field Upgrades \u2013 Phase 1",
+   "owner": "Chester Upland School District",
+   "county": "Delaware",
+   "companies": [
+    "QCG",
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-03 16:00",
+   "why": "School district site/athletic work",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/262492",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/262492"
+  },
+  {
+   "title": "Golden Age Manor First Floor Improvements and Accessible Front Entrance",
+   "owner": "Montgomery County Housing Authority",
+   "county": "Montgomery",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-11-19 13:00",
+   "why": "Housing authority senior building renovation (housing-authority program)",
+   "priority": "Medium",
+   "url": "https://pennbid.bonfirehub.com/opportunities/258974",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/258974"
+  },
+  {
+   "title": "Site Civil Improvements and Building Safety Upgrades",
+   "owner": "Township of Spring",
+   "county": "Berks",
+   "companies": [
+    "PYR",
+    "PERF"
+   ],
+   "type": "IFB",
+   "due": "2026-12-02 14:00",
+   "why": "Berks municipal site and building work",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/261945",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/261945"
+  },
+  {
+   "title": "Marple Township Library Improvements",
+   "owner": "Marple Township",
+   "county": "Delaware",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-11-19 11:00",
+   "why": "Civic renovation",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/258757",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/258757"
+  },
+  {
+   "title": "Delaware County Courthouse Fa\u00e7ade Stabilization \u2013 Phase 1 (eDPW-120926)",
+   "owner": "Delaware County",
+   "county": "Delaware",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-09 23:00",
+   "why": "County courthouse envelope work (portal close shown as 11:00 PM ET; confirm)",
+   "priority": "Low",
+   "url": "https://pennbid.bonfirehub.com/opportunities/257981",
+   "source": "PennBid (Bonfire)",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://pennbid.bonfirehub.com/opportunities/257981"
+  },
+  {
+   "title": "RFQ \u2013 Guaranteed Energy Savings Project",
+   "owner": "Camp Hill School District",
+   "county": "Cumberland",
+   "companies": [
+    "QES"
+   ],
+   "type": "RFQ (GESA)",
+   "due": "2026-11-18",
+   "why": "GESA ESCO selection 5 miles from QES; documents posted on district site",
+   "priority": "High",
+   "url": "https://starbridge.ai/rfp/request-for-qualifications-for-guaranteed-energy-0",
+   "source": "Starbridge (district documents at camphillsd.k12.pa.us)",
+   "notes": "Due time not confirmed",
+   "pre_bid": "",
+   "value": "Not stated",
+   "id": "https://starbridge.ai/rfp/request-for-qualifications-for-guaranteed-energy-0"
+  },
+  {
+   "title": "RFQ \u2013 Building-Related Energy Savings Performance Contract, Plum Senior High School",
+   "owner": "Plum Borough School District",
+   "county": "Allegheny",
+   "companies": [
+    "QES"
+   ],
+   "type": "RFQ (ESPC/GESA)",
+   "due": "2026-11-18 14:00",
+   "why": "ESCO RFQ; shortlist of 3 then competitive RFP; board pick ~Dec 1",
+   "priority": "Medium",
+   "url": "https://www.pbsd.net/RFP.aspx",
+   "source": "District website",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://www.pbsd.net/RFP.aspx"
+  },
+  {
+   "title": "RFQ \u2013 Guaranteed Energy Savings Contract (district facilities)",
+   "owner": "Crawford Central School District",
+   "county": "Crawford",
+   "companies": [
+    "QES"
+   ],
+   "type": "RFQ (GESA)",
+   "due": "2026-11-23",
+   "why": "GESA hybrid (85% energy / 15% construction) under discussion",
+   "priority": "Medium",
+   "url": "https://starbridge.ai/rfp/request-for-qualifications-for-a-guaranteed-energy-8",
+   "source": "Starbridge (RFQ PDF at craw.org)",
+   "notes": "Due time not confirmed",
+   "pre_bid": "",
+   "value": "Not stated",
+   "id": "https://starbridge.ai/rfp/request-for-qualifications-for-a-guaranteed-energy-8"
+  },
+  {
+   "title": "Construction Manager at Risk \u2013 Stark Learning Center Nursing Simulation Suite",
+   "owner": "Wilkes University (private)",
+   "county": "Luzerne",
+   "companies": [
+    "QCG"
+   ],
+   "type": "RFP (CMR)",
+   "due": "2026-11-16",
+   "why": "Private higher-ed CMR in Scranton-office territory; 10% bid security",
+   "priority": "Medium",
+   "url": "https://www.noticeregistry.com/pennsylvania/notice/bid-notice-wilkes-barre-2490746",
+   "source": "NoticeRegistry (aggregator)",
+   "notes": "Unconfirmed at primary source; due tomorrow",
+   "pre_bid": "",
+   "value": "Not stated",
+   "id": "https://www.noticeregistry.com/pennsylvania/notice/bid-notice-wilkes-barre-2490746"
+  },
+  {
+   "title": "Additions & Alterations to Freeport Area High School (Contracts 1\u20136 + abatement)",
+   "owner": "Freeport Area School District",
+   "county": "Armstrong",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "value": "Not stated",
+   "due": "2026-11-18 11:00",
+   "pre_bid": "2026-11-04 (held)",
+   "why": "School addition/renovation, multi-prime GC; western PA",
+   "priority": "Low",
+   "url": "https://starbridge.ai/rfp/additions-alterations-to-the-freeport-area-high-school",
+   "source": "Starbridge (docs from HHSDR Architects)",
+   "notes": "",
+   "id": "https://starbridge.ai/rfp/additions-alterations-to-the-freeport-area-high-school"
+  },
+  {
+   "title": "New Fieldhouse & Site Improvements",
+   "owner": "South Middleton School District",
+   "county": "Cumberland",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-07",
+   "why": "New school building in Boiling Springs; core central PA",
+   "priority": "High",
+   "url": "https://starbridge.ai/rfp/new-fieldhouse-site-improvements-for-south-middleton",
+   "source": "Starbridge",
+   "notes": "Confirm time and pre-bid at district/architect",
+   "pre_bid": "",
+   "value": "Not stated",
+   "id": "https://starbridge.ai/rfp/new-fieldhouse-site-improvements-for-south-middleton"
+  },
+  {
+   "title": "Middle School Renovations",
+   "owner": "Central Valley School District",
+   "county": "Beaver",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-03",
+   "why": "School renovation; western PA",
+   "priority": "Low",
+   "url": "https://starbridge.ai/rfp/central-valley-school-district-cvsd-renovations-rfp",
+   "source": "Starbridge",
+   "pre_bid": "",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://starbridge.ai/rfp/central-valley-school-district-cvsd-renovations-rfp"
+  },
+  {
+   "title": "Rebid \u2013 Exterior & Interior Modernization at Kensington Manor",
+   "owner": "Westmoreland County Housing Authority",
+   "county": "Westmoreland",
+   "companies": [
+    "QCG"
+   ],
+   "type": "IFB",
+   "due": "2026-12-04 10:00",
+   "pre_bid": "2026-11-20 10:00, Kensington Manor community room",
+   "why": "Housing-authority modernization (family units and towers)",
+   "priority": "Medium",
+   "url": "https://publicbidsearch.com/bids/notice-to-bidders-westmoreland-county-housing-authority-pa-d0b72d",
+   "source": "PublicBidSearch (aggregator)",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://publicbidsearch.com/bids/notice-to-bidders-westmoreland-county-housing-authority-pa-d0b72d"
+  },
+  {
+   "title": "Moffett House Structural Repairs (ITB-2026-0005)",
+   "owner": "Housing Authority of the County of Beaver",
+   "county": "Beaver",
+   "companies": [
+    "PYR"
+   ],
+   "type": "IFB",
+   "due": "2026-11-24 13:00",
+   "pre_bid": "2026-11-12 (held)",
+   "why": "Housing-authority structural repairs; 15% bid bond",
+   "priority": "Low",
+   "url": "https://civiciq.com/public-rfp/beaver-county-housing-authority-moffett-house-structural-repairs-itb-2026-0005-2026",
+   "source": "CivicIQ (aggregator)",
+   "value": "Not stated",
+   "notes": "",
+   "id": "https://civiciq.com/public-rfp/beaver-county-housing-authority-moffett-house-structural-repairs-itb-2026-0005-2026"
+  }
+ ],
+ "leads": [
+  {
+   "entity": "Schuylkill County Commissioners / county municipal authority",
+   "project": "Bundled P3 repair/replacement of 28 poor-condition county bridges",
+   "stage": "Commissioners repurposed the Solid Waste Authority as a general-purpose authority to own the bridges; P3 Board application Sept 2026",
+   "timing": "P3 Board approval expected Feb\u2013Mar 2027, then RFPs for contractors and engineers; construction Q3 2027",
+   "budget": "About $50M (certificates of participation)",
+   "companies": [
+    "PERF",
+    "QCG"
+   ],
+   "priority": "High",
+   "url": "https://www.tnonline.com/20260928/schuylkill-cuts-9m-for-bridge-projects/",
+   "county": "Schuylkill",
+   "date": "2026-09-23",
+   "id": "https://www.tnonline.com/20260928/schuylkill-cuts-9m-for-bridge-projects/"
+  },
+  {
+   "entity": "Morrisville Municipal Authority",
+   "project": "New regional wastewater treatment plant & forcemain at Keystone Trade Center",
+   "stage": "ConstructConnect lists 'Bidding Soon' (published 10/30/2026); Pennoni engineer",
+   "timing": "Bid expected soon; 2\u20133 yr construction",
+   "budget": "Earlier reporting ~$85M\u2013$150M (unconfirmed)",
+   "companies": [
+    "PERF",
+    "QCG"
+   ],
+   "priority": "High",
+   "url": "https://projects.constructconnect.com/details/7764255-wastewater-treatment-plant-forcemain-morrisville-municipal-authority&find_loc=pennsylvania-19067",
+   "county": "Bucks",
+   "date": "2026-10-30",
+   "id": "https://projects.constructconnect.com/details/7764255-wastewater-treatment-plant-forcemain-morrisville-municipal-authority&find_loc=pennsylvania-19067"
+  },
+  {
+   "entity": "PA DGS \u2013 Governor's Selection Committee (Nov 18, 2026)",
+   "project": "DGS 251-71 Ph2 \u2013 New PennDOT York County Maintenance Facility (42,000 SF+)",
+   "stage": "Design professional selection 11/18/2026",
+   "timing": "Construction bid likely 2027\u201328",
+   "budget": "$39.2M construction",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "priority": "High",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf",
+   "county": "York",
+   "date": "2026-11-18",
+   "id": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf"
+  },
+  {
+   "entity": "PA DGS \u2013 Governor's Selection Committee (Nov 18, 2026)",
+   "project": "DGS 962-48 \u2013 Fort Indiantown Gap unaccompanied housing (69,952 SF)",
+   "stage": "Design professional selection 11/18/2026",
+   "timing": "Construction bid likely 2027\u201328",
+   "budget": "$38.6M construction",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "priority": "High",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#fig",
+   "county": "Lebanon",
+   "date": "2026-11-18",
+   "id": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#fig"
+  },
+  {
+   "entity": "PA DGS \u2013 Governor's Selection Committee (Nov 18, 2026)",
+   "project": "DGS 401-64 \u2013 Commonwealth University Bloomsburg, Centennial Hall mechanical upgrades",
+   "stage": "Design professional selection 11/18/2026",
+   "timing": "Construction bid likely 2027\u201328",
+   "budget": "$10.0M construction",
+   "companies": [
+    "QCG",
+    "QES"
+   ],
+   "priority": "Medium",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#bloomsburg",
+   "county": "Columbia",
+   "date": "2026-11-18",
+   "id": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#bloomsburg"
+  },
+  {
+   "entity": "PA DGS \u2013 Governor's Selection Committee (Nov 18, 2026)",
+   "project": "DGS 373-11 \u2013 SCI Mahanoy RTU and roof replacements",
+   "stage": "Design professional selection 11/18/2026",
+   "timing": "Construction bid likely 2027",
+   "budget": "$4.0M construction",
+   "companies": [
+    "PYR",
+    "QES"
+   ],
+   "priority": "Medium",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#mahanoy",
+   "county": "Schuylkill",
+   "date": "2026-11-18",
+   "id": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#mahanoy"
+  },
+  {
+   "entity": "PA DGS \u2013 Governor's Selection Committee (Nov 18, 2026)",
+   "project": "DGS 409-67 \u2013 Commonwealth University Lock Haven, Fairview Suites mechanical upgrades",
+   "stage": "Design professional selection 11/18/2026",
+   "timing": "Construction bid likely 2027",
+   "budget": "$3.96M construction",
+   "companies": [
+    "PYR",
+    "QES"
+   ],
+   "priority": "Low",
+   "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#lockhaven",
+   "county": "Clinton",
+   "date": "2026-11-18",
+   "id": "https://www.pa.gov/content/dam/copapwp-pagov/en/dgs/documents/design-and-construction/design/2026-notice/11182026%20notice%20of%20design%20professional%20selections%20-%2011.18.2026.pdf#lockhaven"
+  },
+  {
+   "entity": "Unionville-Chadds Ford School Board",
+   "project": "Charles F. Patton Middle School replacement",
+   "stage": "Board vote expected week of Nov 16, 2026; architect and ICS Consulting (CM) engaged; phased start with fields",
+   "timing": "Bids likely 2027",
+   "budget": "$164M proposed",
+   "companies": [
+    "QCG"
+   ],
+   "priority": "Medium",
+   "url": "https://www.mychesco.com/a/education/school-districts/unionville-chadds-ford-sd/unionville-chadds-ford-board-nears-164-million-school-vote/",
+   "county": "Chester",
+   "date": "2026-11-12",
+   "id": "https://www.mychesco.com/a/education/school-districts/unionville-chadds-ford-sd/unionville-chadds-ford-board-nears-164-million-school-vote/"
+  },
+  {
+   "entity": "Annville-Cleona School Board",
+   "project": "Elementary school building project (new PK\u20136 or 2\u20136 building options)",
+   "stage": "Board voted Nov 2026 to delay; committee to set direction by June 2027; MAROTTA/MAIN Architects recommended",
+   "timing": "Direction by June 2027",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "QCG",
+    "QES"
+   ],
+   "priority": "Medium",
+   "url": "https://lebtown.com/2026/11/12/annville-cleona-board-unanimously-moves-to-delay-building-project/",
+   "county": "Lebanon",
+   "date": "2026-11-12",
+   "id": "https://lebtown.com/2026/11/12/annville-cleona-board-unanimously-moves-to-delay-building-project/"
+  },
+  {
+   "entity": "Schuylkill County Commissioners",
+   "project": "Emergency Services & Fire School Building",
+   "stage": "Nov 12 agenda: $58K amendment to Y. Kim Architects for bidding, CA and geotech (total $307,700)",
+   "timing": "Construction bidding imminent",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "priority": "High",
+   "url": "https://citizenportal.ai/articles/12059320/pennsylvania/schuylkill-county/county-staff-seek-58000-increase-to-y-kim-architects-contract-for-emergency-services-building",
+   "county": "Schuylkill",
+   "date": "2026-11-12",
+   "id": "https://citizenportal.ai/articles/12059320/pennsylvania/schuylkill-county/county-staff-seek-58000-increase-to-y-kim-architects-contract-for-emergency-services-building"
+  },
+  {
+   "entity": "Schuylkill County Housing Authority",
+   "project": "Capital Fund Program modernization of public housing",
+   "stage": "RFP for A/E technical assistance due Dec 3, 2026, 10:00 AM",
+   "timing": "Modernization construction to follow in 2027",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "QCG",
+    "QES"
+   ],
+   "priority": "Medium",
+   "url": "https://www.noticeregistry.com/pennsylvania/notice/bid-notice-schuylkill-haven-2488700",
+   "county": "Schuylkill",
+   "date": "2026-10-30",
+   "id": "https://www.noticeregistry.com/pennsylvania/notice/bid-notice-schuylkill-haven-2488700"
+  },
+  {
+   "entity": "Penn State / Penn State Health",
+   "project": "Milton S. Hershey Medical Center Strategic Facilities Plan (550-acre campus)",
+   "stage": "A/E planning firm short-listed",
+   "timing": "Plan drives multi-year capital program",
+   "budget": "Not stated",
+   "companies": [
+    "QCG",
+    "QES"
+   ],
+   "priority": "Medium",
+   "url": "https://www.opp.psu.edu/project/milton-s-hershey-medical-center-strategic-facilities-plan",
+   "county": "Dauphin",
+   "date": "2026",
+   "id": "https://www.opp.psu.edu/project/milton-s-hershey-medical-center-strategic-facilities-plan"
+  },
+  {
+   "entity": "Elizabethtown Area School District",
+   "project": "Secondary school complex building project (MS/HS)",
+   "stage": "RLPS approved as architect Feb 24, 2026",
+   "timing": "Design underway; CM/bids to follow",
+   "budget": "Not stated",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "priority": "Medium",
+   "url": "https://www.etownschools.org/about/about-the-board/building-projects/elizabethtown-area-middle-school-elizabethtown-area-high-school",
+   "county": "Lancaster",
+   "date": "2026-02-24",
+   "id": "https://www.etownschools.org/about/about-the-board/building-projects/elizabethtown-area-middle-school-elizabethtown-area-high-school"
+  },
+  {
+   "entity": "Dauphin County Technical School",
+   "project": "Campus facility study for expansion (renovations/additions/new CTE space)",
+   "stage": "Architectural facility-study RFP issued (due Feb 23, 2026)",
+   "timing": "Study results then procurement of resulting projects",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "priority": "Medium",
+   "url": "https://dcts.org/wp-content/uploads/RFP-Feasibility-Study-DCTS-2026.pdf",
+   "county": "Dauphin",
+   "date": "2026-02",
+   "id": "https://dcts.org/wp-content/uploads/RFP-Feasibility-Study-DCTS-2026.pdf"
+  },
+  {
+   "entity": "Schuylkill Valley School Board",
+   "project": "Middle school facility conditions assessment",
+   "stage": "Discussed at Buildings & Grounds Committee Sept 21, 2026; not yet on agenda",
+   "timing": "Assessment then capital plan",
+   "budget": "Not stated",
+   "companies": [
+    "QES",
+    "QCG"
+   ],
+   "priority": "Medium",
+   "url": "https://berksconnect.com/news/meetings/schuylkill-valley-school-board-4-3-percent-tax-cap-albright-dual-enrollment-november-2026",
+   "county": "Berks",
+   "date": "2026-11-15",
+   "id": "https://berksconnect.com/news/meetings/schuylkill-valley-school-board-4-3-percent-tax-cap-albright-dual-enrollment-november-2026"
+  },
+  {
+   "entity": "State College Area School Board",
+   "project": "Fairmount Building (89,000 SF historic school) reuse feasibility study",
+   "stage": "$72,655 study by Hoffman Leakey Architects approved",
+   "timing": "Study 2026\u201327",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "QCG"
+   ],
+   "priority": "Low",
+   "url": "https://www.statecollege.com/articles/local-news/scasd-commissions-feasibility-study-for-future-of-fairmount-building/",
+   "county": "Centre",
+   "date": "2026-08-31",
+   "id": "https://www.statecollege.com/articles/local-news/scasd-commissions-feasibility-study-for-future-of-fairmount-building/"
+  },
+  {
+   "entity": "Wissahickon School Board",
+   "project": "Roofing at Blue Bell and Stony Creek elementary schools (capital project)",
+   "stage": "Resolution W-17-26 authorizing up to $12M GO bonds, Series 2027 (Nov 2, 2026)",
+   "timing": "Work 2027",
+   "budget": "Up to $12M bonds",
+   "companies": [
+    "QES",
+    "QCG"
+   ],
+   "priority": "Low",
+   "url": "https://civiciq.com/public-project/on-november-2-2026-the-board-of-school-directors-adopted-87ae390c-49ab-573b-bcd3-45921253d7a9",
+   "county": "Montgomery",
+   "date": "2026-11-02",
+   "id": "https://civiciq.com/public-project/on-november-2-2026-the-board-of-school-directors-adopted-87ae390c-49ab-573b-bcd3-45921253d7a9"
+  },
+  {
+   "entity": "Conewago Valley School Board",
+   "project": "District construction projects",
+   "stage": "Board voted 8\u20131 to authorize bond sale",
+   "timing": "Construction 2027",
+   "budget": "Not stated",
+   "companies": [
+    "PYR",
+    "JVS"
+   ],
+   "priority": "Low",
+   "url": "https://www.gettysburgtimes.com/news/local/cvsd-approves-bond-sale-for-construction-projects-in-8-1-vote/article_e5819704-0175-4b04-bb5e-03229cbafe4f.html",
+   "county": "Adams",
+   "date": "2026-11-10",
+   "id": "https://www.gettysburgtimes.com/news/local/cvsd-approves-bond-sale-for-construction-projects-in-8-1-vote/article_e5819704-0175-4b04-bb5e-03229cbafe4f.html"
+  },
+  {
+   "entity": "Oxford Area School District",
+   "project": "Phase 3 renovation",
+   "stage": "Finance Committee agenda Nov 10, 2026 (finance team)",
+   "timing": "Financing being set",
+   "budget": "Not stated",
+   "companies": [
+    "QCG",
+    "JVS"
+   ],
+   "priority": "Low",
+   "url": "https://resources.finalsite.net/images/v1794237789/oxfordasdorg/ekouqnymg6r7uqg1ayt1/FinComm111026.pdf",
+   "county": "Chester",
+   "date": "2026-11-10",
+   "id": "https://resources.finalsite.net/images/v1794237789/oxfordasdorg/ekouqnymg6r7uqg1ayt1/FinComm111026.pdf"
+  },
+  {
+   "entity": "Berks County Commissioners",
+   "project": "Countywide capital improvements",
+   "stage": "Ordinance adopted to incur up to $40M GO debt",
+   "timing": "Not stated",
+   "budget": "Up to $40M",
+   "companies": [
+    "QCG",
+    "PYR",
+    "PERF"
+   ],
+   "priority": "Medium",
+   "url": "https://www.wfmz.com/news/area/berks/reading-area/berks-county-commissioners-authorize-up-to-40-million-in-new-debt-for-capital-improvements/article_71772fb6-7a53-4bf2-85a5-f73340974ae4.html",
+   "county": "Berks",
+   "date": "2026 (unconfirmed)",
+   "id": "https://www.wfmz.com/news/area/berks/reading-area/berks-county-commissioners-authorize-up-to-40-million-in-new-debt-for-capital-improvements/article_71772fb6-7a53-4bf2-85a5-f73340974ae4.html"
+  },
+  {
+   "entity": "Downingtown Area School District",
+   "project": "Shamona Creek ES HVAC (unfunded) + district-wide facility assessment and 5\u201310 yr capital plan",
+   "stage": "Board approved $22.2M GESA with McClure for two other schools; FCA due May 2027",
+   "timing": "Capital plan May 2027",
+   "budget": "Not stated",
+   "companies": [
+    "QES"
+   ],
+   "priority": "Low",
+   "url": "https://go.boarddocs.com/pa/down/Board.nsf/PRINT-AgendaDetailed?id=DYWQJ6697D15&open=",
+   "county": "Chester",
+   "date": "2026-11-04",
+   "id": "https://go.boarddocs.com/pa/down/Board.nsf/PRINT-AgendaDetailed?id=DYWQJ6697D15&open="
+  },
+  {
+   "entity": "City of Pottsville (RACP itemizations)",
+   "project": "Use of ~$29M itemized RACP authority expiring 10/30/2027 (plus ~$39.5M unused items to 2032)",
+   "stage": "From your Nov 4 RACP research notes; confirm with OB / e-RACP",
+   "timing": "Projects must reach PMP before authority sunsets",
+   "budget": "~$29M expiring 2027",
+   "companies": [
+    "QCG",
+    "PYR"
+   ],
+   "priority": "High",
+   "url": "internal:client_chats.md#3-racp",
+   "county": "Schuylkill",
+   "date": "2026-11-04",
+   "id": "internal:client_chats.md#3-racp"
+  }
+ ],
+ "page": {
+  "title": "Quandel Bid Opportunities Tracker",
+  "canvas_id": "4aa902c5-1427-4f81-ad8f-2517335d56f7",
+  "url": "https://cursor.com/canvas/store-6ce48440-f649-4900-9c7a-2d8468093d26/4aa902c5-1427-4f81-ad8f-2517335d56f7"
+ }
+}

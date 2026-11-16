@@ -16,6 +16,7 @@ import { loadOpp, toGate } from "./data";
 function revalidate(id?: string, orgId?: string) {
   revalidatePath("/pipeline");
   revalidatePath("/");
+  revalidatePath("/bid-feed");
   if (id) revalidatePath(`/opportunities/${id}`);
   if (orgId) revalidatePath(`/organizations/${orgId}`);
 }
@@ -115,7 +116,10 @@ export async function updateOpportunity(id: string, _: FormState, fd: FormData):
 export async function deleteOpportunity(id: string) {
   const user = await requireUser();
   if (!canDelete(user.role)) throw new Error("Only admins and BD directors can delete opportunities.");
-  const o = await prisma.opportunity.delete({ where: { id } });
+  const [, o] = await prisma.$transaction([
+    prisma.bidFeedItem.updateMany({ where: { opportunityId: id }, data: { status: "NEW", opportunityId: null } }),
+    prisma.opportunity.delete({ where: { id } }),
+  ]);
   revalidate(undefined, o.orgId);
   redirect("/pipeline");
 }

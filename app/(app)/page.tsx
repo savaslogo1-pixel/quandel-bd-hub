@@ -35,6 +35,7 @@ export default async function Home() {
     prisma.notification.findMany({ where: { userId: user.id, readAt: null }, orderBy: { createdAt: "desc" }, take: 8 }),
   ]);
   const [owned, tierA, last30, maFlags, myOpps] = counts;
+  const newBids = await prisma.bidFeedItem.count({ where: { status: "NEW" } });
   const training = (await learnerSessions(user.id)).filter((v) => v.dueDate && !v.parts.complete).sort((a, b) => a.dueDate!.getTime() - b.dueDate!.getTime());
   const toReview = canFacilitate(user.role) ? await prisma.deliverableSubmission.count({ where: { status: "SUBMITTED" } }) : 0;
   const first = (user.name ?? user.email).split(/[ @]/)[0];
@@ -51,6 +52,11 @@ export default async function Home() {
           {canEditAccounts(user.role) && <Link className="btn" href="/organizations/new">Add organization</Link>}
         </div>
       </div>
+      {newBids > 0 && (
+        <p className="banner banner-info">
+          <Link href="/bid-feed"><b>{newBids} new bid-feed item{newBids === 1 ? "" : "s"}</b></Link> waiting for review.
+        </p>
+      )}
       <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-5">
         <Stat href="/pipeline?mine=1" n={myOpps} label="My open pursuits" />
         <Stat href="/organizations?mine=1" n={owned} label="Organizations I own" />

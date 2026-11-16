@@ -175,6 +175,7 @@ Path-specific checklists:
 - **Home:** my next steps, my overdue touches, upcoming deadlines (grants, bids, board meetings), training due
 - **Accounts:** list with filters (state, type, company, tier, ARC, fiscal stress, last energy project before X); org page with tabs for profile, contacts, decision map, opportunities, activities, meetings, energy, documents
 - **Pipeline:** board view by stage; toggle by company, state or delivery method; weighted value totals
+- **Bid feed:** incoming RFPs, RFQs, bids and meeting-minute leads. Approve matches or creates the owner and opens a stage 1 (Target) opportunity; dismiss can be restored. Intake is `POST /api/bid-feed/intake` (see README).
 - **Opportunity page:** summary · capital stack · approvals timeline · procurement · team · competitors · documents · compliance check
 - **Program library:** searchable; "match to opportunity" button
 - **Calendar:** grant deadlines, bid dates, board meetings, training sessions (one view, color by type)

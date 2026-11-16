@@ -16,6 +16,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     ["/", "Home"],
     ["/dashboard", "Dashboard"],
     ["/pipeline", "Pipeline"],
+    ["/bid-feed", "Bid feed"],
     ["/organizations", "Organizations"],
     ["/programs", "Programs"],
     ["/projects", "Projects"],
