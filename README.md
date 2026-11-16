@@ -61,6 +61,79 @@ maintained. Fill details from current guidelines and mark each program verified.
 Deadline alerts are created when people open the app. To run them on a schedule, set
 `CRON_SECRET` and call `POST /api/alerts/run` with `Authorization: Bearer <secret>` daily.
 
+## Bid feed
+
+The Bid feed (`/bid-feed`) is the daily sweep of Pennsylvania RFPs, RFQs, bids and
+meeting-minute leads. Each row carries the matched Quandel companies (the sweep's
+`PERF` code is Performance, stored as PCS). Approving an item matches an organization
+by name or creates one, then opens a stage 1 (Target) opportunity. Dismiss and hold
+can be restored. A re-post of the same item updates the row and does not undo a decision.
+
+Set `BID_FEED_SECRET` (separate from `CRON_SECRET`) and post a batch:
+
+```bash
+curl -X POST http://localhost:3000/api/bid-feed/intake \
+  -H "Authorization: Bearer $BID_FEED_SECRET" \
+  -H "Content-Type: application/json" \
+  -d @batch.json
+```
+
+`batch.json`:
+
+```json
+{
+  "items": [
+    {
+      "externalKey": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=EXAMPLE",
+      "title": "Example school HVAC renovation",
+      "ownerName": "Example Area School District",
+      "county": "Dauphin",
+      "state": "PA",
+      "type": "RFP",
+      "companies": ["QCG", "QES"],
+      "estimatedValue": null,
+      "valueText": "GC $2M–$3M",
+      "dueDate": "2026-12-08T14:00:00.000Z",
+      "preBidDate": "2026-11-06T00:00:00.000Z",
+      "preBidText": "held",
+      "sourceUrl": "https://www.emarketplace.state.pa.us/Solicitations.aspx?SID=EXAMPLE",
+      "sourceName": "PA eMarketplace",
+      "priority": "High",
+      "why": "Higher-ed HVAC near Harrisburg",
+      "notes": ""
+    }
+  ]
+}
+```
+
+The tracker field names are accepted too, so the sweep can post a row as it stores it:
+`id` (external key), `owner`, `project` and `entity` (meeting-minute leads), `value` or
+`budget`, `due`, `pre_bid`, `url`, `source`, and `companies`. A lead's `stage`, `timing`
+and signal `date` are kept in notes. `date` is not treated as the bid due date.
+`type` is `RFP`, `RFQ`, `IFB` / `bid`, or meeting minutes. `priority` is High, Medium,
+Low or Watch. Omitted `state` is PA.
+
+Response: `{ "created": 1, "updated": 0, "errors": [] }`. An item that fails validation
+is listed in `errors` (`index`, `externalKey`, `message`) and the rest of the batch is
+still saved. A missing or wrong secret is 401. A body that is not `{ "items": [...] }`
+(at most 500) is 400.
+
+Matching is on `externalKey`. The update refreshes the published fields and company tags.
+It does not change `status`, the first-seen time, or the linked opportunity.
+
+A single published dollar figure is stored as `estimatedValue`. A range (`$11M–$12M`) or
+a ceiling (`up to $12M`) stays in `valueText` and is not converted into a number.
+
+Load the current tracker (50 solicitations and 22 meeting-minute leads) after migrations
+and `npm run db:seed`:
+
+```bash
+npm run bid-feed:import
+npm run bid-feed:import -- path/to/tracker.json
+```
+
+Running it again updates the same rows.
+
 ## Imports
 
 Organizations → Import (admins and BD directors) loads .xlsx or .csv files with a preview

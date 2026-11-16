@@ -1,5 +1,23 @@
 # Changelog
 
+## Bid feed — 2026-11-16
+- Bid feed (nav): Pennsylvania solicitations and meeting-minute leads, filterable by status,
+  company, type and due-soon, sorted by due date. Each row shows priority, due date, value
+  and a source link.
+- `BidFeedItem` stores the owner, county, type, matched companies (lead is the first code;
+  the sweep's PERF code is PCS), a single estimated value when the text states one, the
+  published value text, due and pre-bid dates, source, priority, notes, status
+  (new / approved / dismissed / on hold), first-seen and last-updated, and a stable
+  external key. Approving links the row to the opportunity it created.
+- `POST /api/bid-feed/intake` with `Authorization: Bearer $BID_FEED_SECRET` upserts a JSON
+  batch by external key. A re-post updates the published fields and does not reset a
+  decision or unlink an opportunity. The contract is in the README.
+- Approve matches an organization by normalized name (or creates one) and opens a stage 1
+  (Target) opportunity with the lead company, support companies, dates and source. Dismiss
+  and hold can be restored. The same roles that edit opportunities can do this.
+- `npm run bid-feed:import` loads `data/bid_feed_tracker.json` (50 solicitations, 22 leads).
+- Tests cover intake auth, upsert idempotency and the approve flow.
+
 ## Team page update — 2026-11-02
 Brought the shared team page (`prototype/bd-hub.html`, published at
 https://claude.ai/artifact/UFYEMekqpSiJC7joYGes5r) in line with Phases 5–8:

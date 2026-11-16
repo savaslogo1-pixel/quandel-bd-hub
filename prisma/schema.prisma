@@ -78,6 +78,7 @@ model User {
   giftsReviewed        GiftEntry[]                @relation("GiftReviewer")
   lobbying             LobbyingEntry[]            @relation("LobbyingBy")
   createdApprovalSteps ApprovalStep[]
+  createdBidFeedItems  BidFeedItem[]              @relation("BidFeedCreatedBy")
 
   // NextAuth (Microsoft 365 sign-in)
   accounts Account[]
@@ -106,6 +107,8 @@ model Company {
   trainingAssignments  TrainingAssignment[]
   projects             Project[]            @relation("ProjectCompanies")
   competitors          Competitor[]         @relation("CompetitorRivals")
+  bidFeedItems         BidFeedItem[]        @relation("BidFeedCompanies")
+  bidFeedLeads         BidFeedItem[]        @relation("BidFeedLead")
 }
 
 /// Admin-editable picklists (SPEC §6 Admin). Lists used in Phase 1:
@@ -462,6 +465,8 @@ model Opportunity {
   lostTo           Competitor?    @relation("OppLostTo", fields: [lostToId], references: [id], onDelete: SetNull)
   projects         Project[]
   bundles          BridgeBundle[]
+  /// Set when this pursuit was opened from the bid feed.
+  bidFeedItem      BidFeedItem?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -1226,6 +1231,76 @@ model LobbyingEntry {
   updatedAt    DateTime @updatedAt
 
   @@index([jurisdiction, date])
+}
+
+// ───────────────────────── Bid feed ─────────────────────────
+// Incoming RFPs, RFQs, bids and meeting-minute leads. A daily job posts a batch to
+// POST /api/bid-feed/intake. externalKey (usually the source URL) makes a re-post
+// update the same row. Approving opens a stage 1 (Target) opportunity.
+
+enum BidFeedKind {
+  RFP
+  RFQ
+  IFB // invitation for bid / public bid
+  MEETING_MINUTES
+  OTHER
+}
+
+enum BidFeedStatus {
+  NEW
+  APPROVED
+  DISMISSED
+  ON_HOLD
+}
+
+enum BidFeedPriority {
+  HIGH
+  MEDIUM
+  LOW
+  WATCH
+}
+
+model BidFeedItem {
+  id          String          @id @default(cuid())
+  /// Stable key from the source, usually the source URL. Re-posts update this row.
+  externalKey String          @unique
+  title       String
+  ownerName   String // owner or agency, as published
+  county      String?
+  location    String? // a place line when it says more than the county
+  state       StateCode       @default(PA)
+  kind        BidFeedKind
+  /// Published type when it is more specific than `kind` (e.g. "RFQ (GESA)", "IFB (IDIQ)").
+  typeLabel   String?
+  /// A single published figure, when the text states one. Ranges stay in valueText only.
+  estimatedValue Decimal?
+  valueText      String?
+  dueAt          DateTime? // bid due or decision date
+  preBidAt       DateTime?
+  preBidText     String? // original pre-bid line when it carries a place or "held"
+  sourceUrl      String?
+  sourceName     String?
+  priority       BidFeedPriority @default(MEDIUM)
+  notes          String?
+  why            String?
+  status         BidFeedStatus   @default(NEW)
+  firstSeenAt    DateTime        @default(now())
+
+  /// Matched Quandel companies. `leadCompany` is the first one in the sweep's order.
+  companies     Company[] @relation("BidFeedCompanies")
+  leadCompanyId String?
+  leadCompany   Company?  @relation("BidFeedLead", fields: [leadCompanyId], references: [id], onDelete: SetNull)
+
+  opportunityId String?      @unique
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String?
+  createdBy   User?    @relation("BidFeedCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([status, dueAt])
+  @@index([kind])
 }
 
 // ───────────────────────── NextAuth (Microsoft 365 sign-in) ─────────────────────────
